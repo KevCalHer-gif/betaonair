@@ -4,7 +4,7 @@ import './styles.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
 
 const brandFont = localFont({
-  src: '../../fonts/chinese_rocks_rg.otf',
+  src: '../fonts/chinese_rocks_rg.otf',
   variable: '--font-brand',
   display: 'swap',
 })
