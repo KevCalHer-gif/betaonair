@@ -260,3 +260,11 @@ Ver GLOSSARY.md para nombres completos.
 6. Siempre verificar GLOSSARY.md antes de nombrar variables, funciones o archivos
 7. Al detectar una decisión nueva, recordar al usuario agregarla a DECISIONS.md
 8. Cerrar cada sesión con la actualización de este archivo
+
+---
+
+## REPORTE DE SESIÓN
+
+- **Estado actual**: Fase 1 – Día 2, pendiente ejecutar `create-payload-app`
+- **Tarea sugerida**: Leandro debe ejecutar `npx create-payload-app` con Next.js + PostgreSQL para generar el esqueleto del proyecto.
+- **Bloqueos detectados**: El archivo `docker-compose.yml` ya existe, pero aún no se ha generado el Payload CMS. No se puede verificar el admin ni continuar con el resto del backlog hasta ejecutar `create-payload-app` y verificar que el servicio de base de datos funciona correctamente.
