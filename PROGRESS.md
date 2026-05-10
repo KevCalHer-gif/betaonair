@@ -39,6 +39,31 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 - Creación del sistema de roles del agente (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
 - Creación de archivos de documentación del proyecto (BRAIN.md, DECISIONS.md, PROGRESS.md, GLOSSARY.md)
 
+### [2026-05-10] — Fase 1 completa: proyecto base funcionando
+**Sesión:** 2 — Setup e infraestructura
+**Completado por:** LEANDRO
+**Tareas completadas:**
+- Ejecutar create-payload-app (blank, PostgreSQL, TypeScript)
+- Configurar npm cache en F: por espacio limitado en C:
+- Reemplazar docker-compose.yml por configuración PostgreSQL local
+- Crear base de datos betaonair_db en PostgreSQL 18 via pgAdmin
+- Verificar arranque de Payload admin en localhost:3000/admin
+- Crear primer usuario administrador
+
+**Archivos creados/modificados:**
+- package.json, payload.config.ts, next.config.ts (generados por Payload)
+- docker-compose.yml (reemplazado por config PostgreSQL)
+- .env (DATABASE_URL configurado)
+- src/collections/Users.ts, src/collections/Media.ts
+
+**Commit(s):** feat(setup): inicializar proyecto Next.js 16 + Payload CMS v3 + PostgreSQL
+
+**Notas:**
+- PostgreSQL 18 instalado localmente, no en Docker (C: con poco espacio)
+- npm cache movido a F:\npm-cache
+- Docker reservado para deploy en VPS (Fase 4)
+- Siguiente paso: crear colecciones en Payload (Fase 2)
+
 **Archivos creados/modificados:**
 - BRAIN.md
 - DECISIONS.md
