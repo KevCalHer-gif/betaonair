@@ -206,10 +206,10 @@ DÍA:         2
 ```
 [x] Colección: services
 [x] Colección: projects
-[ ] Colección: posts (blog)
+[x] Colección: posts (blog)
 [x] Colección: categories
-[ ] Colección: testimonials
-[ ] Colección: contacts
+[x] Colección: testimonials
+[x] Colección: contacts
 [ ] Global: settings
 [ ] Global: seo
 [ ] Configurar acceso y roles en cada colección
