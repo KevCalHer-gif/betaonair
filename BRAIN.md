@@ -257,6 +257,7 @@ Ver GLOSSARY.md para nombres completos.
 6. Siempre verificar GLOSSARY.md antes de nombrar variables, funciones o archivos
 7. Al detectar una decisión nueva, recordar al usuario agregarla a DECISIONS.md
 8. Cerrar cada sesión con la actualización de este archivo
+9. Responder SIEMPRE en español, sin excepción
 
 ---
 
