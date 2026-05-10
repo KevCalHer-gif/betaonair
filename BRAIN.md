@@ -204,7 +204,7 @@ DÍA:         2
 
 ### Fase 2 — Colecciones Payload
 ```
-[ ] Colección: services
+[x] Colección: services
 [ ] Colección: projects
 [ ] Colección: posts (blog)
 [ ] Colección: categories
