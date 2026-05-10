@@ -167,18 +167,13 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        1 — Infraestructura base
+FASE:        2 — Colecciones Payload
 SEMANA:      1
 DÍA:         2
 ```
 
 ### Tarea en progreso
-```
-[~] Configuración inicial del repositorio y entorno de desarrollo
-    Rol asignado: LEANDRO
-    Bloqueado por: ninguno
-    Notas: pendiente de ejecutar create-payload-app
-```
+*(ninguna)*
 
 ### Completado
 ```
@@ -186,6 +181,8 @@ DÍA:         2
 [x] Definición de roles del equipo (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
 [x] Definición de colecciones principales de Payload CMS
 [x] Creación del repositorio en GitHub y primer commit (ccf63e2)
+[x] Colección: services
+[x] Colección: projects
 ```
 
 ---
@@ -204,8 +201,8 @@ DÍA:         2
 
 ### Fase 2 — Colecciones Payload
 ```
-[ ] Colección: services
-[ ] Colección: projects
+[x] Colección: services
+[x] Colección: projects
 [ ] Colección: posts (blog)
 [ ] Colección: categories
 [ ] Colección: testimonials
