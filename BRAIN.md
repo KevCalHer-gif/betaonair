@@ -167,9 +167,9 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        2 — Colecciones Payload
+FASE:        3 — Frontend base
 SEMANA:      1
-DÍA:         2
+DÍA:         1
 ```
 
 ### Tarea en progreso
@@ -213,7 +213,7 @@ DÍA:         2
 [ ] Global: settings
 [ ] Global: seo
 [x] Configurar acceso y roles en cada colección
-[ ] Ejecutar: npx payload generate:types
+[x] Ejecutar: npx payload generate:types
 ```
 
 ### Fase 3 — Frontend base
