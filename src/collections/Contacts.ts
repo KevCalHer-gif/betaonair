@@ -3,8 +3,8 @@ import type { CollectionConfig } from 'payload'
 export const Contacts: CollectionConfig = {
   slug: 'contacts',
   admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name', 'email', 'read'],
+    useAsTitle: 'nombre',
+    defaultColumns: ['nombre', 'email', 'leido'],
   },
   access: {
     read: ({ req: { user } }) => !!user,
@@ -14,28 +14,32 @@ export const Contacts: CollectionConfig = {
   },
   fields: [
     {
-      name: 'name',
+      name: 'nombre',
       type: 'text',
       required: true,
     },
     {
       name: 'email',
-      type: 'text',
+      type: 'email',
       required: true,
     },
     {
-      name: 'subject',
+      name: 'telefono',
       type: 'text',
     },
     {
-      name: 'message',
+      name: 'mensaje',
       type: 'textarea',
       required: true,
     },
     {
-      name: 'read',
+      name: 'leido',
       type: 'checkbox',
       defaultValue: false,
+    },
+    {
+      name: 'fechaRecibido',
+      type: 'date',
     },
   ],
 }
