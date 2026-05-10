@@ -1,5 +1,6 @@
 import React from 'react'
 import './styles.css'
+import ParticleTrail from '../components/ui/ParticleTrail'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -12,7 +13,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
+        <ParticleTrail />
+        <main style={{ position: 'relative', zIndex: 1 }}>{children}</main>
       </body>
     </html>
   )
