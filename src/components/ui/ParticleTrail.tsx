@@ -242,7 +242,7 @@ export default function ParticleTrail({ className }: ParticleTrailProps) {
           width: '100%',
           height: '100%',
           pointerEvents: 'none',
-          zIndex: 0,
+          zIndex: 9999,
         }}
       />
       <CustomCursor x={cursorPos.x} y={cursorPos.y} color={cursorColor} />
