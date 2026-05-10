@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles.css'
-import ParticleTrail from '../components/ui/ParticleTrail'
+import ParticleTrail from '../../components/ui/ParticleTrail'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
