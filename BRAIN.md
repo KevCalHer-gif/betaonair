@@ -212,7 +212,7 @@ DÍA:         2
 [x] Colección: contacts
 [ ] Global: settings
 [ ] Global: seo
-[ ] Configurar acceso y roles en cada colección
+[x] Configurar acceso y roles en cada colección
 [ ] Ejecutar: npx payload generate:types
 ```
 
