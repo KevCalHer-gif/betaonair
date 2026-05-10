@@ -2,6 +2,7 @@ import React from 'react'
 import localFont from 'next/font/local'
 import './styles.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
+import BackgroundDrip from '../../components/ui/BackgroundDrip'
 
 const brandFont = localFont({
   src: '../fonts/chinese_rocks_rg.otf',
@@ -20,6 +21,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={brandFont.variable}>
       <body>
+        <BackgroundDrip />
         <ParticleTrail />
         <main style={{ position: 'relative', zIndex: 1 }}>{children}</main>
       </body>

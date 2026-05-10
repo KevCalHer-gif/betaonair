@@ -175,8 +175,8 @@ export default function ParticleTrail({ className }: ParticleTrailProps) {
       setCursorColor(colorStr)
 
       if (ctx) {
-        // fade
-        ctx.globalCompositeOperation = 'source-over'
+        // fade using destination-out to make areas with no particles transparent
+        ctx.globalCompositeOperation = 'destination-out'
         ctx.fillStyle = 'rgba(0,0,0,0.18)'
         ctx.fillRect(0, 0, w, h)
 
