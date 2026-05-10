@@ -1,0 +1,5 @@
+export { getServices, getServiceBySlug } from './services'
+export { getProjects, getProjectBySlug, getFeaturedProjects } from './projects'
+export { getPosts, getPostBySlug, getRecentPosts } from './posts'
+export { getCategories } from './categories'
+export { getTestimonials } from './testimonials'
