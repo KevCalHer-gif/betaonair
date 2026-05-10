@@ -181,8 +181,10 @@ DÍA:         2
 [x] Definición de roles del equipo (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
 [x] Definición de colecciones principales de Payload CMS
 [x] Creación del repositorio en GitHub y primer commit (ccf63e2)
-[ ] Colección: services
-[ ] Colección: projects
+[x] Ejecutar create-payload-app con Next.js + PostgreSQL
+[x] Configurar docker-compose.yml con servicio PostgreSQL
+[x] Verificar que Payload admin carga en localhost:3000/admin
+[x] Crear primer usuario administrador
 ```
 
 ---
@@ -192,11 +194,12 @@ DÍA:         2
 ### Fase 1 — Infraestructura
 ```
 [x] Crear repositorio en GitHub
-[ ] Ejecutar create-payload-app con Next.js + PostgreSQL
-[ ] Configurar docker-compose.yml con servicio PostgreSQL
-[ ] Verificar que Payload admin carga en localhost:3000/admin
-[ ] Configurar .env y .env.example
-[ ] Primer commit y push a GitHub
+[x] Ejecutar create-payload-app con Next.js + PostgreSQL
+[x] Configurar docker-compose.yml con servicio PostgreSQL
+[x] Verificar que Payload admin carga en localhost:3000/admin
+[x] Configurar .env y .env.example
+[x] Primer commit y push a GitHub
+[x] Crear primer usuario administrador
 ```
 
 ### Fase 2 — Colecciones Payload
@@ -261,8 +264,3 @@ Ver GLOSSARY.md para nombres completos.
 
 ---
 
-## REPORTE DE SESIÓN
-
-- **Estado actual**: Fase 1 – Día 2, pendiente ejecutar `create-payload-app`
-- **Tarea sugerida**: Leandro debe ejecutar `npx create-payload-app` con Next.js + PostgreSQL para generar el esqueleto del proyecto.
-- **Bloqueos detectados**: El archivo `docker-compose.yml` ya existe, pero aún no se ha generado el Payload CMS. No se puede verificar el admin ni continuar con el resto del backlog hasta ejecutar `create-payload-app` y verificar que el servicio de base de datos funciona correctamente.
