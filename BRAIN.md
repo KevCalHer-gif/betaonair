@@ -173,7 +173,8 @@ DÍA:         1
 ```
 
 ### Tarea en progreso
-*(ninguna)*
+- Capa de acceso a datos (src/lib/api/) — completada
+- Siguiente tarea: Layout global (nav + footer)
 
 ### Completado
 ```
@@ -218,6 +219,7 @@ DÍA:         1
 
 ### Fase 3 — Frontend base
 ```
+[x] Capa de acceso a datos (src/lib/api/)
 [ ] Layout global (nav + footer)
 [ ] Página: homepage
 [ ] Página: servicios
