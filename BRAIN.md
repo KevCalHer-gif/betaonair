@@ -181,8 +181,8 @@ DÍA:         2
 [x] Definición de roles del equipo (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
 [x] Definición de colecciones principales de Payload CMS
 [x] Creación del repositorio en GitHub y primer commit (ccf63e2)
-[x] Colección: services
-[x] Colección: projects
+[ ] Colección: services
+[ ] Colección: projects
 ```
 
 ---
@@ -201,8 +201,8 @@ DÍA:         2
 
 ### Fase 2 — Colecciones Payload
 ```
-[x] Colección: services
-[x] Colección: projects
+[ ] Colección: services
+[ ] Colección: projects
 [ ] Colección: posts (blog)
 [ ] Colección: categories
 [ ] Colección: testimonials
