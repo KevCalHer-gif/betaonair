@@ -169,7 +169,7 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ```
 FASE:        1 — Infraestructura base
 SEMANA:      1
-DÍA:         1
+DÍA:         2
 ```
 
 ### Tarea en progreso
@@ -185,6 +185,7 @@ DÍA:         1
 [x] Definición de arquitectura y stack tecnológico
 [x] Definición de roles del equipo (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
 [x] Definición de colecciones principales de Payload CMS
+[x] Creación del repositorio en GitHub y primer commit (ccf63e2)
 ```
 
 ---
@@ -193,7 +194,7 @@ DÍA:         1
 
 ### Fase 1 — Infraestructura
 ```
-[ ] Crear repositorio en GitHub
+[x] Crear repositorio en GitHub
 [ ] Ejecutar create-payload-app con Next.js + PostgreSQL
 [ ] Configurar docker-compose.yml con servicio PostgreSQL
 [ ] Verificar que Payload admin carga en localhost:3000/admin
