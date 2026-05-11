@@ -19,6 +19,7 @@
 | `contacts`             | Contactos           | Mensajes recibidos del formulario           |
 | `users`                | Usuarios            | Usuarios del sistema (viene con Payload)    |
 | `media`                | Multimedia          | Archivos de imagen y video (viene con Payload) |
+| `projects`             | Proyectos           | Trabajos realizados para clientes (portafolio) |
 
 ---
 
