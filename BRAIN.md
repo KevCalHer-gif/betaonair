@@ -167,14 +167,13 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        3 — Frontend base
+FASE:        2 — Colecciones Payload (re‑definición)
 SEMANA:      1
 DÍA:         1
 ```
 
 ### Tarea en progreso
-- Homepage completada (HeroSection + ServicesSection)
-- Siguiente tarea: Layout global (nav + footer)
+- Re‑definición de colecciones para portal Beta On Air (integrar streaming, noticias, promociones)
 
 ### Completado
 ```
@@ -203,18 +202,18 @@ DÍA:         1
 [x] Crear primer usuario administrador
 ```
 
-### Fase 2 — Colecciones Payload
+### Fase 2 — Colecciones Payload (re‑definición)
 ```
-[x] Colección: services
-[x] Colección: projects
-[x] Colección: posts (blog)
-[x] Colección: categories
-[x] Colección: testimonials
-[x] Colección: contacts
+[ ] Colección: Programas
+[ ] Colección: Episodios
+[ ] Colección: Transmisiones en Vivo
+[ ] Colección: Artículos de Noticias
+[ ] Colección: Promociones / Alianzas
+[ ] Colección: Noticias Republicanas
 [ ] Global: settings
 [ ] Global: seo
-[x] Configurar acceso y roles en cada colección
-[x] Ejecutar: npx payload generate:types
+[ ] Configurar acceso y roles en cada colección
+[ ] Ejecutar: npx payload generate:types
 ```
 
 ### Fase 3 — Frontend base
