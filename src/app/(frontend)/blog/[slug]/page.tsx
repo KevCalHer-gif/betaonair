@@ -1,34 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import { getPostBySlug } from '../../../../lib/api/posts'
-import type { Post } from '../../../../payload-types'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function BlogDetailPage() {
-  const { slug } = useParams<{ slug: string }>()
-  const [post, setPost] = useState<Post | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
-    if (slug) {
-      getPostBySlug(slug as string).then(setPost)
-    }
-  }, [slug])
+    router.replace('/')
+  }, [router])
 
-  if (!post) {
-    return <div style={{ padding: '2rem', color: '#fff' }}>Cargando...</div>
-  }
-
-  return (
-    <div style={{ padding: '2rem', color: '#fff' }}>
-      <h1>{post.title}</h1>
-      {post.excerpt && <p style={{ color: '#aaa' }}>{post.excerpt}</p>}
-      {post.content && (
-        <div style={{ lineHeight: 1.8 }}>
-          <RichText data={post.content} />
-        </div>
-      )}
-    </div>
-  )
+  return null
 }

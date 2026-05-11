@@ -17,7 +17,7 @@ export default function ServiciosPage() {
       {services.map((s) => (
         <div key={s.id} style={{ margin: '1rem 0', padding: '1rem', border: '1px solid #333' }}>
           <h2>{s.title}</h2>
-          {s.descripcionCorta && <p>{s.descripcionCorta}</p>}
+          {s.descripcion && <p>{s.descripcion}</p>}
         </div>
       ))}
     </div>
