@@ -1,112 +1,23 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-
-const services = [
-  {
-    title: 'Diseño Gráfico',
-    items: [
-      'Branding e identidad visual',
-      'Diseño editorial',
-      'Diseño publicitario',
-      'Artes para campañas',
-      'Recursos gráficos',
-    ],
-  },
-  {
-    title: 'Producción Audiovisual y Animación',
-    items: [
-      'Producción de video',
-      'Motion graphics',
-      'Animación 2D',
-      'Animación 3D',
-      'Contenido audiovisual',
-    ],
-  },
-  {
-    title: 'Gestión de RRSS',
-    items: [
-      'Administración de redes',
-      'Creación de contenido',
-      'Community management',
-      'Estrategia digital',
-    ],
-  },
-  {
-    title: 'Pauta Publicitaria',
-    items: [
-      'Campañas digitales',
-      'Facebook Ads',
-      'Instagram Ads',
-      'Google Ads',
-      'Estrategias de pauta',
-    ],
-  },
-  {
-    title: 'Monitoreo Digital',
-    items: [
-      'Seguimiento de campañas',
-      'Métricas digitales',
-      'Analítica',
-      'Monitoreo de medios',
-    ],
-  },
-  {
-    title: 'Streaming',
-    items: [
-      'Transmisiones en vivo',
-      'Eventos online',
-      'Cobertura digital',
-      'Streaming corporativo',
-    ],
-  },
-  {
-    title: 'Activación BTL',
-    items: [
-      'Activaciones de marca',
-      'Eventos promocionales',
-      'Experiencias interactivas',
-      'Marketing experiencial',
-    ],
-  },
-  {
-    title: 'Gestión ATL',
-    items: [
-      'Campañas masivas',
-      'Publicidad tradicional',
-      'Medios de comunicación',
-    ],
-  },
-  {
-    title: 'Micro ATL',
-    items: [
-      'Campañas segmentadas',
-      'Estrategias híbridas',
-    ],
-  },
-  {
-    title: 'Gestión de Talentos',
-    items: [
-      'Influencers',
-      'Imagen pública',
-      'Talentos digitales',
-      'Colaboraciones de marca',
-    ],
-  },
-  {
-    title: 'Comunicación Integral',
-    items: [
-      'Estrategia de marca',
-      'Comunicación corporativa',
-      'Campañas integrales',
-      'Marketing 360',
-    ],
-  },
-]
+import { getLiveStreams } from '@/lib/api/live'
+import { getPrograms } from '@/lib/api/programs'
+import type { Live } from '@/payload-types'
+import type { Program } from '@/payload-types'
 
 export default function ServicesSection() {
+  const [liveStreams, setLiveStreams] = useState<Live[]>([])
+  const [programs, setPrograms] = useState<Program[]>([])
+
+  useEffect(() => {
+    getLiveStreams().then(setLiveStreams)
+    getPrograms().then(setPrograms)
+  }, [])
+
   return (
-    <section id="servicios" style={{ background: '#0a0a0a', padding: '5rem 1rem' }}>
+    <section id="contenido" style={{ background: '#0a0a0a', padding: '5rem 1rem' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -120,61 +31,99 @@ export default function ServicesSection() {
             textAlign: 'center',
           }}
         >
-          Nuestros <span style={{ color: '#c61d4a' }}>Servicios</span>
+          En Vivo{' '}
+          <span style={{ color: '#c61d4a' }}>y Podcast</span>
         </motion.h2>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '1.5rem',
-            marginTop: '3rem',
-          }}
-        >
-          {services.map((service, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+        {liveStreams.length > 0 && (
+          <div style={{ margin: '2rem 0' }}>
+            <h3 style={{ color: '#c61d4a' }}>Streaming en Vivo</h3>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {liveStreams.map((live) => (
+                <div
+                  key={live.id}
+                  style={{
+                    border: '1px solid #333',
+                    padding: '1rem',
+                    minWidth: 200,
+                    flex: '1 1 300px',
+                  }}
+                >
+                  {live.titulo && <h4 style={{ color: '#fff' }}>{live.titulo}</h4>}
+                  {live.embedUrl && (
+                    <div
+                      style={{
+                        position: 'relative',
+                        paddingBottom: '56.25%',
+                        height: 0,
+                        overflow: 'hidden',
+                      }}
+                    >
+                      <iframe
+                        src={live.embedUrl}
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          border: 0,
+                        }}
+                        allowFullScreen
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {programs.length > 0 && (
+          <div style={{ margin: '2rem 0' }}>
+            <h3 style={{ color: '#c61d4a' }}>Programas Propios</h3>
+            <div
               style={{
-                border: '1px solid #222',
-                borderRadius: 0,
-                padding: '1.5rem',
-                background: 'transparent',
-                cursor: 'default',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#c61d4a'
-                e.currentTarget.style.background = '#111'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#222'
-                e.currentTarget.style.background = 'transparent'
+                display: 'grid',
+                gap: '1.5rem',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px,1fr))',
               }}
             >
-              <h3 style={{ color: '#c61d4a', fontSize: '1.2rem', marginBottom: '1rem' }}>
-                {service.title}
-              </h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {service.items.map((item, j) => (
-                  <li
-                    key={j}
-                    style={{
-                      color: '#ccc',
-                      padding: '0.25rem 0',
-                      borderBottom:
-                        j < service.items.length - 1 ? '1px solid #222' : 'none',
-                    }}
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
+              {programs.map((prog) => (
+                <div
+                  key={prog.id}
+                  style={{
+                    border: '1px solid #222',
+                    padding: '1.5rem',
+                    background: 'transparent',
+                    transition: 'background 0.3s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#111'
+                    e.currentTarget.style.borderColor = '#c61d4a'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = '#222'
+                  }}
+                >
+                  <h4 style={{ color: '#c61d4a', marginBottom: '0.5rem' }}>
+                    {prog.title}
+                  </h4>
+                  {prog.descripcionCorta && (
+                    <p style={{ color: '#ccc' }}>{prog.descripcionCorta}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {liveStreams.length === 0 && programs.length === 0 && (
+          <p style={{ color: '#888', textAlign: 'center', marginTop: '2rem' }}>
+            Cargando contenidos...
+          </p>
+        )}
       </div>
     </section>
   )

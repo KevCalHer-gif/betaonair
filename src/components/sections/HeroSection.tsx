@@ -48,7 +48,7 @@ export default function HeroSection() {
 
       <motion.div {...fadeUp(0.4)}>
         <a
-          href="#servicios"
+          href="#contenido"
           style={{
             display: 'inline-block',
             backgroundColor: '#c61d4a',
