@@ -76,3 +76,4 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 - Todas las decisiones arquitectónicas documentadas en DECISIONS.md
 - El proyecto aún no tiene código — siguiente paso es ejecutar create-payload-app
 - Node.js 20+ requerido — verificar antes de iniciar Fase 1
+**Notas:** Pendientes de frontend completadas por LISANDRO. Todas las páginas (layout, servicios, portafolio, blog, contacto) fueron implementadas y documentadas. Se requiere revisión de CENTINELA y aplicación de LEANDRO.
