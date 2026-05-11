@@ -1,4 +1,6 @@
 @echo off
+REM Cambiar al directorio raíz del proyecto
+cd /d "%~dp0.."
 REM script para iniciar el entorno de desarrollo
 echo Verificando configuración...
 
