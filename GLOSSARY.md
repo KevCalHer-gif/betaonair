@@ -10,11 +10,12 @@
 
 | Nombre en código       | Nombre en admin     | Descripción                                 |
 |------------------------|---------------------|---------------------------------------------|
-| `services`             | Servicios           | Servicios que ofrece la agencia             |
-| `projects`             | Proyectos           | Trabajos del portafolio                     |
-| `posts`                | Blog                | Artículos del blog                          |
-| `categories`           | Categorías          | Categorías para posts y proyectos           |
-| `testimonials`         | Testimonios         | Opiniones de clientes                       |
+| `services`             | Servicios           | Promoción de marcas y creadores             |
+| `programs`             | Programas           | Shows del canal (TBT, Piedra y Camino, Beta Kids) |
+| `episodes`             | Episodios           | Episodios por programa con embed URL        |
+| `news`                 | Noticias            | Noticias republicadas con voz propia        |
+| `live`                 | Transmisiones       | Transmisiones en vivo embebidas (YouTube/TikTok) |
+| `categories`           | Categorías          | Categorías para programas y noticias        |
 | `contacts`             | Contactos           | Mensajes recibidos del formulario           |
 | `users`                | Usuarios            | Usuarios del sistema (viene con Payload)    |
 | `media`                | Multimedia          | Archivos de imagen y video (viene con Payload) |
@@ -53,15 +54,16 @@
 
 ## Rutas del frontend (Next.js)
 
-| Ruta pública        | Archivo                                  | Descripción             |
-|---------------------|------------------------------------------|-------------------------|
-| `/`                 | `src/app/page.tsx`                       | Homepage                |
-| `/servicios`        | `src/app/servicios/page.tsx`             | Listado de servicios    |
-| `/portafolio`       | `src/app/portafolio/page.tsx`            | Listado de proyectos    |
-| `/portafolio/[slug]`| `src/app/portafolio/[slug]/page.tsx`     | Detalle de proyecto     |
-| `/blog`             | `src/app/blog/page.tsx`                  | Listado de posts        |
-| `/blog/[slug]`      | `src/app/blog/[slug]/page.tsx`           | Detalle de post         |
-| `/contacto`         | `src/app/contacto/page.tsx`              | Formulario de contacto  |
+| Ruta pública        | Archivo                                  | Descripción                          |
+|---------------------|------------------------------------------|--------------------------------------|
+| `/`                 | `src/app/page.tsx`                       | Homepage (Hero + en vivo + noticias) |
+| `/programas`        | `src/app/programas/page.tsx`             | Grilla de todos los shows            |
+| `/programas/[slug]` | `src/app/programas/[slug]/page.tsx`      | Detalle del programa + episodios     |
+| `/en-vivo`          | `src/app/en-vivo/page.tsx`               | Embed de transmisión en vivo        |
+| `/noticias`         | `src/app/noticias/page.tsx`              | Feed de noticias republicadas       |
+| `/noticias/[slug]`  | `src/app/noticias/[slug]/page.tsx`       | Artículo de noticia completo         |
+| `/servicios`        | `src/app/servicios/page.tsx`             | Promociona tu marca con Beta On Air  |
+| `/contacto`         | `src/app/contacto/page.tsx`              | Formulario de contacto               |
 
 ---
 

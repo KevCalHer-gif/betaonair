@@ -173,7 +173,9 @@ DÍA:         1
 ```
 
 ### Tarea en progreso
-- Re‑definición de colecciones para portal Beta On Air (integrar streaming, noticias, promociones)
+- Paso 1: Eliminar colecciones antiguas (testimonials, projects, posts)
+- Paso 2: Crear Programs, Episodes, News, Live
+- Paso 6: Modificar Services para promoción
 
 ### Completado
 ```
@@ -204,15 +206,15 @@ DÍA:         1
 
 ### Fase 2 — Colecciones Payload (re‑definición)
 ```
-[ ] Colección: Programas
-[ ] Colección: Episodios
-[ ] Colección: Transmisiones en Vivo
-[ ] Colección: Artículos de Noticias
-[ ] Colección: Promociones / Alianzas
-[ ] Colección: Noticias Republicanas
+[x] Colección: Programs
+[x] Colección: Episodes
+[x] Colección: Live
+[x] Colección: News
+[ ] Servicios reorientados a promoción (Services modificado)
 [ ] Global: settings
 [ ] Global: seo
 [ ] Configurar acceso y roles en cada colección
+[ ] Backup de base de datos antes de migrar
 [ ] Ejecutar: npx payload generate:types
 ```
 

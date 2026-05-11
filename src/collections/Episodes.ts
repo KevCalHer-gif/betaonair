@@ -1,10 +1,18 @@
 import type { CollectionConfig } from 'payload'
 
-export const Services: CollectionConfig = {
-  slug: 'services',
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export const Episodes: CollectionConfig = {
+  slug: 'episodes',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'tipo', 'orden', 'activo'],
+    defaultColumns: ['title', 'program', 'publishedAt'],
   },
   access: {
     read: () => true,
@@ -17,7 +25,6 @@ export const Services: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
-      unique: true,
     },
     {
       name: 'slug',
@@ -38,38 +45,31 @@ export const Services: CollectionConfig = {
       },
     },
     {
-      name: 'tipo',
+      name: 'program',
+      type: 'relationship',
+      relationTo: 'programs',
+      hasMany: false,
+      required: true,
+    },
+    {
+      name: 'embedUrl',
+      type: 'text',
+    },
+    {
+      name: 'thumbnail',
+      type: 'relationship',
+      relationTo: 'media',
+      hasMany: false,
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+    },
+    {
+      name: 'status',
       type: 'select',
-      options: ['promocion', 'produccion', 'publicidad', 'streaming', 'otros'],
-      defaultValue: 'promocion',
-    },
-    {
-      name: 'descripcion',
-      type: 'textarea',
-      maxLength: 500,
-    },
-    {
-      name: 'precioBase',
-      type: 'number',
-      defaultValue: 0,
-    },
-    {
-      name: 'activo',
-      type: 'checkbox',
-      defaultValue: true,
-    },
-    {
-      name: 'orden',
-      type: 'number',
-      defaultValue: 0,
+      options: ['draft', 'published'],
+      defaultValue: 'published',
     },
   ],
-}
-
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_]+/g, '-')
-    .replace(/^-+|-+$/g, '')
 }

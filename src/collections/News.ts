@@ -1,10 +1,11 @@
 import type { CollectionConfig } from 'payload'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
-export const Services: CollectionConfig = {
-  slug: 'services',
+export const News: CollectionConfig = {
+  slug: 'news',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'tipo', 'orden', 'activo'],
+    defaultColumns: ['title', 'publishedAt', 'status'],
   },
   access: {
     read: () => true,
@@ -38,30 +39,43 @@ export const Services: CollectionConfig = {
       },
     },
     {
-      name: 'tipo',
-      type: 'select',
-      options: ['promocion', 'produccion', 'publicidad', 'streaming', 'otros'],
-      defaultValue: 'promocion',
-    },
-    {
-      name: 'descripcion',
+      name: 'excerpt',
       type: 'textarea',
-      maxLength: 500,
     },
     {
-      name: 'precioBase',
-      type: 'number',
-      defaultValue: 0,
+      name: 'content',
+      type: 'richText',
+      editor: lexicalEditor(),
     },
     {
-      name: 'activo',
-      type: 'checkbox',
-      defaultValue: true,
+      name: 'coverImage',
+      type: 'relationship',
+      relationTo: 'media',
+      hasMany: false,
     },
     {
-      name: 'orden',
-      type: 'number',
-      defaultValue: 0,
+      name: 'sourceUrl',
+      type: 'text',
+    },
+    {
+      name: 'sourceName',
+      type: 'text',
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      relationTo: 'categories',
+      hasMany: true,
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+    },
+    {
+      name: 'status',
+      type: 'select',
+      options: ['draft', 'published'],
+      defaultValue: 'published',
     },
   ],
 }

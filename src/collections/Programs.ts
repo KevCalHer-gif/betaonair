@@ -1,10 +1,18 @@
 import type { CollectionConfig } from 'payload'
 
-export const Services: CollectionConfig = {
-  slug: 'services',
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export const Programs: CollectionConfig = {
+  slug: 'programs',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'tipo', 'orden', 'activo'],
+    defaultColumns: ['title', 'isLive', 'status'],
   },
   access: {
     read: () => true,
@@ -38,38 +46,34 @@ export const Services: CollectionConfig = {
       },
     },
     {
-      name: 'tipo',
-      type: 'select',
-      options: ['promocion', 'produccion', 'publicidad', 'streaming', 'otros'],
-      defaultValue: 'promocion',
-    },
-    {
-      name: 'descripcion',
+      name: 'description',
       type: 'textarea',
-      maxLength: 500,
     },
     {
-      name: 'precioBase',
-      type: 'number',
-      defaultValue: 0,
+      name: 'coverImage',
+      type: 'relationship',
+      relationTo: 'media',
+      hasMany: false,
     },
     {
-      name: 'activo',
+      name: 'accentColor',
+      type: 'text',
+      defaultValue: '#c61d4a',
+    },
+    {
+      name: 'isLive',
       type: 'checkbox',
-      defaultValue: true,
+      defaultValue: false,
     },
     {
-      name: 'orden',
-      type: 'number',
-      defaultValue: 0,
+      name: 'liveUrl',
+      type: 'text',
+    },
+    {
+      name: 'status',
+      type: 'select',
+      options: ['active', 'inactive'],
+      defaultValue: 'active',
     },
   ],
-}
-
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_]+/g, '-')
-    .replace(/^-+|-+$/g, '')
 }
