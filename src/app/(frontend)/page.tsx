@@ -1,12 +1,19 @@
 import React from 'react'
 import HeroSection from '../../components/sections/HeroSection'
-import ServicesSection from '../../components/sections/ServicesSection'
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ServicesSection />
+      <section>
+        <h2>En Vivo</h2>
+      </section>
+      <section>
+        <h2>Programas</h2>
+      </section>
+      <section>
+        <h2>Noticias</h2>
+      </section>
     </>
   )
 }
