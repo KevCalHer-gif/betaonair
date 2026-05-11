@@ -176,6 +176,7 @@ DÍA:         1
 - Paso 1: Eliminar colecciones antiguas (testimonials, projects, posts)
 - Paso 2: Crear Programs, Episodes, News, Live
 - Paso 6: Modificar Services para promoción
+- **Frontend base:** Layout global, páginas de servicios, portafolio, blog y contacto implementadas (pendiente revisión CENTINELA)
 
 ### Completado
 ```
