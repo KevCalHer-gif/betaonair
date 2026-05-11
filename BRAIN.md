@@ -241,6 +241,18 @@ DÍA:         1
 
 ---
 
+## ANÁLISIS RED RANGER — 2026-05-10
+
+**Áreas a corregir por LISANDRO:**
+
+1. **scripts\bridge-grox.bat** — La línea del `for` contiene un token literal incorrecto (`for /f "3DYVhoL9p..."`). Debe usar `tokens=*` para leer correctamente las variables del archivo `.env`.
+2. **.env.example** — Faltan las variables `NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_API_URL` que están documentadas en GLOSSARY.md. Deben agregarse con comentarios.
+3. **scripts\bridge-grox.bat** — El script carga variables del `.env` usando un `for` que no ignora líneas comentadas ni vacías. Se recomienda mejorar su robustez. (Opcional pero deseable.)
+
+**Acción inmediata:** Lisandro debe corregir el token en bridge-grox.bat y actualizar .env.example. Luego, CENTINELA deberá revisar los cambios antes de que LEANDRO los implemente.
+
+---
+
 ## CONVENCIONES ACTIVAS
 
 Ver GLOSSARY.md para nombres completos.
