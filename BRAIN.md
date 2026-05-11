@@ -290,6 +290,34 @@ DÍA:         1
 
 ---
 
+## ANÁLISIS RED RANGER — 2026-05-10 (Cuarta)
+
+**ANÁLISIS:**
+
+Estado actual del proyecto: Fase 2 (colecciones Payload) completada en su mayoría; Fase 3 (frontend base) implementada excepto la página de inicio (homepage) que aún muestra un apartado estático "Nuestros Servicios" (Diseño gráfico, Producción audiovisual, etc.). Según la solicitud, ese contenido debe ser reemplazado por elementos que reflejen lo que realmente se transmite en Beta On Air: **streamings en vivo**, **podcasts** y **programas propios** del canal.
+
+**RIESGOS:**
+
+- El componente `ServicesSection` actual en la homepage (`src/components/sections/ServicesSection.tsx`) probablemente contiene texto estático o llama a la colección `services` (orientada a promoción). Modificarlo para que muestre datos dinámicos (en vivo de `Live`, programas de `Programs`, etc.) requerirá cambios en el componente y quizás en la lógica de fetching.
+- Si se elimina por completo la sección de "servicios promocionales", se perderá una funcionalidad planificada para la agencia. Se debe decidir si mantener ambas secciones separadas o fusionarlas bajo un nuevo enfoque.
+- Existe dependencia de que las colecciones `Live` y `Programs` tengan datos de prueba para evitar pantallas vacías.
+
+**DEPENDENCIAS:**
+
+- Las colecciones `Live`, `Programs` y `Episodes` ya existen en `payload.config.ts` y sus APIs en `src/lib/api/`.
+- El componente `ServicesSection` debe ser actualizado para usar `getLiveStreams()` y `getPrograms()` en lugar de `getServices()`.
+- Se requiere confirmación sobre si la sección debe llamarse "En Vivo y Podcast" o "Nuestros Contenidos".
+
+**PREGUNTAS ABIERTAS:**
+
+- ¿Debemos eliminar por completo la colección `Services` y su referencia en el frontend, o mantenerla como para futura página de "Servicios Profesionales"?
+- ¿El layout de la homepage debe incluir ahora un carrusel de programas en vivo y luego una grilla de podcasts (episodios recientes)?
+- ¿Los enlaces del menú de navegación deben conservar "Servicios" o cambiarse a "Programas" y "En Vivo"?
+
+**APROBACIÓN:** APROBADO con la condición de resolver las preguntas abiertas y de que Lisandro se encargue de modificar `ServicesSection` y concretar los cambios en la página de inicio.
+
+---
+
 ## CONVENCIONES ACTIVAS
 
 Ver GLOSSARY.md para nombres completos.
