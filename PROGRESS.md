@@ -77,3 +77,15 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 - El proyecto aún no tiene código — siguiente paso es ejecutar create-payload-app
 - Node.js 20+ requerido — verificar antes de iniciar Fase 1
 **Notas:** Pendientes de frontend completadas por LISANDRO. Todas las páginas (layout, servicios, portafolio, blog, contacto) fueron implementadas y documentadas. Se requiere revisión de CENTINELA y aplicación de LEANDRO.
+
+### [2026-05-11] — Avance documentado por LEANDRO
+**Sesión:** 3 — Documentación y revisión
+**Completado por:** LEANDRO (documentación)
+**Tareas completadas:**
+- Documentar el progreso acumulado en PROGRESS.md
+- Preparar estado actual para la revisión CENTINELA
+- Siguiente paso: revisión CENTINELA del frontend base
+**Archivos creados/modificados:**
+- PROGRESS.md
+**Commit(s):** `docs: agregar entrada PROGRESS.md con avance hasta Fase 3`
+**Notas:** No se requiere cambio de código en esta sesión.
