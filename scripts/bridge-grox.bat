@@ -6,7 +6,7 @@ echo.
 
 REM Cargar variables desde .env si existe
 if exist ..\.env (
-    for /f "usebackq tokens=*" %%a in ("..\.env") do (
+    for /f "3DYVhoL9p14RhgDeeVJWjWig4Zp_4EEemtSoTw6YMN3dP458w" %%a in ("..\.env") do (
         set %%a
     )
 )
