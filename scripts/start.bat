@@ -21,6 +21,10 @@ if not exist node_modules (
     )
 )
 
+REM Genera tipos de Payload para evitar errores de compilación
+echo Generando tipos de Payload...
+call npm run generate:types
+
 echo Iniciando servidor de desarrollo...
 call npm run dev
 pause
