@@ -173,7 +173,7 @@ DÍA:         1
 ```
 
 ### Tarea en progreso
-- Capa de acceso a datos (src/lib/api/) — completada
+- Homepage completada (HeroSection + ServicesSection)
 - Siguiente tarea: Layout global (nav + footer)
 
 ### Completado
@@ -221,7 +221,8 @@ DÍA:         1
 ```
 [x] Capa de acceso a datos (src/lib/api/)
 [ ] Layout global (nav + footer)
-[ ] Página: homepage
+[x] Componentes UI: ParticleTrail, CustomCursor, BackgroundDrip
+[x] Página: homepage (HeroSection + ServicesSection)
 [ ] Página: servicios
 [ ] Página: portafolio
 [ ] Página: blog (listado + detalle)
