@@ -241,15 +241,28 @@ DÍA:         1
 
 ---
 
-## ANÁLISIS RED RANGER — 2026-05-10
+## ANÁLISIS RED RANGER — 2026-05-10 (Segunda)
 
-**Áreas a corregir por LISANDRO:**
+**Áreas a corregir por LISANDRO (orden priorizado):**
 
-1. **scripts\bridge-grox.bat** — La línea del `for` contiene un token literal incorrecto (`for /f "3DYVhoL9p..."`). Debe usar `tokens=*` para leer correctamente las variables del archivo `.env`.
-2. **.env.example** — Faltan las variables `NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_API_URL` que están documentadas en GLOSSARY.md. Deben agregarse con comentarios.
-3. **scripts\bridge-grox.bat** — El script carga variables del `.env` usando un `for` que no ignora líneas comentadas ni vacías. Se recomienda mejorar su robustez. (Opcional pero deseable.)
+1. **.env.example** — Agregar las variables `NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_API_URL` según GLOSSARY.md, con comentarios explicativos. (bridge-grox.bat queda descartado por ahora según instrucción.)
 
-**Acción inmediata:** Lisandro debe corregir el token en bridge-grox.bat y actualizar .env.example. Luego, CENTINELA deberá revisar los cambios antes de que LEANDRO los implemente.
+2. **Fase 3 — Frontend base** — Una vez actualizado .env.example, Lisandro debe implementar:
+   - Layout global (nav + footer)
+   - Página de servicios (`src/app/servicios/page.tsx`) y su componente ServicesSection
+   - Página de portafolio (`src/app/portafolio/page.tsx`) – actualmente redirige a /, reemplazar con contenido real
+   - Página de blog (listado + detalle) (`src/app/blog/page.tsx`, `src/app/blog/[slug]/page.tsx`) – reemplazar redirecciones por contenido real
+   - Página de contacto (`src/app/contacto/page.tsx`) – ya tiene esqueleto, integrar con colección Contacts de Payload
+
+3. **Fase 2 — Colecciones Payload** — Modificar Services para que esté orientado a promoción (pendiente). Se puede hacer en paralelo.
+
+**RIESGOS:** Implementar páginas sin datos en Payload puede generar errores de fetch. Se recomienda manejar estados vacíos o seed inicial.
+
+**DEPENDENCIAS:** Deben existir colecciones news, programs, episodes, categories (ya creadas). La colección projects no existe en nueva arquitectura; portafolio deberá obtener datos de programs (se necesita confirmación de Red Ranger).
+
+**PREGUNTAS ABIERTAS:** ¿Portafolio debe mostrar programs (nuevo) o projects (antiguo)? ¿La página de contacto debe conectarse a la colección `contacts` ya definida?
+
+**APROBACIÓN:** APROBADO con la condición de resolver la duda sobre portafolio antes de implementar.
 
 ---
 
