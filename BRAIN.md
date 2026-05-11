@@ -266,6 +266,29 @@ DÍA:         1
 
 ---
 
+## ANÁLISIS RED RANGER — 2026-05-10 (Tercera)
+
+**Correcciones pendientes para LISANDRO:**
+
+- **bridge-grox.bat** — Se ha descartado temporalmente según instrucción. No requiere cambios ahora.
+- **.env.example** — La variable `DATABASE_URL` ya fue corregida a PostgreSQL. Se alinea con `docker-compose.yml`. No hay más correcciones necesarias.
+- **Fase 3 — Frontend base** — Lisandro debe implementar en orden:
+  1. Layout global (nav + footer)
+  2. Página de servicios (`src/app/servicios/page.tsx`) y `ServicesSection`
+  3. Página de portafolio (`src/app/portafolio/page.tsx`) – **requiere confirmación sobre si debe usar programs o projects**
+  4. Página de blog (listado y detalle) – reemplazar redirecciones
+  5. Página de contacto – integrar con colección Contacts
+
+**RIESGOS:** Implementar portafolio sin decidir fuente de datos puede generar duplicidad de lógica. Se recomienda esperar respuesta de Red Ranger.
+
+**DEPENDENCIAS:** Las colecciones `programs`, `episodes`, `news`, `live`, `categories` ya existen. `contacts` también existe.
+
+**PREGUNTAS ABIERTAS:** ¿Portafolio debe obtener datos de `programs` (nueva arquitectura) o de una colección `projects` separada? La decisión afecta la ruta `/portafolio`.
+
+**APROBACIÓN:** APROBADO con la condición de resolver la duda sobre portafolio antes de comenzar esa página. Lisandro puede empezar con Layout global y servicios mientras tanto.
+
+---
+
 ## CONVENCIONES ACTIVAS
 
 Ver GLOSSARY.md para nombres completos.
