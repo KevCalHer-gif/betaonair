@@ -112,3 +112,12 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **Bloqueos detectados:**
 - La decisión sobre la fuente de datos del portafolio (¿`programs` o `projects`?) debe resolverse antes de empezar esa página, aunque no impide avanzar con las demás tareas de Fase 3.
 - No hay bloqueos críticos en este momento.
+
+### [2026-05-11] — Revisión CENTINELA: fix de `this.alpha` en layout.tsx
+**Rol:** CENTINELA
+**Archivo revisado:** `src/app/(frontend)/layout.tsx`
+**ESTADO:** APROBADO
+**PROBLEMAS CRÍTICOS:** Ninguno.
+**OBSERVACIONES:** Se han reemplazado las referencias a `this.alpha` y `this.r` por variables locales `__a` y `__r` en los métodos `update()` y `draw()`. No se detectaron otros `this.*` con el mismo problema en el mismo archivo.
+**TESTS FALTANTES:** No aplica para este script inline.
+**VEREDICTO:** Puede pasar a LEANDRO.
