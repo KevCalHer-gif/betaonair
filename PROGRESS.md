@@ -230,3 +230,17 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 - ¿La página de contacto debe mostrar un formulario que guarde en la colección `contacts` (backend ya implementado)?
 
 **APROBACIÓN:** REQUIERE AJUSTE — Se debe resolver primero el duplicado del nav (tarea de LISANDRO) y confirmar la fuente de datos del portafolio antes de avanzar con las demás páginas.
+
+### [2026-05-11] — RED RANGER: Respuesta a PROMPT.txt sobre próxima prioridad
+**Rol:** RED RANGER
+**ANÁLISIS:** Las tareas pendientes en Fase 2 (Global settings, seo, roles, backup) no bloquean el frontend. La prioridad inmediata es resolver el **duplicado del nav** en el layout global, ya que fue reportado visualmente y podría confundir a los usuarios. Una vez corregido, LISANDRO debe continuar con la **página de contacto** (más sencilla y ya tiene backend) y luego la **página de servicios** (ya tiene colección `services` creada). El portafolio y blog requieren confirmación de fuente de datos pero no bloquean.
+**RIESGOS:** 
+- No implementar el fix del nav duplicado hará que cualquier otra mejora visual tenga una experiencia rota.
+- Si LISANDRO modifica la estructura del layout sin cuidado, podría romper el fondo canvas (bg-canvas.js) o el ParticleTrail.
+**DEPENDENCIAS:** 
+- Corregir el nav duplicado no depende de ninguna otra tarea.
+- La página de contacto depende solo de la colección `contacts` (ya existe).
+- La página de servicios depende de la colección `services` (ya registrada) y de sus datos iniciales.
+**PREGUNTAS ABIERTAS:** 
+- ¿El duplicado del nav se origina en `<ParticleTrail />` o en un `<nav>` extra proveniente de `ink-water-demo-alfa.html` ya eliminado? Será necesario inspeccionar el DOM renderizado.
+**APROBACIÓN:** APROBADO – LISANDRO debe comenzar con el fix del nav duplicado y reportar a CENTINELA.
