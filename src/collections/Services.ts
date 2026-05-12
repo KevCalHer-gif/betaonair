@@ -25,4 +25,4 @@ const Services: CollectionConfig = {
   timestamps: true,
 }
 
-export default Services
+export { Services }
