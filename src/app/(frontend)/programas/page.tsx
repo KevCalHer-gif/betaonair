@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { getPrograms } from '@/lib/api/programs'
-import type { Program } from '@/payload-types'
+type Program = { id: string; title: string; slug?: string; description?: string; coverImage?: any }
 
 export default function ProgramasPage() {
   const [programs, setPrograms] = useState<Program[]>([])

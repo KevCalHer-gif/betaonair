@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { getNews } from '@/lib/api/news'
-import type { News } from '@/payload-types'
+type News = { id: string; title: string; content?: any; slug?: string; publishedAt?: string }
 
 export default function NoticiasPage() {
   const [news, setNews] = useState<News[]>([])

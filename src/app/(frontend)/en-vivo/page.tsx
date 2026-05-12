@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { getLiveStreams } from '@/lib/api/live'
-import type { Live } from '@/payload-types'
+type Live = { id: string; title: string; embedUrl: string; isActive?: boolean }
 
 export default function EnVivoPage() {
   const [streams, setStreams] = useState<Live[]>([])
