@@ -11,7 +11,7 @@ export default function BackgroundDrip() {
         height: '100vh',
         pointerEvents: 'none',
         zIndex: -1,
-        background: 'linear-gradient(to bottom, #000000 50%, #1a1a1a 100%)',
+        background: 'transparent',
       }}
     >
       <svg
