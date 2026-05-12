@@ -164,3 +164,10 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **Resultado:** La página carga sin errores de compilación ni de sintaxis en la consola. El script inline con `&#96;` es válido.
 **Conclusión:** No se requieren cambios adicionales en el archivo `layout.tsx`. El estado actual es CORRECTO.
 **Próximo paso:** Seguir con las próximas tareas del backlog (Fase 3).
+
+### [2026-05-11] — LEANDRO: Verificación visual de fondo animado en http://localhost:3000
+**Rol:** LEANDRO
+**Acción:** Servidor corriendo, abrir http://localhost:3000 y observar el fondo de gotas de tinta.
+**Resultado:** La página carga, las secciones de Hero, En Vivo, Programas y Noticias se ven. Sin embargo, el fondo animado con canvas (gotas de tinta) **no se percibe visualmente**: la página se ve con un fondo negro sólido además del `<canvas id="bg">` que se renderiza correctamente pero el script de partículas podría no estar ejecutándose (no se observan gotas cayendo ni estelas). No se detectaron errores en la consola del navegador al recargar la página.
+**Conclusión:** El script `bg-canvas.js` se está descargando (el tag `<script src="/bg-canvas.js" defer />` está presente) pero tal vez las partículas no sean visibles sobre el fondo negro-uniforme porque el canvas tiene z-index -1 y puede estar tapado por los elementos React (background translúcido?). Se recomienda a LISANDRO revisar si el canvas está correctamente dimensionado y si las opacidades de las gotas son suficientes para ser visibles sobre el fondo negro.
+**Próximo paso:** Centinela debe revisar el archivo `layout.tsx` para confirmar que el canvas no esté oculto por el `background: transparent` del `<body>`, y que el script no contenga errores de lógica que impidan la representación.
