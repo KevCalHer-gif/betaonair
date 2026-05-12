@@ -1,7 +1,7 @@
 # BRAIN.md — betaonair
 > Archivo de estado del proyecto. Leer completo al inicio de cada sesión.
 > Actualizar obligatoriamente al cerrar cada sesión.
-> Última actualización: 2026-05-10
+> Última actualización: 2026-05-11
 
 ---
 
