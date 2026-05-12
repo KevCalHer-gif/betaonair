@@ -157,3 +157,10 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **Acción tomada:** Según el protocolo de roles, LISANDRO no puede ejecutar comandos de terminal. Esta tarea corresponde a LEANDRO.
 **Sugerencia:** LEANDRO debe ejecutar `npm run dev` en la raíz del proyecto, abrir el navegador en `http://localhost:3000` y confirmar visualmente que no hay errores de compilación ni de sintaxis en la consola. Si la página carga correctamente, el script inline con entidades HTML &#96; es válido y no se requiere más cambios.
 **Próximo paso:** LEANDRO ejecuta la verificación y reporta el resultado.
+
+### [2026-05-11] — LEANDRO: Verificación `npm run dev` — página carga correctamente
+**Rol:** LEANDRO
+**Acción:** Ejecutar `npm run dev` y comprobar en http://localhost:3000
+**Resultado:** La página carga sin errores de compilación ni de sintaxis en la consola. El script inline con `&#96;` es válido.
+**Conclusión:** No se requieren cambios adicionales en el archivo `layout.tsx`. El estado actual es CORRECTO.
+**Próximo paso:** Seguir con las próximas tareas del backlog (Fase 3).
