@@ -1,15 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
-import localFont from 'next/font/local'
 import './styles.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
 import InkWaterBackground from '../../components/ui/InkWaterBackground'
 
-const brandFont = localFont({
-  src: '../fonts/chinese_rocks_rg.otf',
-  variable: '--font-brand',
-  display: 'swap',
-})
 
 export const metadata = {
   description: 'Beta On Air — Hacemos que se note.',
@@ -27,8 +21,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   }
 
   return (
-    <html lang="en" className={brandFont.variable}>
-      <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent', color: '#f0f0f0' }}>
+    <html lang="en">
+        <head>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" />
+        </head>
+      <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent', color: '#f0f0f0', fontFamily: "'Bebas Neue', sans-serif" }}>
         <InkWaterBackground />
         <ParticleTrail />
         <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 2 }}>
