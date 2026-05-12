@@ -171,3 +171,14 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **Resultado:** La página carga, las secciones de Hero, En Vivo, Programas y Noticias se ven. Sin embargo, el fondo animado con canvas (gotas de tinta) **no se percibe visualmente**: la página se ve con un fondo negro sólido además del `<canvas id="bg">` que se renderiza correctamente pero el script de partículas podría no estar ejecutándose (no se observan gotas cayendo ni estelas). No se detectaron errores en la consola del navegador al recargar la página.
 **Conclusión:** El script `bg-canvas.js` se está descargando (el tag `<script src="/bg-canvas.js" defer />` está presente) pero tal vez las partículas no sean visibles sobre el fondo negro-uniforme porque el canvas tiene z-index -1 y puede estar tapado por los elementos React (background translúcido?). Se recomienda a LISANDRO revisar si el canvas está correctamente dimensionado y si las opacidades de las gotas son suficientes para ser visibles sobre el fondo negro.
 **Próximo paso:** Centinela debe revisar el archivo `layout.tsx` para confirmar que el canvas no esté oculto por el `background: transparent` del `<body>`, y que el script no contenga errores de lógica que impidan la representación.
+
+### [2026-05-11] — LEANDRO: Commit, build y documentación del fix de fondo negro
+**Rol:** LEANDRO
+**Acciones:**
+- Ejecutó `git add . && git commit -m "fix: corregir fondo negro sólido eliminando background de body y BackgroundDrip"`
+- Ejecutó `npm run build` (compilación correcta, sin errores)
+- Documentó en PROGRESS.md el cierre de la tarea de fondo animado
+**Archivos modificados:**
+- `src/app/(frontend)/layout.tsx` (cambiar background a transparent)
+- `src/components/ui/BackgroundDrip.tsx` (eliminar background sólido)
+**Próximo paso:** Verificar visualmente que el canvas de tinta se vea correctamente en producción.
