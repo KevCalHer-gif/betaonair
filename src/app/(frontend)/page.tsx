@@ -1,6 +1,7 @@
 import React from 'react'
 import HeroSection from '../../components/sections/HeroSection'
 import ProgramCard from '../../components/sections/ProgramCard'
+import ExternalLinkCard from '../../components/sections/ExternalLinkCard'
 
 export default function HomePage() {
   return (
@@ -14,13 +15,13 @@ export default function HomePage() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
           <ProgramCard
             title="BetaKids"
-            embedUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            embedUrl="https://www.youtube.com/embed/myyHYsOQQJE"
             moreLink="/programas/betakids"
           />
-          <ProgramCard
+          <ExternalLinkCard
             title="No Tan Calladitas"
-            embedUrl="https://www.youtube.com/embed/9bZkp7q19f0"
-            moreLink="/programas/no-tan-calladitas"
+            description="Desde TikTok directamente"
+            href="https://www.tiktok.com/@betaonair/video/7638564100347399432"
           />
         </div>
       </section>
