@@ -121,3 +121,12 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **OBSERVACIONES:** Se han reemplazado las referencias a `this.alpha` y `this.r` por variables locales `__a` y `__r` en los métodos `update()` y `draw()`. No se detectaron otros `this.*` con el mismo problema en el mismo archivo.
 **TESTS FALTANTES:** No aplica para este script inline.
 **VEREDICTO:** Puede pasar a LEANDRO.
+
+### [2026-05-11] — CENTINELA: Análisis crítico sobre la rotura de la página
+**Rol:** CENTINELA
+**Archivo revisado:** `src/app/(frontend)/layout.tsx`
+**ESTADO:** RECHAZADO
+**PROBLEMAS CRÍTICOS:** El script dentro de `dangerouslySetInnerHTML` contiene backticks literales (`) dentro de una plantilla de cadena delimitada por backticks. Esto rompe la sintaxis de JavaScript/JSX, impidiendo que la página se compile y se muestre. El error se introdujo al reemplazar las entidades HTML `&#96;` por backticks reales siguiendo la instrucción de PROMPT.txt, sin verificar que esto generaría un error sintáctico. La página no puede levantarse en absoluto.
+**OBSERVACIONES:** La solución correcta es mantener las entidades `&#96;` o escapar los backticks como `\``. Además, RED RANGER y LISANDRO no detectaron este problema en sus análisis previos. CENTINELA debió detectar la regresión al revisar el cambio, pero no lo hizo. Se requiere revertir la sustitución y aplicar la corrección adecuada.
+**TESTS FALTANTES:** Sería conveniente agregar un test que verifique que el script inline no contiene errores sintácticos en el lado del servidor.
+**VEREDICTO:** Debe volver a LISANDRO para corregir el error sintáctico.
