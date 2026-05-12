@@ -150,3 +150,10 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **Adicionalmente:** LISANDRO debe **ignorar la instrucción de PROMPT.txt** que pide cambiar &#96; por backticks reales, ya que provocaría la rotura de la página.
 **Verificación:** LISANDRO debe ejecutar `npm run dev` y confirmar que la página carga sin errores en el navegador. Si no hay errores, el problema está solucionado y no se requieren más cambios en este archivo.
 **Próximo paso:** CENTINELA revisará que no se haya introducido ninguna otra regresión.
+
+### [2026-05-11] — LISANDRO: Escalación a LEANDRO para ejecutar `npm run dev`
+**Rol:** LISANDRO
+**Instrucción recibida:** Ejecutar `npm run dev` y verificar si la página carga sin errores.
+**Acción tomada:** Según el protocolo de roles, LISANDRO no puede ejecutar comandos de terminal. Esta tarea corresponde a LEANDRO.
+**Sugerencia:** LEANDRO debe ejecutar `npm run dev` en la raíz del proyecto, abrir el navegador en `http://localhost:3000` y confirmar visualmente que no hay errores de compilación ni de sintaxis en la consola. Si la página carga correctamente, el script inline con entidades HTML &#96; es válido y no se requiere más cambios.
+**Próximo paso:** LEANDRO ejecuta la verificación y reporta el resultado.
