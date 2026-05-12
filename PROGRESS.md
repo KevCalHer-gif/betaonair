@@ -130,3 +130,23 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **OBSERVACIONES:** La solución correcta es mantener las entidades `&#96;` o escapar los backticks como `\``. Además, RED RANGER y LISANDRO no detectaron este problema en sus análisis previos. CENTINELA debió detectar la regresión al revisar el cambio, pero no lo hizo. Se requiere revertir la sustitución y aplicar la corrección adecuada.
 **TESTS FALTANTES:** Sería conveniente agregar un test que verifique que el script inline no contiene errores sintácticos en el lado del servidor.
 **VEREDICTO:** Debe volver a LISANDRO para corregir el error sintáctico.
+
+### [2026-05-11] — RED RANGER: Análisis del error de backticks en layout.tsx
+**Rol:** RED RANGER
+**Archivo analizado:** `src/app/(frontend)/layout.tsx`
+**ANÁLISIS:**
+- El script inline dentro de `dangerouslySetInnerHTML` utiliza backticks literales (&#96;) como entidad HTML para evitar conflictos con el delimitador de template literal (` delimitador JSX).
+- La instrucción de PROMPT.txt (cambiarlos a backticks reales) genera un error de sintaxis porque el template literal queda cerrado prematuramente.
+- La solución correcta es **mantener las entidades HTML &#96;**  o, alternativamente, escapar cada backtick real con `\``. En JSX, una cadena template literal no puede contener backticks sin escapar.
+- **Riesgo:** Si se aplica el cambio de PROMPT.txt, la página no compila y se rompe el deploy.
+**RIESGOS:** El cambio propuesto en PROMPT.txt es peligroso y debe rechazarse. La versión actual (con &#96;) funciona correctamente.
+**DEPENDENCIAS:** La línea actual con &#96; es la correcta. No se requiere ningún cambio en el script.
+**PREGUNTAS ABIERTAS:** Ninguna.
+**APROBACIÓN:** APROBADO (mantener el estado actual)
+
+### [2026-05-11] — CENTINELA: Instrucciones precisas para LISANDRO
+**Rol:** CENTINELA
+**Acción requerida:** LISANDRO debe **NO MODIFICAR** el script de layout.tsx. La versión actual con las entidades HTML &#96; es sintácticamente válida y debe conservarse.
+**Adicionalmente:** LISANDRO debe **ignorar la instrucción de PROMPT.txt** que pide cambiar &#96; por backticks reales, ya que provocaría la rotura de la página.
+**Verificación:** LISANDRO debe ejecutar `npm run dev` y confirmar que la página carga sin errores en el navegador. Si no hay errores, el problema está solucionado y no se requieren más cambios en este archivo.
+**Próximo paso:** CENTINELA revisará que no se haya introducido ninguna otra regresión.
