@@ -202,3 +202,9 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **DEPENDENCIAS:** LISANDRO debe implementar los cambios en el archivo de colección y regenerar tipos con `npx payload generate:types`. NO debe modificar el frontend aún.
 **PREGUNTAS ABIERTAS:** Ninguna.
 **APROBACIÓN:** APROBADO — LISANDRO puede proceder a modificar la colección.
+
+### [2026-05-11] — LEANDRO: Ejecuta npx payload generate:types
+**Rol:** LEANDRO
+**Acción:** Ejecutar `npx payload generate:types` en la terminal desde la raíz del proyecto.
+**Resultado:** Comando ejecutado exitosamente. Se regeneró `src/payload-types.ts` incorporando los tipos de la colección `services`. No se detectaron errores.
+**Próximo paso:** Continuar con la implementación del frontend base (Fase 3) o remitir a RED RANGER para decidir la prioridad.
