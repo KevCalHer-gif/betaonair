@@ -182,3 +182,15 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 - `src/app/(frontend)/layout.tsx` (cambiar background a transparent)
 - `src/components/ui/BackgroundDrip.tsx` (eliminar background sólido)
 **Próximo paso:** Verificar visualmente que el canvas de tinta se vea correctamente en producción.
+
+### [2026-05-11] — RED RANGER: Análisis de PROMPT.txt sobre fondo negro sólido
+**Rol:** RED RANGER
+**ANÁLISIS:** PROMPT.txt indica que LISANDRO debe revisar y corregir el fondo negro en `layout.tsx`, `BackgroundDrip.tsx` y `styles.css` para que el canvas animado sea visible. Actualmente:
+1. `<body style="background:transparent">` está correcto.
+2. `BackgroundDrip.tsx` ya fue modificado para tener `background:transparent`, no pinta ningún fondo sólido.
+3. El canvas `<canvas id="bg">` tiene `zIndex:-1` y ningún otro elemento con `position:fixed` tiene fondo sólido que lo tape.
+4. `styles.css` no define `background` en `body` ni `html` — la propiedad `background: transparent` en `html` está presente y es correcta.
+**RIESGOS:** La ausencia de fondo visible podría deberse a que el script `bg-canvas.js` no se ejecuta o no encuentra el canvas. Se sugiere a LISANDRO verificar que el script se carga correctamente (debería verse en la pestaña Network del DevTools) y que no hay errores de JavaScript en la consola.
+**DEPENDENCIAS:** Se necesita la confirmación de LISANDRO sobre la ejecución del script.
+**PREGUNTAS ABIERTAS:** ¿Por qué el script no pinta nada si no hay errores? ¿El canvas está siendo sobrescrito por algún estilo CSS que lo oculta? ¿La función render() está siendo llamada correctamente?
+**APROBACIÓN:** REQUIERE AJUSTE — LISANDRO debe investigar si el script se carga y ejecuta, y reportar a CENTINELA.
