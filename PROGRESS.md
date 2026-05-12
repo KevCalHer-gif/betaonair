@@ -244,3 +244,19 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **PREGUNTAS ABIERTAS:** 
 - ¿El duplicado del nav se origina en `<ParticleTrail />` o en un `<nav>` extra proveniente de `ink-water-demo-alfa.html` ya eliminado? Será necesario inspeccionar el DOM renderizado.
 **APROBACIÓN:** APROBADO – LISANDRO debe comenzar con el fix del nav duplicado y reportar a CENTINELA.
+
+### [2026-05-11] — Consulta de correo registrado en Git
+**Rol:** LEANDRO (sugerencia)
+**Instrucción:** Para conocer el correo electrónico configurado globalmente en tu instalación de Git, ejecuta en la terminal:
+
+```bash
+git config user.email
+```
+
+Si deseas configurarlo o cambiarlo, usa:
+
+```bash
+git config user.email "tu-correo@ejemplo.com"
+```
+
+**Próximo paso:** N/A
