@@ -1,28 +1,66 @@
 'use client'
 
+import Image from 'next/image'
 import React from 'react'
 
 interface ProgramCardProps {
-  title: string
-  embedUrl: string
-  moreLink: string
+  nombre: string
+  logo: string
+  slug: string
 }
 
-export default function ProgramCard({ title, embedUrl, moreLink }: ProgramCardProps) {
+export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
   return (
-    <div style={{ background: '#111', border: '1px solid #333', borderRadius: 8, padding: '1rem', maxWidth: 400, margin: '0 auto' }}>
-      <h3 style={{ color: '#c61d4a', fontSize: '1.2rem', marginBottom: '1rem' }}>{title}</h3>
-      <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
-        <iframe
-          src={embedUrl}
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+    <div
+      style={{
+        width: 200,
+        height: 280,
+        border: '1px solid #333',
+        background: '#0a0a0a',
+        borderRadius: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ position: 'relative', width: '100%', height: 180 }}>
+        <Image
+          src={logo}
+          alt={nombre}
+          fill
+          sizes="200px"
+          style={{ objectFit: 'contain' }}
         />
       </div>
-      <a href={moreLink} style={{ color: '#c61d4a', textDecoration: 'none', marginTop: '1rem', display: 'inline-block' }}>
-        Ver más episodios →
-      </a>
+      <span
+        style={{
+          fontFamily: 'var(--font-brand)',
+          color: '#f0f0f0',
+          fontSize: '1rem',
+          textAlign: 'center',
+          marginTop: '0.5rem',
+          lineHeight: 1.2,
+          padding: '0 0.25rem',
+        }}
+      >
+        {nombre}
+      </span>
+      <button
+        onClick={() => window.location.assign(`/programas/${slug}`)}
+        style={{
+          background: '#c61d4a',
+          color: '#fff',
+          border: 'none',
+          padding: '0.5rem 1rem',
+          cursor: 'pointer',
+          borderRadius: 4,
+          marginTop: 'auto',
+          marginBottom: '0.75rem',
+        }}
+      >
+        Ver programa
+      </button>
     </div>
   )
 }
