@@ -3,6 +3,7 @@ import Link from 'next/link'
 import localFont from 'next/font/local'
 import './styles.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
+import InkWaterBackground from '../../components/ui/InkWaterBackground'
 
 const brandFont = localFont({
   src: '../fonts/chinese_rocks_rg.otf',
@@ -28,7 +29,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={brandFont.variable}>
       <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent', color: '#f0f0f0' }}>
-        <canvas id="bg" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }} />
+        <InkWaterBackground />
         <ParticleTrail />
         <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 2 }}>
           <Link href="/" style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
@@ -44,7 +45,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <footer style={{ textAlign: 'center', padding: '1rem', borderTop: '1px solid #333', color: '#888', position: 'relative', zIndex: 2 }}>
           © {year} Beta On Air. Todos los derechos reservados.
         </footer>
-        <script src="/bg-canvas.js" defer />
       </body>
     </html>
   )
