@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { getNewsBySlug } from '@/lib/api/news'
-import type { News } from '@/payload-types'
+
+type News = { id: string; title: string; content?: any; slug?: string }
 
 export default function BlogDetailPage() {
   const { slug } = useParams()
