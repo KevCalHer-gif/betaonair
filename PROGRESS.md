@@ -260,3 +260,5 @@ git config user.email "tu-correo@ejemplo.com"
 ```
 
 **Próximo paso:** N/A
+
+**Comando ejecutado por LEANDRO:** `git config user.email "herreracalle7672@gmail.com"`
