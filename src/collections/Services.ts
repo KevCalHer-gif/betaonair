@@ -1,75 +1,28 @@
 import type { CollectionConfig } from 'payload'
 
-export const Services: CollectionConfig = {
-  slug: 'services',
-  admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'tipo', 'orden', 'activo'],
-  },
-  access: {
-    read: () => true,
-    create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
-  },
-  fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      unique: true,
-      admin: { position: 'sidebar' },
-      hooks: {
-        beforeChange: [
-          ({ data, originalDoc, operation }) => {
-            if (operation === 'create' && data?.title && !data.slug) {
-              data.slug = generateSlug(data.title)
-            }
-            if (operation === 'update' && data?.title && data.title !== originalDoc?.title) {
-              data.slug = generateSlug(data.title)
-            }
-          },
-        ],
-      },
-    },
-    {
-      name: 'tipo',
-      type: 'select',
-      options: ['promocion', 'produccion', 'publicidad', 'streaming', 'otros'],
-      defaultValue: 'promocion',
-    },
-    {
-      name: 'descripcion',
-      type: 'textarea',
-      maxLength: 500,
-    },
-    {
-      name: 'precioBase',
-      type: 'number',
-      defaultValue: 0,
-    },
-    {
-      name: 'activo',
-      type: 'checkbox',
-      defaultValue: true,
-    },
-    {
-      name: 'orden',
-      type: 'number',
-      defaultValue: 0,
-    },
-  ],
+function generateSlug(title: string): string {
+  return title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '')
 }
 
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+const Services: CollectionConfig = {
+  slug: 'services',
+  admin: { useAsTitle: 'title', group: 'Contenido' },
+  access: {
+    read: () => true,
+    create: ({ req: { user } }) => !!user && (user?.role === 'admin' || user?.role === 'editor'),
+    update: ({ req: { user } }) => !!user && (user?.role === 'admin' || user?.role === 'editor'),
+    delete: ({ req: { user } }) => !!user && user?.role === 'admin',
+  },
+  fields: [
+    { name: 'title', type: 'text', required: true, label: 'Título del servicio' },
+    { name: 'slug', type: 'text', unique: true, index: true, admin: { position: 'sidebar', readOnly: true }, hooks: { beforeValidate: [({ data }) => { if (data?.title) data.slug = generateSlug(data.title) }] } },
+    { name: 'description', type: 'richText', label: 'Descripción' },
+    { name: 'price', type: 'number', label: 'Precio (opcional)', required: false },
+    { name: 'features', type: 'array', label: 'Características', fields: [{ name: 'feature', type: 'text', label: 'Beneficio' }] },
+    { name: 'isActive', type: 'checkbox', label: 'Activo', defaultValue: true },
+    { name: 'order', type: 'number', label: 'Orden de visualización', admin: { position: 'sidebar' } },
+  ],
+  timestamps: true,
 }
+
+export default Services
