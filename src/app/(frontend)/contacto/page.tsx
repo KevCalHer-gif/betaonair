@@ -5,7 +5,6 @@ import { useState, FormEvent } from 'react'
 export default function ContactoPage() {
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
-  const [telefono, setTelefono] = useState('')
   const [mensaje, setMensaje] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [exito, setExito] = useState(false)
@@ -20,13 +19,12 @@ export default function ContactoPage() {
       const res = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email, telefono, mensaje }),
+        body: JSON.stringify({ nombre, email, mensaje }),
       })
       if (!res.ok) throw new Error('Error al enviar el mensaje')
       setExito(true)
       setNombre('')
       setEmail('')
-      setTelefono('')
       setMensaje('')
     } catch (err: any) {
       setError(err.message || 'Error inesperado')
@@ -36,7 +34,7 @@ export default function ContactoPage() {
   }
 
   return (
-    <div style={{ padding: '2rem', color: '#fff', maxWidth: 600, margin: '0 auto' }}>
+    <div style={{ padding: '2rem', color: '#f0f0f0', maxWidth: 600, margin: '0 auto' }}>
       <h1>Contacto</h1>
       {exito && <p style={{ color: '#4caf50' }}>Mensaje enviado correctamente.</p>}
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -46,7 +44,7 @@ export default function ContactoPage() {
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
-          style={{ padding: '0.5rem', background: '#111', color: '#fff', border: '1px solid #333' }}
+          style={{ padding: '0.5rem', background: '#111', color: '#f0f0f0', border: '1px solid #333' }}
         />
         <input
           type="email"
@@ -54,14 +52,7 @@ export default function ContactoPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ padding: '0.5rem', background: '#111', color: '#fff', border: '1px solid #333' }}
-        />
-        <input
-          type="tel"
-          placeholder="Teléfono (opcional)"
-          value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
-          style={{ padding: '0.5rem', background: '#111', color: '#fff', border: '1px solid #333' }}
+          style={{ padding: '0.5rem', background: '#111', color: '#f0f0f0', border: '1px solid #333' }}
         />
         <textarea
           placeholder="Mensaje"
@@ -69,7 +60,7 @@ export default function ContactoPage() {
           onChange={(e) => setMensaje(e.target.value)}
           required
           rows={5}
-          style={{ padding: '0.5rem', background: '#111', color: '#fff', border: '1px solid #333', resize: 'vertical' }}
+          style={{ padding: '0.5rem', background: '#111', color: '#f0f0f0', border: '1px solid #333', resize: 'vertical' }}
         />
         <button
           type="submit"
