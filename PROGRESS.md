@@ -194,3 +194,11 @@ Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
 **DEPENDENCIAS:** Se necesita la confirmación de LISANDRO sobre la ejecución del script.
 **PREGUNTAS ABIERTAS:** ¿Por qué el script no pinta nada si no hay errores? ¿El canvas está siendo sobrescrito por algún estilo CSS que lo oculta? ¿La función render() está siendo llamada correctamente?
 **APROBACIÓN:** REQUIERE AJUSTE — LISANDRO debe investigar si el script se carga y ejecuta, y reportar a CENTINELA.
+
+### [2026-05-11] — RED RANGER: Aprobación de modificación de colección Services
+**Rol:** RED RANGER
+**ANÁLISIS:** Se aprobó la modificación de la colección `Services` (en `src/collections/Services.ts`) para reorientarla a promoción de marcas y creadores con campos: title, description, price (opcional), features (array de string), isActive (boolean), order (number). No se detectan riesgos críticos.
+**RIESGOS:** Ninguno. La colección actualmente no está siendo utilizada en el frontend (la página de servicios redirige a "/"), por lo que el cambio no rompe ninguna funcionalidad existente.
+**DEPENDENCIAS:** LISANDRO debe implementar los cambios en el archivo de colección y regenerar tipos con `npx payload generate:types`. NO debe modificar el frontend aún.
+**PREGUNTAS ABIERTAS:** Ninguna.
+**APROBACIÓN:** APROBADO — LISANDRO puede proceder a modificar la colección.
