@@ -167,9 +167,8 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        2 — Colecciones Payload (re‑definición)
-SEMANA:      1
-DÍA:         1
+FASE:        3 completada. Frontend estable con datos hardcodeados.
+Siguiente:   Fase 4 - Deploy y producción.
 ```
 
 ### Tarea en progreso
@@ -230,6 +229,8 @@ DÍA:         1
 [ ] Página: portafolio
 [ ] Página: blog (listado + detalle)
 [ ] Página: contacto
+[ ] Conectar colección programs con frontend via Route Handler (pendiente Fase 4)
+[ ] Conectar colección news con frontend via Route Handler (pendiente Fase 4)
 ```
 
 ### Fase 4 — Calidad y deploy
