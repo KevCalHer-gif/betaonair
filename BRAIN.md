@@ -167,8 +167,7 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        3 completada. Frontend estable con datos hardcodeados.
-Siguiente:   Fase 4 - Deploy y producción.
+FASE:        4 — Deploy iniciado (pendiente de ejecución)
 ```
 
 ### Tarea en progreso
@@ -240,6 +239,8 @@ Siguiente:   Fase 4 - Deploy y producción.
 [ ] Configuración de Nginx
 [ ] Deploy en VPS
 [ ] Configuración de Cloudflare
+[~] Build de producción (pendiente)
+[~] Ejecutar `npm run build` (pendiente)
 ```
 
 ---

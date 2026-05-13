@@ -292,3 +292,31 @@ git config user.email "tu-correo@ejemplo.com"
 - **DECISIONS.md** – decisiones arquitectónicas (ahora en el chat).
 **Archivos creados/modificados:** Ninguno.
 **Commit(s):** No se requirió commit para esta respuesta.
+
+### [2026-05-12] — LEANDRO: Documentación final y preparación para deploy
+**Sesión:** 4 — Cierre de documentación e inicio de deploy
+**Completado por:** LEANDRO (documentación y preparación)
+**Tareas completadas:**
+- Actualizar PROGRESS.md con esta entrada
+- Actualizar BRAIN.md (estado a Fase 4 — Deploy iniciado, backlog marcado como en progreso)
+- Dejar listos los comandos de build y deploy en README.md
+- Proponer comandos para ejecutar deploy en entorno de producción
+**Archivos creados/modificados:**
+- PROGRESS.md
+- BRAIN.md
+- README.md
+**Commit(s):** No realizado aún — esperando instrucciones finales.
+**Notas:** El proyecto está listo para build y deploy. Los pasos recomendados son:
+
+```bash
+npm run build
+npm run start
+```
+
+o, si se usa Docker para producción:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en colecciones.

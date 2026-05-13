@@ -24,9 +24,17 @@ Plataforma de streaming en vivo, podcasts y programas propios con gestión de co
 | Comando              | Descripción                                        |
 |----------------------|----------------------------------------------------|
 | `npm run dev`        | Levanta servidor de desarrollo (Next.js + Payload) |
-| `npm run build`      | Build de producción                                |
+| `npm run build`      | Build de producción (genera carpeta `.next`)       |
 | `npm run payload generate:types` | Generar tipos TypeScript a partir de la configuración |
 | `docker compose up -d` | Levantar base de datos PostgreSQL                |
+
+## Deploy en producción
+
+1. Asegúrate de que las variables de entorno en `.env` estén configuradas para producción (`DATABASE_URL`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_API_URL`).
+2. Ejecuta `npm run build` para compilar la aplicación.
+3. Inicia el servidor con `npm run start` (corre en puerto 3000 por defecto).
+4. Opcionalmente, configura Nginx como proxy inverso frente al puerto 3000.
+5. Para usar Docker en producción, crea un archivo `docker-compose.prod.yml` que incluya el servicio `app` y la base de datos PostgreSQL.
 
 ## Colecciones
 
