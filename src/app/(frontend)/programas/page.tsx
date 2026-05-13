@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
+export const dynamic = 'force-dynamic'
+
 const fallbackProgramas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
   { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino', descripcion: 'Conversaciones profundas sobre cultura, historia y el camino de Bolivia.' },
