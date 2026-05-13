@@ -7,6 +7,7 @@ export default function BgCanvas() {
   const mountedRef = useRef(true)
 
   useEffect(() => {
+    mountedRef.current = true
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -186,6 +187,7 @@ export default function BgCanvas() {
     let animId: number
 
     const render = () => {
+      if (!mountedRef.current) return
       animId = requestAnimationFrame(render)
       ctx.clearRect(0, 0, W, H)
 
