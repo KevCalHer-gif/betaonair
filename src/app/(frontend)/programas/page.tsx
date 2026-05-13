@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,6 +13,9 @@ const programas = [
 ]
 
 export default function ProgramasPage() {
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null)
+  const [hoverBtn, setHoverBtn] = useState<string | null>(null)
+
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
       <h1 style={{ fontFamily: 'var(--font-brand)', color: '#c61d4a', fontSize: '2rem', marginBottom: '2rem', textAlign: 'center' }}>
@@ -19,6 +25,8 @@ export default function ProgramasPage() {
         {programas.map((prog) => (
           <article
             key={prog.slug}
+            onMouseEnter={() => setHoveredSlug(prog.slug)}
+            onMouseLeave={() => setHoveredSlug(null)}
             style={{
               background: '#0a0a0a',
               border: '1px solid #333',
@@ -28,6 +36,17 @@ export default function ProgramasPage() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              transform:
+                hoveredSlug === prog.slug
+                  ? 'translateY(-12px) scale(1.04)'
+                  : 'translateY(0) scale(1)',
+              boxShadow:
+                hoveredSlug === prog.slug
+                  ? '0 0 30px rgba(198,29,74,0.5), 0 20px 40px rgba(0,0,0,0.6)'
+                  : 'none',
+              borderColor: hoveredSlug === prog.slug ? '#c61d4a' : '#333',
+              transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
+              cursor: 'pointer',
             }}
           >
             <Image
@@ -53,6 +72,8 @@ export default function ProgramasPage() {
             </p>
             <Link
               href={`/programas/${prog.slug}`}
+              onMouseEnter={() => setHoverBtn(prog.slug)}
+              onMouseLeave={() => setHoverBtn(null)}
               style={{
                 background: '#c61d4a',
                 color: '#fff',
@@ -63,6 +84,11 @@ export default function ProgramasPage() {
                 textDecoration: 'none',
                 display: 'inline-block',
                 borderRadius: '4px',
+                transform: hoverBtn === prog.slug ? 'translateY(-3px)' : 'translateY(0)',
+                boxShadow:
+                  hoverBtn === prog.slug ? '0 0 20px rgba(198,29,74,0.7)' : 'none',
+                filter: hoverBtn === prog.slug ? 'brightness(1.2)' : 'brightness(1)',
+                transition: 'all 0.25s ease',
               }}
             >
               Ver episodios
