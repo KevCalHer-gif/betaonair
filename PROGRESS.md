@@ -262,3 +262,21 @@ git config user.email "tu-correo@ejemplo.com"
 **Próximo paso:** N/A
 
 **Comando ejecutado por LEANDRO:** `git config user.email "herreracalle7672@gmail.com"`
+
+### [2026-05-12] — Documentación del proyecto y commit
+**Sesión:** 4 — Cierre de documentación base
+**Completado por:** LEANDRO
+**Tareas completadas:**
+- Crear README.md personalizado con descripción del proyecto, tecnologías, comandos habituales y colecciones
+- Actualizar PROGRESS.md con resumen de fases completadas y pendientes
+- Asegurar .env.example alineado con la base de datos actual (PostgreSQL)
+- Ejecutar `git add . && git commit -m "docs: documentación del proyecto (README, PROGRESS)"`
+
+**Archivos creados/modificados:**
+- README.md (sustituido el template de Payload por documentación de Beta On Air)
+- PROGRESS.md (agregada entrada de cierre de sesión)
+- .env.example (sin cambios, ya correcto)
+
+**Commit(s):** `docs: documentación del proyecto (README, PROGRESS)`
+
+**Notas:** Se deja el proyecto listo para continuar con Fase 3 (frontend dinámico) según roadmap.

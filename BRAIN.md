@@ -1,7 +1,7 @@
 # BRAIN.md — betaonair
 > Archivo de estado del proyecto. Leer completo al inicio de cada sesión.
 > Actualizar obligatoriamente al cerrar cada sesión.
-> Última actualización: 2026-05-11
+> Última actualización: 2026-05-12
 
 ---
 
@@ -188,6 +188,7 @@ DÍA:         1
 [x] Configurar docker-compose.yml con servicio PostgreSQL
 [x] Verificar que Payload admin carga en localhost:3000/admin
 [x] Crear primer usuario administrador
+[x] Documentación README.md y PROGRESS.md creadas y commit
 ```
 
 ---
