@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPayload } from 'payload'
-import config from '../../../payload.config'
+import configPromise from '@payload-config'
 
 const fallbackProgramas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
@@ -13,18 +13,17 @@ const fallbackProgramas = [
 
 async function fetchPrograms() {
   try {
-    const payload = await getPayload({ config })
+    const payload = await getPayload({ config: configPromise })
     const result = await payload.find({
       collection: 'programs',
       limit: 20,
-      sort: 'order',
     })
     if (result.docs && result.docs.length > 0) {
-      return result.docs.map((doc) => ({
-        nombre: doc.title as string,
-        slug: doc.slug as string,
-        descripcion: (doc.description as string) || '',
-        logo: (doc.logo as any)?.url || `/images/programas/${doc.slug}.png`,
+      return result.docs.map((doc: any) => ({
+        nombre: doc.title,
+        slug: doc.slug,
+        descripcion: doc.description || '',
+        logo: doc.logo?.url || `/images/programas/${doc.slug}.png`,
       }))
     }
   } catch (error) {
