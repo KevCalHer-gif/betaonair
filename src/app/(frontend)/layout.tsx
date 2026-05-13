@@ -28,7 +28,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent', color: '#f0f0f0', fontFamily: "'Bebas Neue', sans-serif" }}>
         <BgCanvas />
         <ParticleTrail />
-        <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 2 }}>
+        <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 100 }}>
           <Link href="/" style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
           <Link href="/programas" style={linkStyle}>Programas</Link>
           <Link href="/en-vivo" style={linkStyle}>En Vivo</Link>
