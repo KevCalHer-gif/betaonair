@@ -148,3 +148,24 @@ Evitar que el agente mezcle tipos de tareas y genere inconsistencias.
 Cada rol tiene responsabilidades y restricciones explícitas.
 El flujo RED RANGER → LISANDRO → CENTINELA → LEANDRO crea una puerta de calidad
 antes de que cualquier código llegue al repositorio o al servidor.
+
+## [008] Implementación de página /programas con datos hardcodeados
+**Fecha:** 2026-05-12
+**Decidido por:** RED RANGER
+**Estado:** APROBADO
+
+**Decisión:**
+Se aprueba la implementación de la página `/programas` (listado de hasta 5 programas) y la página de detalle `/programas/[slug]` utilizando logos desde `public/images/programas/` y datos hardcodeados, como paso temporal antes de conectar con Payload CMS.
+
+**Contexto:**
+La página actual de programas redirige a "/" y no muestra contenido real. Los avatares de los programas (logos) se encuentran en `public/images/programas/`. Cuando el CMS esté listo, se migrarán los datos.
+
+**Opciones consideradas:**
+- Esperar a que Payload esté conectado → descartado por retrasar la experiencia de usuario
+- Usar datos hardcodeados → seleccionado, con compromiso de migrar después
+
+**Razón:**
+Acelera la entrega de funcionalidad visible sin depender del backend de Payload. Los datos son estáticos y simples de mantener. El logo de cada programa estará en `/images/programas/[slug].png` por convención.
+
+**Riesgo conocido:**
+- Al conectar Payload, se deberá reemplazar el contenido estático con llamadas API, manteniendo la misma estructura de rutas.
