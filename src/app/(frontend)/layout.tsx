@@ -34,6 +34,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <Link href="/en-vivo" style={linkStyle}>En Vivo</Link>
           <Link href="/noticias" style={linkStyle}>Noticias</Link>
           <Link href="/patrocinios" style={linkStyle}>Patrocinios</Link>
+          <Link href="/servicios" style={linkStyle}>Servicios</Link>
           <Link href="/contacto" style={linkStyle}>Contacto</Link>
         </nav>
         <main style={{ position: 'relative', zIndex: 1, flex: 1, padding: '2rem' }}>
