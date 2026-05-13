@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 
 export default function BgCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mountedRef = useRef(true)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -276,8 +277,12 @@ export default function BgCanvas() {
     render()
 
     return () => {
+      mountedRef.current = false
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', resize)
+      if (ctx) {
+        ctx.clearRect(0, 0, W, H)
+      }
     }
   }, [])
 
