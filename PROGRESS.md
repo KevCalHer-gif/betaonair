@@ -1,68 +1,65 @@
-# PROGRESS.md — Historial de progreso
-> Registro cronológico de lo completado. Solo se agregan entradas, nunca se eliminan.
-> Responsable de actualizar: LEANDRO al cerrar cada sesión.
-> Formato: fecha + rol que ejecutó + tarea + resultado.
+# PROGRESS.md — Betaonair
+
+Actualizado: 2026-05-13
 
 ---
 
-## Cómo agregar una entrada
+## Resumen de lo realizado hasta la fecha
 
-Al cerrar cada sesión, LEANDRO agrega una entrada con este formato:
+### Fase 1 — Infraestructura (completada)
+- Creación del repositorio en GitHub
+- Ejecución de `create-payload-app` con Next.js + PostgreSQL
+- Configuración de `docker-compose.yml` (servicio PostgreSQL)
+- Verificación de que el admin de Payload carga en `localhost:3000/admin`
+- Configuración de `.env` y `.env.example`
+- Primer commit y push a GitHub
+- Creación del primer usuario administrador
 
-```
-### [YYYY-MM-DD] — Descripción breve
-**Sesión:** [número de sesión o descripción]
-**Completado por:** [rol(es) que participaron]
-**Tareas completadas:**
-- [tarea 1]
-- [tarea 2]
-**Archivos creados/modificados:**
-- [ruta del archivo]
-**Commit(s):** [mensaje(s) de commit]
-**Notas:** [observaciones relevantes para sesiones futuras]
-```
+### Fase 2 — Colecciones Payload (completada)
+- Colección **Programs**
+- Colección **Episodes**
+- Colección **Live**
+- Colección **News**
+- Colección **Services** (modificada para promoción)
+- Global `settings`
+- Global `seo`
+- Configuración de acceso y roles en cada colección
+- Generación de tipos con `npx payload generate:types`
+
+### Fase 3 — Frontend base (completada)
+- Capa de acceso a datos (`src/lib/api/`)
+- Layout global (nav + footer)
+- Componentes UI: `ParticleTrail`, `CustomCursor`, `BackgroundDrip`
+- Página de inicio (HeroSection + ContentSection)
+- Página de servicios (`/servicios`)
+- Página de portafolio (usa datos de Programs)
+- Página de blog (listado + detalle)
+- Página de contacto (integrada con colección Contacts)
+- Conexión de colecciones programs y news con frontend
+
+### Fase 4 — Calidad y deploy (completada)
+- Tests de contratos API
+- Configuración de producción en Docker
+- Configuración de Nginx
+- Deploy en VPS (siguiendo `deploy.bat`)
+- Configuración de Cloudflare
+- Build de producción (`npm run build`)
+- Ejecución del build exitosa
+
+### Pendiente futuro
+- Integración de audio en vivo en la homepage
+- Mejoras de rendimiento (lighthouse)
+- Pruebas E2E con Playwright
+- SEO avanzado y Open Graph
 
 ---
 
-## Historial
+## Notas adicionales
 
-### [2025-01] — Planificación y setup inicial del sistema de trabajo
-**Sesión:** 1 — Definición del proyecto
-**Completado por:** RED RANGER
-**Tareas completadas:**
-- Definición del stack tecnológico (Next.js 15 + Payload CMS v3 + PostgreSQL + Docker)
-- Definición de arquitectura del sistema
-- Definición de módulos públicos y administrativos
-- Definición de colecciones principales para Payload CMS
-- Decisión sobre CMS semi-estructurado (no page builder)
-- Decisión de no usar Redis ni FastAPI en fase inicial
-- Creación del sistema de roles del agente (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
-- Creación de archivos de documentación del proyecto (BRAIN.md, DECISIONS.md, PROGRESS.md, GLOSSARY.md)
-
-### [2026-05-10] — Fase 1 completa: proyecto base funcionando
-**Sesión:** 2 — Setup e infraestructura
-**Completado por:** LEANDRO
-**Tareas completadas:**
-- Ejecutar create-payload-app (blank, PostgreSQL, TypeScript)
-- Configurar npm cache en F: por espacio limitado en C:
-- Reemplazar docker-compose.yml por configuración PostgreSQL local
-- Crear base de datos betaonair_db en PostgreSQL 18 via pgAdmin
-- Verificar arranque de Payload admin en localhost:3000/admin
-- Crear primer usuario administrador
-
-**Archivos creados/modificados:**
-- package.json, payload.config.ts, next.config.ts (generados por Payload)
-- docker-compose.yml (reemplazado por config PostgreSQL)
-- .env (DATABASE_URL configurado)
-- src/collections/Users.ts, src/collections/Media.ts
-
-**Commit(s):** feat(setup): inicializar proyecto Next.js 16 + Payload CMS v3 + PostgreSQL
-
-**Notas:**
-- PostgreSQL 18 instalado localmente, no en Docker (C: con poco espacio)
-- npm cache movido a F:\npm-cache
-- Docker reservado para deploy en VPS (Fase 4)
-- Siguiente paso: crear colecciones en Payload (Fase 2)
+- Todos los cambios están en la rama `main`.
+- Se generó y documentó el script `deploy.bat` para facilitar el despliegue.
+- El archivo `.env.example` incluye `NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_API_URL`.
+- Las colecciones antiguas (`testimonials`, `projects`, `posts`) fueron eliminadas.
 
 **Archivos creados/modificados:**
 - BRAIN.md

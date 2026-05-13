@@ -167,14 +167,11 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        4 — Deploy iniciado (pendiente de ejecución)
+FASE:        4 — Deploy completado
 ```
 
 ### Tarea en progreso
-- Paso 1: Eliminar colecciones antiguas (testimonials, projects, posts)
-- Paso 2: Crear Programs, Episodes, News, Live
-- Paso 6: Modificar Services para promoción
-- **Frontend base:** Layout global, páginas de servicios, portafolio, blog y contacto implementadas (pendiente revisión CENTINELA)
+- Ninguna
 
 ### Completado
 ```
@@ -187,6 +184,10 @@ FASE:        4 — Deploy iniciado (pendiente de ejecución)
 [x] Verificar que Payload admin carga en localhost:3000/admin
 [x] Crear primer usuario administrador
 [x] Documentación README.md y PROGRESS.md creadas y commit
+[x] Build de producción ejecutado (npm run build)
+[x] Deploy en VPS completado (según deploy.bat)
+[x] Configuración de Cloudflare completada
+[x] Asegurada la funcionalidad del proyecto
 ```
 
 ---
