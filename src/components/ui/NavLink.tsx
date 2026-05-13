@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import '@/app/(frontend)/animations.css'
 
 interface NavLinkProps {
   href: string

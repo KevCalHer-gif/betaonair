@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import './styles.css'
+import './animations.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
 import BgCanvas from '../../components/ui/BgCanvas'
 import NavLink from '../../components/ui/NavLink'

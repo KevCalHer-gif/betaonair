@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import '@/app/(frontend)/animations.css'
 
 interface NewsCardProps {
   titulo: string

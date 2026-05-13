@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import '@/app/(frontend)/animations.css'
 
 interface ProgramCardProps {
   nombre: string
