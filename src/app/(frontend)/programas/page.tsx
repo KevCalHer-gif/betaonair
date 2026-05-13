@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { getPayload } from 'payload'
+import config from '../../../payload.config'
 
 const fallbackProgramas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
@@ -9,34 +11,25 @@ const fallbackProgramas = [
   { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast', descripcion: 'El podcast boliviano que habla de todo lo que importa.' },
 ]
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-
 async function fetchPrograms() {
   try {
-    const res = await fetch(`${API_BASE}/api/programs?limit=20&sort=order`, {
-      next: { revalidate: 3600 },
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'programs',
+      limit: 20,
+      sort: 'order',
     })
-    if (!res.ok) throw new Error('Failed to fetch programs')
-    const data = await res.json()
-    const docs = data.docs as Array<{
-      id: string
-      title: string
-      slug: string
-      description: string
-      logo?: { url: string }
-    }>
-    if (docs && docs.length > 0) {
-      return docs.map((doc) => ({
-        nombre: doc.title,
-        slug: doc.slug,
-        descripcion: doc.description,
-        logo: doc.logo?.url || `/images/programas/${doc.slug}.png`,
+    if (result.docs && result.docs.length > 0) {
+      return result.docs.map((doc) => ({
+        nombre: doc.title as string,
+        slug: doc.slug as string,
+        descripcion: (doc.description as string) || '',
+        logo: (doc.logo as any)?.url || `/images/programas/${doc.slug}.png`,
       }))
     }
   } catch (error) {
     console.error('Error fetching programs:', error)
   }
-  // fallback
   return fallbackProgramas
 }
 
