@@ -37,7 +37,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <Link href="/servicios" style={linkStyle}>Servicios</Link>
           <Link href="/contacto" style={linkStyle}>Contacto</Link>
         </nav>
-        <main style={{ position: 'relative', zIndex: 1, flex: 1, padding: '2rem' }}>
+        <main style={{ position: 'relative', zIndex: 2, flex: 1, padding: '2rem' }}>
           {children}
         </main>
         <footer style={{ textAlign: 'center', padding: '1rem', borderTop: '1px solid #333', color: '#888', position: 'relative', zIndex: 2 }}>
