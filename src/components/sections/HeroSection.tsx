@@ -22,6 +22,27 @@ export default function HeroSection() {
         justifyContent: 'center',
       }}
     >
+      <Image
+        src="/recuros-13.png"
+        alt="Rayo"
+        width={90}
+        height={90}
+        className="hero-sticker hero-sticker-1"
+      />
+      <Image
+        src="/recuros-19.png"
+        alt="YIIAAA"
+        width={120}
+        height={120}
+        className="hero-sticker hero-sticker-2"
+      />
+      <Image
+        src="/recuros-12.png"
+        alt="Awesome"
+        width={100}
+        height={100}
+        className="hero-sticker hero-sticker-3"
+      />
       <motion.div {...fadeUp(0)}>
         <Image
           src="/logo.png"
