@@ -36,7 +36,9 @@ export default function HomePage() {
         </h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
           {programas.map((p) => (
-            <ProgramCard key={p.slug} nombre={p.nombre} logo={p.logo} slug={p.slug} />
+            <div key={p.slug} className="card-programa fade-in-up" style={{ display: 'flex' }}>
+              <ProgramCard nombre={p.nombre} logo={p.logo} slug={p.slug} />
+            </div>
           ))}
         </div>
       </section>

@@ -44,6 +44,7 @@ export default function NoticiasPage() {
       {noticias.map((n) => (
         <article
           key={n.slug}
+          className="card-noticia fade-in-up"
           style={{
             background: '#0a0a0a',
             padding: '1.5rem',
@@ -66,6 +67,7 @@ export default function NoticiasPage() {
           <p style={{ color: '#aaa', fontSize: '0.95rem', margin: '0 0 0.75rem' }}>{n.resumen}</p>
           <Link
             href={`/noticias/${n.slug}`}
+            className="btn-animated"
             style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}
           >
             Leer más →
