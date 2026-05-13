@@ -2,6 +2,12 @@
 
 import { useEffect } from 'react'
 
+declare global {
+  interface Window {
+    __tubesCursor: any
+  }
+}
+
 export default function ParticleTrail() {
   useEffect(() => {
     const canvas = document.getElementById('tubes-canvas') as HTMLCanvasElement
@@ -9,23 +15,31 @@ export default function ParticleTrail() {
 
     let app: any = null
 
-    import('https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js' as any)
-      .then((module) => {
-        const TubesCursor = module.default
-        app = TubesCursor(canvas, {
-          tubes: {
-            colors: ['#c61d4a', '#ff643c', '#a855f7'],
-            lights: {
-              intensity: 200,
-              colors: ['#c61d4a', '#fe8a2e', '#ff008a', '#60aed5'],
-            },
-          },
-        })
-      })
-      .catch((err) => console.error('Error loading TubesCursor:', err))
+    const script = document.createElement('script')
+    script.type = 'module'
+    script.textContent = `
+    import TubesCursor from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js';
+    const canvas = document.getElementById('tubes-canvas');
+    if (canvas) {
+      window.__tubesCursor = TubesCursor(canvas, {
+        tubes: {
+          colors: ['#c61d4a', '#ff643c', '#a855f7'],
+          lights: {
+            intensity: 200,
+            colors: ['#c61d4a', '#fe8a2e', '#ff008a', '#60aed5']
+          }
+        }
+      });
+    }
+  `
+    document.head.appendChild(script)
 
     return () => {
-      if (app && app.dispose) app.dispose()
+      if (window.__tubesCursor && window.__tubesCursor.dispose) {
+        window.__tubesCursor.dispose()
+        window.__tubesCursor = null
+      }
+      if (script.parentNode) script.parentNode.removeChild(script)
     }
   }, [])
 
