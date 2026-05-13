@@ -3,6 +3,7 @@ import Link from 'next/link'
 import './styles.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
 import BgCanvas from '../../components/ui/BgCanvas'
+import NavLink from '../../components/ui/NavLink'
 
 
 export const metadata = {
@@ -14,12 +15,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const year = new Date().getFullYear()
 
-  const linkStyle: React.CSSProperties = {
-    color: '#ccc',
-    textDecoration: 'none',
-    marginRight: '1rem',
-  }
-
   return (
     <html lang="en">
         <head>
@@ -30,12 +25,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <ParticleTrail />
         <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 100 }}>
           <Link href="/" style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
-          <Link href="/programas" style={linkStyle}>Programas</Link>
-          <Link href="/en-vivo" style={linkStyle}>En Vivo</Link>
-          <Link href="/noticias" style={linkStyle}>Noticias</Link>
-          <Link href="/patrocinios" style={linkStyle}>Patrocinios</Link>
-          <Link href="/servicios" style={linkStyle}>Servicios</Link>
-          <Link href="/contacto" style={linkStyle}>Contacto</Link>
+          <NavLink href="/programas">Programas</NavLink>
+          <NavLink href="/en-vivo">En Vivo</NavLink>
+          <NavLink href="/noticias">Noticias</NavLink>
+          <NavLink href="/patrocinios">Patrocinios</NavLink>
+          <NavLink href="/servicios">Servicios</NavLink>
+          <NavLink href="/contacto">Contacto</NavLink>
         </nav>
         <main style={{ position: 'relative', zIndex: 2, flex: 1, padding: '2rem' }}>
           {children}

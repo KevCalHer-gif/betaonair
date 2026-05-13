@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import NewsCard from '../../../components/ui/NewsCard'
 
 const noticias = [
   {
@@ -31,8 +30,6 @@ const noticias = [
 ]
 
 export default function NoticiasPage() {
-  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null)
-
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
       <h1
@@ -46,46 +43,15 @@ export default function NoticiasPage() {
       >
         Últimas Noticias
       </h1>
-      {noticias.map((n) => {
-        const isHovered = hoveredSlug === n.slug
-        return (
-          <article
-            key={n.slug}
-            onMouseEnter={() => setHoveredSlug(n.slug)}
-            onMouseLeave={() => setHoveredSlug(null)}
-            className="card-noticia fade-in-up"
-            style={{
-              background: isHovered ? '#111' : '#0a0a0a',
-              padding: '1.5rem',
-              borderRadius: '4px',
-              marginBottom: '1.5rem',
-              borderLeft: '3px solid #c61d4a',
-              transform: isHovered ? 'translateX(10px)' : 'translateX(0)',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: 'var(--font-brand)',
-                color: '#f0f0f0',
-                fontSize: '1.3rem',
-                margin: '0 0 0.5rem',
-              }}
-            >
-              {n.titulo}
-            </h2>
-            <p style={{ color: '#888', fontSize: '0.85rem', margin: '0 0 0.5rem' }}>{n.fecha}</p>
-            <p style={{ color: '#aaa', fontSize: '0.95rem', margin: '0 0 0.75rem' }}>{n.resumen}</p>
-            <Link
-              href={`/noticias/${n.slug}`}
-              className="btn-animated"
-              style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}
-            >
-              Leer más →
-            </Link>
-          </article>
-        )
-      })}
+      {noticias.map((n) => (
+        <NewsCard
+          key={n.slug}
+          titulo={n.titulo}
+          fecha={n.fecha}
+          slug={n.slug}
+          resumen={n.resumen}
+        />
+      ))}
     </main>
   )
 }
