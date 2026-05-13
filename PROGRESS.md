@@ -280,3 +280,15 @@ git config user.email "tu-correo@ejemplo.com"
 **Commit(s):** `docs: documentación del proyecto (README, PROGRESS)`
 
 **Notas:** Se deja el proyecto listo para continuar con Fase 3 (frontend dinámico) según roadmap.
+
+### [2026-05-12] — Respuesta a consulta sobre archivo de documentación
+**Rol:** LEANDRO (documentación)
+**Consulta del usuario:** «CUAL ES EL ARCHIVO QUE TIENE LA DOCUMENTACION DEL PROYECTO»
+**Respuesta:**
+- **README.md** – documentación general del proyecto (tecnologías, instalación, comandos, colecciones).
+- **PROGRESS.md** – historial de progreso cronológico.
+- **BRAIN.md** – protocolo interno, roles del equipo, reglas, estado actual y backlog.
+- **.env.example** – variables de entorno con comentarios.
+- **DECISIONS.md** – decisiones arquitectónicas (ahora en el chat).
+**Archivos creados/modificados:** Ninguno.
+**Commit(s):** No se requirió commit para esta respuesta.
