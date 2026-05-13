@@ -22,12 +22,12 @@ const beneficios = [
   },
 ];
 
-const logos = [
-  { src: '/images/programas/logo1.png', alt: 'Programa 1' },
-  { src: '/images/programas/logo2.png', alt: 'Programa 2' },
-  { src: '/images/programas/logo3.png', alt: 'Programa 3' },
-  { src: '/images/programas/logo4.png', alt: 'Programa 4' },
-  { src: '/images/programas/logo5.png', alt: 'Programa 5' },
+const programas = [
+  { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
+  { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino' },
+  { nombre: 'The Bronta Time', logo: '/images/programas/the-bronta-time.png', slug: 'the-bronta-time' },
+  { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas' },
+  { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast' },
 ];
 
 export default function PatrociniosPage() {
@@ -146,15 +146,19 @@ export default function PatrociniosPage() {
             alignItems: 'center',
           }}
         >
-          {logos.map((logo, idx) => (
-            <Image
-              key={idx}
-              src={logo.src}
-              alt={logo.alt}
-              width={150}
-              height={80}
-              style={{ objectFit: 'contain' }}
-            />
+          {programas.map((p, idx) => (
+            <div key={idx} style={{ textAlign: 'center' }}>
+              <Image
+                src={p.logo}
+                alt={p.nombre}
+                width={160}
+                height={160}
+                style={{ objectFit: 'contain' }}
+              />
+              <p style={{ fontFamily: 'var(--font-brand)', color: '#f0f0f0', marginTop: '0.5rem' }}>
+                {p.nombre}
+              </p>
+            </div>
           ))}
         </div>
       </section>
