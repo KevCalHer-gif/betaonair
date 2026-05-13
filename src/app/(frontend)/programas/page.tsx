@@ -1,11 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 
-export const dynamic = 'force-dynamic'
-
-const fallbackProgramas = [
+const programas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
   { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino', descripcion: 'Conversaciones profundas sobre cultura, historia y el camino de Bolivia.' },
   { nombre: 'The Bronta Time', logo: '/images/programas/the-bronta-time.png', slug: 'the-bronta-time', descripcion: 'El programa de entretenimiento y humor que no te puedes perder.' },
@@ -13,30 +9,7 @@ const fallbackProgramas = [
   { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast', descripcion: 'El podcast boliviano que habla de todo lo que importa.' },
 ]
 
-async function fetchPrograms() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const result = await payload.find({
-      collection: 'programs',
-      limit: 20,
-    })
-    if (result.docs && result.docs.length > 0) {
-      return result.docs.map((doc: any) => ({
-        nombre: doc.title,
-        slug: doc.slug,
-        descripcion: doc.description || '',
-        logo: doc.logo?.url || `/images/programas/${doc.slug}.png`,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching programs:', error)
-  }
-  return fallbackProgramas
-}
-
-export default async function ProgramasPage() {
-  const programas = await fetchPrograms()
-
+export default function ProgramasPage() {
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
       <h1 style={{ fontFamily: 'var(--font-brand)', color: '#c61d4a', fontSize: '2rem', marginBottom: '2rem', textAlign: 'center' }}>
