@@ -5,7 +5,7 @@ import ProgramCard from '../../components/sections/ProgramCard'
 const programas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
   { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino' },
-  { nombre: 'The Bronta Time', logo: '/images/programas/the-bronta-time.png', slug: 'the-bronta-time' },
+  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronta-time.png', slug: 'the-bronta-time' },
   { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas' },
   { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast' },
 ]

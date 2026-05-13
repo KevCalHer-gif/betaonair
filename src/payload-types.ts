@@ -69,12 +69,15 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    services: Service;
     categories: Category;
-    projects: Project;
-    posts: Post;
-    testimonials: Testimonial;
     contacts: Contact;
+    programs: Program;
+    episodes: Episode;
+    news: News;
+    live: Live;
+    sponsorships: Sponsorship;
+    services: Service;
+    projects: Project;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,12 +87,15 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    projects: ProjectsSelect<false> | ProjectsSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
-    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
+    programs: ProgramsSelect<false> | ProgramsSelect<true>;
+    episodes: EpisodesSelect<false> | EpisodesSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
+    live: LiveSelect<false> | LiveSelect<true>;
+    sponsorships: SponsorshipsSelect<false> | SponsorshipsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -175,37 +181,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services".
- */
-export interface Service {
-  id: number;
-  title: string;
-  slug?: string | null;
-  descripcionCorta?: string | null;
-  descripcionLarga?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  icono?: string | null;
-  imagenPrincipal?: (number | null) | Media;
-  orden?: number | null;
-  activo?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
 export interface Category {
@@ -214,91 +189,6 @@ export interface Category {
   slug?: string | null;
   description?: string | null;
   color?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
- */
-export interface Project {
-  id: number;
-  title: string;
-  slug?: string | null;
-  cliente?: string | null;
-  descripcionCorta?: string | null;
-  descripcionLarga?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  categorias?: (number | Category)[] | null;
-  imagenes?:
-    | {
-        imagen: number | Media;
-        alt?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  urlExterna?: string | null;
-  estado?: ('draft' | 'published' | 'archived') | null;
-  orden?: number | null;
-  destacado?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: number;
-  title: string;
-  slug?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  excerpt?: string | null;
-  author?: (number | null) | User;
-  categories?: (number | Category)[] | null;
-  featuredImage?: (number | null) | Media;
-  status?: ('draft' | 'published') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials".
- */
-export interface Testimonial {
-  id: number;
-  name: string;
-  role?: string | null;
-  company?: string | null;
-  content: string;
-  photo?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -314,6 +204,165 @@ export interface Contact {
   mensaje: string;
   leido?: boolean | null;
   fechaRecibido?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs".
+ */
+export interface Program {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description?: string | null;
+  coverImage?: (number | null) | Media;
+  accentColor?: string | null;
+  isLive?: boolean | null;
+  liveUrl?: string | null;
+  status?: ('active' | 'inactive') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "episodes".
+ */
+export interface Episode {
+  id: number;
+  title: string;
+  slug?: string | null;
+  program: number | Program;
+  embedUrl?: string | null;
+  thumbnail?: (number | null) | Media;
+  publishedAt?: string | null;
+  status?: ('draft' | 'published') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  title: string;
+  slug?: string | null;
+  excerpt?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  coverImage?: (number | null) | Media;
+  sourceUrl?: string | null;
+  sourceName?: string | null;
+  categories?: (number | Category)[] | null;
+  publishedAt?: string | null;
+  status?: ('draft' | 'published') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "live".
+ */
+export interface Live {
+  id: number;
+  title: string;
+  embedUrl?: string | null;
+  isActive?: boolean | null;
+  program?: (number | null) | Program;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsorships".
+ */
+export interface Sponsorship {
+  id: number;
+  name: string;
+  slug?: string | null;
+  description?: string | null;
+  logo?: (number | null) | Media;
+  url?: string | null;
+  status?: ('active' | 'inactive') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  price?: number | null;
+  features?:
+    | {
+        feature?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  isActive?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  client?: string | null;
+  thumbnail?: (number | null) | Media;
+  status?: ('draft' | 'published' | 'archived') | null;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -350,28 +399,40 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'services';
-        value: number | Service;
-      } | null)
-    | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'projects';
-        value: number | Project;
-      } | null)
-    | ({
-        relationTo: 'posts';
-        value: number | Post;
-      } | null)
-    | ({
-        relationTo: 'testimonials';
-        value: number | Testimonial;
-      } | null)
-    | ({
         relationTo: 'contacts';
         value: number | Contact;
+      } | null)
+    | ({
+        relationTo: 'programs';
+        value: number | Program;
+      } | null)
+    | ({
+        relationTo: 'episodes';
+        value: number | Episode;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
+      } | null)
+    | ({
+        relationTo: 'live';
+        value: number | Live;
+      } | null)
+    | ({
+        relationTo: 'sponsorships';
+        value: number | Sponsorship;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -457,22 +518,6 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services_select".
- */
-export interface ServicesSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  descripcionCorta?: T;
-  descripcionLarga?: T;
-  icono?: T;
-  imagenPrincipal?: T;
-  orden?: T;
-  activo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -480,60 +525,6 @@ export interface CategoriesSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   color?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects_select".
- */
-export interface ProjectsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  cliente?: T;
-  descripcionCorta?: T;
-  descripcionLarga?: T;
-  categorias?: T;
-  imagenes?:
-    | T
-    | {
-        imagen?: T;
-        alt?: T;
-        id?: T;
-      };
-  urlExterna?: T;
-  estado?: T;
-  orden?: T;
-  destacado?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
- */
-export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  content?: T;
-  excerpt?: T;
-  author?: T;
-  categories?: T;
-  featuredImage?: T;
-  status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
- */
-export interface TestimonialsSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  company?: T;
-  content?: T;
-  photo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -548,6 +539,116 @@ export interface ContactsSelect<T extends boolean = true> {
   mensaje?: T;
   leido?: T;
   fechaRecibido?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs_select".
+ */
+export interface ProgramsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  coverImage?: T;
+  accentColor?: T;
+  isLive?: T;
+  liveUrl?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "episodes_select".
+ */
+export interface EpisodesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  program?: T;
+  embedUrl?: T;
+  thumbnail?: T;
+  publishedAt?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  coverImage?: T;
+  sourceUrl?: T;
+  sourceName?: T;
+  categories?: T;
+  publishedAt?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "live_select".
+ */
+export interface LiveSelect<T extends boolean = true> {
+  title?: T;
+  embedUrl?: T;
+  isActive?: T;
+  program?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsorships_select".
+ */
+export interface SponsorshipsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  logo?: T;
+  url?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  price?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  isActive?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  client?: T;
+  thumbnail?: T;
+  status?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
