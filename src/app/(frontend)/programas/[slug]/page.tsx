@@ -1,51 +1,110 @@
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
+'use client'
 
-const programas = [
-  { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
-  { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino', descripcion: 'Conversaciones profundas sobre cultura, historia y el camino de Bolivia.' },
-  { nombre: 'The Bronta Time', logo: '/images/programas/the-bronta-time.png', slug: 'the-bronta-time', descripcion: 'El programa de entretenimiento y humor que no te puedes perder.' },
-  { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas', descripcion: 'Las voces femeninas que rompen el silencio y generan conversación.' },
-  { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast', descripcion: 'El podcast boliviano que habla de todo lo que importa.' },
-]
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { getProgramBySlug } from '../../../../lib/api/programs'
+import { getEpisodesByProgram } from '../../../../lib/api/episodes'
 
-type Props = {
-  params: Promise<{ slug: string }>
+interface Program {
+  id: number
+  title: string
+  description?: string | null
 }
 
-export default async function ProgramasSlugPage({ params }: Props) {
-  const { slug } = await params
-  const programa = programas.find((p) => p.slug === slug)
-  if (!programa) {
-    notFound()
+interface Episode {
+  id: number
+  title: string
+  embedUrl?: string | null
+}
+
+export default function ProgramSlugPage() {
+  const params = useParams()
+  const slug = params?.slug as string
+
+  const [program, setProgram] = useState<Program | null>(null)
+  const [episodes, setEpisodes] = useState<Episode[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!slug) return
+    const load = async () => {
+      setLoading(true)
+      try {
+        const fetchedProgram = await getProgramBySlug(slug)
+        setProgram(fetchedProgram)
+        if (fetchedProgram) {
+          const episodesData = await getEpisodesByProgram(slug)
+          setEpisodes(episodesData)
+        }
+      } catch (error) {
+        console.error('Error loading program:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [slug])
+
+  if (loading) {
+    return (
+      <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
+        <p style={{ color: '#aaa' }}>Cargando programa…</p>
+      </main>
+    )
+  }
+
+  if (!program) {
+    return (
+      <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
+        <p style={{ color: '#aaa' }}>Programa no encontrado.</p>
+      </main>
+    )
   }
 
   return (
-    <main style={{ minHeight: '100vh', padding: '2rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Image
-        src={programa.logo}
-        alt={programa.nombre}
-        width={300}
-        height={300}
-        style={{ objectFit: 'contain' }}
-      />
+    <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
       <h1
         style={{
           fontFamily: 'var(--font-brand)',
           color: '#c61d4a',
-          fontSize: '1.8rem',
-          marginTop: '1.5rem',
-          textAlign: 'center',
+          fontSize: '2rem',
+          marginBottom: '1rem',
         }}
       >
-        {programa.nombre}
+        {program.title}
       </h1>
-      <p style={{ color: '#888', fontSize: '1rem', textAlign: 'center', marginTop: '1rem', maxWidth: '600px' }}>
-        {programa.descripcion}
-      </p>
-      <p style={{ color: '#bbb', fontSize: '0.9rem', marginTop: '2rem' }}>
-        Episodios próximamente
-      </p>
+      {program.description && (
+        <p style={{ color: '#888', fontSize: '1rem', marginBottom: '2rem' }}>
+          {program.description}
+        </p>
+      )}
+
+      <h2 style={{ color: '#f0f0f0', fontSize: '1.5rem', marginBottom: '1rem' }}>
+        Episodios
+      </h2>
+      {episodes.length === 0 ? (
+        <p style={{ color: '#888' }}>No hay episodios disponibles aún.</p>
+      ) : (
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {episodes.map((ep) => (
+            <li key={ep.id} style={{ marginBottom: '1.5rem' }}>
+              <h3 style={{ color: '#f0f0f0', margin: '0 0 0.5rem' }}>{ep.title}</h3>
+              {ep.embedUrl ? (
+                <iframe
+                  src={ep.embedUrl}
+                  title={ep.title}
+                  width="100%"
+                  height="315"
+                  style={{ border: 'none', borderRadius: 8 }}
+                  allowFullScreen
+                />
+              ) : (
+                <p style={{ color: '#aaa' }}>Sin enlace de reproducción.</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   )
 }
