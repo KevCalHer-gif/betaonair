@@ -132,10 +132,10 @@ export default function InkWaterBackground() {
       }
     }
 
-    const drops = Array.from({ length: 22 }, (_, i) => new InkDrop(true))
+    const drops = Array.from({ length: 10 }, (_, i) => new InkDrop(true))
     let ripples: { x: number; y: number; r: number; alpha: number; maxR: number }[] = []
 
-    const waterParts = Array.from({ length: 200 }, () => ({
+    const waterParts = Array.from({ length: 80 }, () => ({
       x: Math.random(),
       y: 0.65 + Math.random() * 0.35,
       r: 0.6 + Math.random() * 2.5,
