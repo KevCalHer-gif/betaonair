@@ -3,23 +3,27 @@ import type { GlobalConfig } from 'payload'
 export const Seo: GlobalConfig = {
   slug: 'seo',
   label: 'SEO',
+  access: {
+    read: () => true,
+    update: ({ req }: any) => req.user?.role === 'admin',
+  },
   fields: [
     {
-      name: 'title',
+      name: 'metaTitle',
       type: 'text',
-      label: 'Título por defecto',
-      defaultValue: 'Beta On Air — Hacemos que se note.',
+      label: 'Meta Title',
+      required: true,
     },
     {
-      name: 'description',
-      type: 'text',
-      label: 'Descripción por defecto',
-      defaultValue: 'Beta On Air — plataforma digital de contenidos bolivianos.',
+      name: 'metaDescription',
+      type: 'textarea',
+      label: 'Meta Description',
+      required: true,
     },
     {
       name: 'ogImage',
       type: 'upload',
-      label: 'Imagen Open Graph',
+      label: 'OG Image',
       relationTo: 'media',
     },
   ],
