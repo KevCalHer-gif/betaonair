@@ -349,3 +349,16 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Próximo paso:** Verificar que el push se refleja en GitHub y que ambas páginas cargan correctamente.
 **Archivos modificados:** PROGRESS.md (solo documentación adicional).
 **Notas:** Este commit cierra la implementación de las rutas /noticias/[slug] y /patrocinios.
+
+### [2026-05-13] — LEANDRO: Commit de roles de usuario, dashboard con métricas y Vercel Analytics
+**Rol:** LEANDRO (implementador)
+**Acción:** Ejecutar `git add . && git commit -m "feat(admin): agregar roles de usuario, dashboard con metricas y Vercel Analytics" && git push origin main`.
+**Resultado:** [Pendiente de ejecución por parte del usuario]
+**Próximo paso:** Verificar que el push se refleja en GitHub y que el panel admin carga el nuevo dashboard personalizado.
+**Archivos modificados:** 
+- src/collections/Users.ts (campo role y acceso por roles)
+- src/components/admin/Dashboard.tsx (componente nuevo con tarjetas de conteo)
+- src/payload.config.ts (registro del dashboard en admin.components.views)
+- src/app/(frontend)/layout.tsx (import y uso de Analytics de Vercel)
+- PROGRESS.md (solo documentación adicional)
+**Notas:** Este cierre incorpora la gestión de roles (admin, editor, viewer), un dashboard admin con métricas en tiempo real, y Vercel Analytics para seguimiento de visitas en producción.
