@@ -1,5 +1,1 @@
-LEANDRO: El proyecto está aprobado por CENTINELA para avanzar. Ejecuta los siguientes pasos de preparación para deploy:
-
-1. Ejecuta npm run build y reporta si hay errores de compilación
-2. Si el build es exitoso, haz commit de todos los cambios pendientes con el mensaje: "chore: preparación para deploy - build de producción verificado"
-3. Reporta el resultado del build: cuántas páginas se generaron, si hubo warnings, y el tamaño del bundle
+LISANDRO: Abre src\payload.config.ts, importa Settings desde ./globals/Settings y Seo desde ./globals/Seo, y agregalos al array globals dentro de la configuracion de Payload. No toques nada mas del archivo.
