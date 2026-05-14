@@ -3,6 +3,34 @@
 > Actualizar obligatoriamente al cerrar cada sesión.
 > Última actualización: 2026-05-12
 
+## ANÁLISIS RED RANGER — 2026-05-13 (Plan de páginas /programas/[slug], /en-vivo, /contacto)
+
+**ANÁLISIS:**
+- Las colecciones `programs`, `episodes`, `live` y `contacts` ya existen en Payload y están configuradas con acceso apropiado.
+- Las funciones `getPrograms`, `getProgram`, `getEpisodes`, `getLiveStreams` y `getContacts` están disponibles en `src/lib/api/`.
+- No hay dependencias externas (no usa nuevos endpoints).
+- La página `/programas/[slug]` debe usar `getProgram` y `getEpisodes` para mostrar detalle del programa y su lista de episodios.
+- La página `/en-vivo` debe usar `getLiveStreams` para mostrar la transmisión activa; la colección `Live` soporta `isActive` y `embedUrl`.
+- La página `/contacto` debe usar `getContacts`? No, la página de contacto debe guardar datos mediante la colección `Contacts` (no `getContacts`). La función `getContacts` solo lee, no escribe. Para enviar datos se necesita un Route Handler o el built-in de Payload (crear un contacto mediante POST). Se debe verificar si existe un endpoint de Payload que permita creación pública. La colección `contacts` tiene `access` con `create: ({ req: { user } }) => !!user`, lo que requiere autenticación. El formulario de contacto debe estar abierto a cualquier visitante. Por tanto, la configuración de acceso en `Contacts` debe permitir `create: () => true` para que cualquiera pueda enviar un mensaje. **Riesgo crítico**: Actualmente la colección `contacts` tiene `create: ({ req: { user } }) => !!user` lo que impide envío anónimo. Se debe modificar antes de construir la página de contacto.
+- No hay conflictos con las rutas existentes.
+
+**RIESGOS:**
+1. Colección `contacts` bloquea envío anónimo (create: requiere usuario autenticado). Se debe cambiar a `create: () => true` antes de implementar el formulario.
+2. Las funciones de API (`getLiveStreams`, `getPrograms`, etc.) devuelven promesas y deben manejarse correctamente con `useEffect` o `async` components.
+3. Las páginas deben manejar estados de carga y error (si el CMS aún no tiene datos).
+4. La página `/en-vivo` debería mostrar el embed (YouTube/Twitch) de `embedUrl`. Necesita verificar que el embed se renderice sin restricciones CORS.
+
+**DEPENDENCIAS:**
+- Modificar `Contacts` collection para permitir create público.
+- Las funciones API ya existen, no se requieren nuevas.
+
+**PREGUNTAS ABIERTAS:**
+- ¿La página `/contacto` debe redirigir al usuario después de enviar el formulario? Se necesita definir comportamiento post-envío.
+- ¿`/en-vivo` debe mostrar el embed automáticamente o pedir confirmación (clic para activar)?
+- ¿Los episodios deben tener un enlace a `embedUrl` o incrustarse directamente en la página de detalle del programa?
+
+**APROBACIÓN:** APROBADO CON OBSERVACIONES — Se debe modificar `Contacts` antes de construir la página de contacto. El resto del plan es viable.
+
 ---
 
 ## PROTOCOLO DE INICIO DE SESIÓN
