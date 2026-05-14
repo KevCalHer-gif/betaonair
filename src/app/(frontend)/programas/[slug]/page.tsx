@@ -9,6 +9,7 @@ interface Program {
   id: number
   title: string
   description?: string | null
+  coverImage?: { url?: string }
 }
 
 interface Episode {
@@ -63,6 +64,22 @@ export default function ProgramSlugPage() {
 
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
+      {/* Cover image */}
+      {program.coverImage?.url && (
+        <img
+          src={program.coverImage.url}
+          alt={program.title}
+          style={{
+            width: '100%',
+            maxWidth: 600,
+            display: 'block',
+            margin: '0 auto',
+            borderRadius: 12,
+            marginBottom: '2rem',
+          }}
+        />
+      )}
+
       <h1
         style={{
           fontFamily: 'var(--font-brand)',
@@ -74,7 +91,7 @@ export default function ProgramSlugPage() {
         {program.title}
       </h1>
       {program.description && (
-        <p style={{ color: '#888', fontSize: '1rem', marginBottom: '2rem' }}>
+        <p style={{ color: '#aaa', fontSize: '1rem', marginBottom: '2rem' }}>
           {program.description}
         </p>
       )}
