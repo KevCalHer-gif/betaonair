@@ -3,7 +3,6 @@ import Link from 'next/link'
 import './styles.css'
 import './animations.css'
 import ParticleTrail from '../../components/ui/ParticleTrail'
-import BgCanvas from '../../components/ui/BgCanvas'
 import NavLink from '../../components/ui/NavLink'
 
 
@@ -22,7 +21,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" />
         </head>
       <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent', color: '#f0f0f0', fontFamily: "'Bebas Neue', sans-serif" }}>
-        <BgCanvas />
         <ParticleTrail />
         <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 100 }}>
           <Link href="/" style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
