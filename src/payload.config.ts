@@ -16,6 +16,8 @@ import { Live } from './collections/Live'
 import { Sponsorships } from './collections/Sponsorships'
 import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
+import { Settings } from './globals/Settings'
+import { Seo } from './globals/Seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,6 +30,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects],
+  globals: [Settings, Seo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
