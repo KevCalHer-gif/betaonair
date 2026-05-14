@@ -341,3 +341,11 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Próximo paso:** Verificar que el push se refleja en GitHub y que las páginas cargan correctamente en producción.
 **Archivos modificados:** PROGRESS.md (solo documentación adicional).
 **Notas:** Esta entrada documenta el avance de la Fase 3 según el backlog de BRAIN.md.
+
+### [2026-05-13] — LEANDRO: Commit y push de Fase 3 – páginas noticias/[slug] y patrocinios
+**Rol:** LEANDRO (implementador)
+**Acción:** Ejecutar `git add . && git commit -m "feat(fase3): agregar pagina noticias slug y pagina patrocinios" && git push origin main`.
+**Resultado:** [Pendiente de ejecución por parte del usuario]
+**Próximo paso:** Verificar que el push se refleja en GitHub y que ambas páginas cargan correctamente.
+**Archivos modificados:** PROGRESS.md (solo documentación adicional).
+**Notas:** Este commit cierra la implementación de las rutas /noticias/[slug] y /patrocinios.
