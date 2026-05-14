@@ -18,6 +18,7 @@ import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
 import { Settings } from './globals/Settings'
 import { Seo } from './globals/Seo'
+import Dashboard from './components/admin/Dashboard'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,6 +28,14 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    components: {
+      views: {
+        Dashboard: {
+          Component: Dashboard,
+          path: '/dashboard',
+        },
+      },
     },
   },
   collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects],
