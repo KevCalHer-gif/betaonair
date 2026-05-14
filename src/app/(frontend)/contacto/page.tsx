@@ -5,6 +5,7 @@ import { useState, FormEvent } from 'react'
 export default function ContactoPage() {
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
+  const [tipo, setTipo] = useState('')
   const [mensaje, setMensaje] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [exito, setExito] = useState(false)
@@ -19,12 +20,13 @@ export default function ContactoPage() {
       const res = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email, mensaje }),
+        body: JSON.stringify({ nombre, email, tipo, mensaje }),
       })
       if (!res.ok) throw new Error('Error al enviar el mensaje')
       setExito(true)
       setNombre('')
       setEmail('')
+      setTipo('')
       setMensaje('')
     } catch (err: any) {
       setError(err.message || 'Error inesperado')
@@ -54,6 +56,17 @@ export default function ContactoPage() {
           required
           style={{ padding: '0.5rem', background: '#111', color: '#f0f0f0', border: '1px solid #333' }}
         />
+        <select
+          value={tipo}
+          onChange={(e) => setTipo(e.target.value)}
+          required
+          style={{ padding: '0.5rem', background: '#111', color: '#f0f0f0', border: '1px solid #333' }}
+        >
+          <option value="">Selecciona tipo</option>
+          <option value="Marca">Marca</option>
+          <option value="Oyente">Oyente</option>
+          <option value="Prensa">Prensa</option>
+        </select>
         <textarea
           placeholder="Mensaje"
           value={mensaje}
