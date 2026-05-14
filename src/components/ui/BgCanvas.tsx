@@ -120,9 +120,9 @@ export default function BgCanvas() {
             this.r * 0.3,
             this.r * 1.6,
           )
-          g.addColorStop(0, `rgba(0,0,0,${this.alpha})`)
+          g.addColorStop(0, `rgba(20,20,40,${this.alpha})`)
           g.addColorStop(0.5, `rgba(5,5,5,${this.alpha * 0.7})`)
-          g.addColorStop(1, 'rgba(0,0,0,0)')
+          g.addColorStop(1, 'rgba(20,20,40,0)')
           ctx.beginPath()
           ctx.ellipse(0, 0, this.r * 0.65, this.r * 1.5, 0, 0, Math.PI * 2)
           ctx.fillStyle = g
@@ -138,18 +138,18 @@ export default function BgCanvas() {
             this.y,
             this.bloomR,
           )
-          g.addColorStop(0, `rgba(0,0,0,${this.bloomAlpha * 0.85})`)
+          g.addColorStop(0, `rgba(15,15,35,${this.bloomAlpha * 0.85})`)
           g.addColorStop(0.35, `rgba(10,10,10,${this.bloomAlpha * 0.45})`)
-          g.addColorStop(1, 'rgba(0,0,0,0)')
+          g.addColorStop(1, 'rgba(15,15,35,0)')
           ctx.beginPath()
           ctx.arc(this.x, this.y, this.bloomR, 0, Math.PI * 2)
           ctx.fillStyle = g
           ctx.fill()
           for (const t of this.tendrils) {
             const tg = ctx.createRadialGradient(t.x, t.y, 0, t.x, t.y, t.r * 4)
-            tg.addColorStop(0, `rgba(0,0,0,${t.alpha * t.life * 0.9})`)
+            tg.addColorStop(0, `rgba(15,15,35,${t.alpha * t.life * 0.9})`)
             tg.addColorStop(0.4, `rgba(15,15,15,${t.alpha * t.life * 0.35})`)
-            tg.addColorStop(1, 'rgba(0,0,0,0)')
+            tg.addColorStop(1, 'rgba(15,15,35,0)')
             ctx.beginPath()
             ctx.arc(t.x, t.y, t.r * 4, 0, Math.PI * 2)
             ctx.fillStyle = tg
