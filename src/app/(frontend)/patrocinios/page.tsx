@@ -1,39 +1,29 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 const beneficios = [
   {
     icono: '📡',
-    titulo: 'Alcance digital',
+    titulo: 'Alcance',
     descripcion:
-      'Presencia en YouTube, TikTok, Facebook e Instagram con miles de seguidores activos.',
+      'Llegamos a miles de bolivianos cada semana a través de YouTube, TikTok, Facebook, Instagram y transmisiones en vivo.',
   },
   {
-    icono: '🎙️',
-    titulo: 'Contenido auténtico',
+    icono: '💼',
+    titulo: 'Contenido Patrocinado',
     descripcion:
-      'Integramos tu marca de forma natural en nuestros programas y transmisiones en vivo.',
+      'Integramos tu marca de forma orgánica en nuestros programas, podcasts y redes sociales con menciones y segmentos dedicados.',
   },
   {
-    icono: '🇧🇴',
-    titulo: 'Audiencia boliviana',
+    icono: '📺',
+    titulo: 'Presencia en Vivo',
     descripcion:
-      'Conectamos tu marca directamente con la audiencia boliviana que consume contenido local.',
+      'Tu marca puede estar presente en nuestras transmisiones en vivo, con menciones en tiempo real y elementos visuales personalizados.',
   },
-];
-
-const programas = [
-  { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
-  { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino' },
-  { nombre: 'The Bronta Time', logo: '/images/programas/the-bronta-time.png', slug: 'the-bronta-time' },
-  { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas' },
-  { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast' },
 ];
 
 export default function PatrociniosPage() {
   return (
     <main>
-      {/* Hero */}
       <section
         style={{
           padding: '4rem 1rem',
@@ -58,12 +48,13 @@ export default function PatrociniosPage() {
             lineHeight: 1.6,
           }}
         >
-          Llegamos a miles de bolivianos cada semana a través de nuestros programas, redes sociales
-          y transmisiones en vivo.
+          Beta On Air es una plataforma digital de contenidos bolivianos con alcance en
+          toda Bolivia y la diáspora. A través de nuestros programas, redes sociales y
+          transmisiones en vivo, conectamos marcas con una audiencia joven, activa y
+          comprometida.
         </p>
       </section>
 
-      {/* ¿Por qué elegirnos? */}
       <section
         style={{
           padding: '3rem 1rem',
@@ -80,7 +71,7 @@ export default function PatrociniosPage() {
             marginBottom: '2rem',
           }}
         >
-          ¿Por qué elegirnos?
+          Beneficios
         </h2>
         <div
           style={{
@@ -120,49 +111,6 @@ export default function PatrociniosPage() {
         </div>
       </section>
 
-      {/* Nuestros programas */}
-      <section
-        style={{
-          padding: '3rem 1rem',
-          textAlign: 'center',
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: 'var(--font-brand)',
-            color: '#c61d4a',
-            fontSize: '2rem',
-            marginBottom: '2rem',
-          }}
-        >
-          Nuestros programas
-        </h2>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '2rem',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-          }}
-        >
-          {programas.map((p, idx) => (
-            <div key={idx} style={{ textAlign: 'center' }}>
-              <Image
-                src={p.logo}
-                alt={p.nombre}
-                width={160}
-                height={160}
-                style={{ objectFit: 'contain' }}
-              />
-              <p style={{ fontFamily: 'var(--font-brand)', color: '#f0f0f0', marginTop: '0.5rem' }}>
-                {p.nombre}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* CTA */}
       <section
         style={{
@@ -178,7 +126,7 @@ export default function PatrociniosPage() {
             marginBottom: '1rem',
           }}
         >
-          ¿Listo para destacar?
+          ¿Listo para empezar?
         </h2>
         <Link
           href="/contacto"
