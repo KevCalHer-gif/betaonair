@@ -30,10 +30,6 @@ export default function ParticleTrail() {
           }
         }
       });
-      if(window.__tubesCursor && window.__tubesCursor.renderer){
-        window.__tubesCursor.renderer.setClearColor(0x000000,0)
-      }
-      window.__tubesCursor.renderer.domElement.style.background='transparent';
     }
   `
     document.head.appendChild(script)
