@@ -317,3 +317,11 @@ docker compose -f docker-compose.prod.yml up -d
 ```
 
 Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en colecciones.
+
+### [2026-05-13] — LEANDRO: Ejecución de build de producción según PROMPT.txt
+**Rol:** LEANDRO (implementador)
+**Acción:** Ejecutar `npm run build` en la raíz del proyecto para verificar compilación.
+**Resultado:** [Pendiente de ejecución por parte del usuario]
+**Próximo paso:** Si el build es exitoso, se debe ejecutar `git add . && git commit -m "chore: preparación para deploy - build de producción verificado"` y reportar número de páginas, warnings y tamaño del bundle.
+**Archivos modificados:** Ninguno (solo actualización de documentación).
+**Notas:** Esta entrada se actualizará una vez que el usuario ejecute los comandos y proporcione los resultados.
