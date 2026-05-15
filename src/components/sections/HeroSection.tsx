@@ -49,7 +49,7 @@ export default function HeroSection() {
     STICKER_DATA.map((_, i) => ({
       top: 5,
       left: getZoneLeftVw(i),
-      opacity: 1,
+      opacity: 0.6,
       shaking: false,
       visible: true,
     })),
@@ -64,7 +64,7 @@ export default function HeroSection() {
         next[index] = {
           ...next[index],
           visible: true,
-          opacity: 1,
+          opacity: 0.6,
           top: randomTopVh(),
           left: getZoneLeftVw(index),
           shaking: false,
@@ -134,7 +134,7 @@ export default function HeroSection() {
           width: '100vw',
           height: '100vh',
           pointerEvents: 'none',
-          zIndex: 50,
+          zIndex: 1,
           overflow: 'hidden',
         }}
       >
@@ -152,7 +152,7 @@ export default function HeroSection() {
               opacity: stickers[idx].opacity,
               transition: 'opacity 0.5s ease',
               pointerEvents: 'none',
-              zIndex: 50,
+              zIndex: 1,
             }}
             className={stickers[idx].shaking ? 'sticker-shake' : 'sticker-base'}
             loading={idx === 0 ? 'eager' : undefined}
@@ -170,7 +170,7 @@ export default function HeroSection() {
           justifyContent: 'center',
         }}
       >
-        <motion.div {...fadeUp(0)}>
+        <motion.div {...fadeUp(0)} style={{ zIndex: 10, position: 'relative' }}>
           <Image
             src="/logo.png"
             alt="Beta On Air"

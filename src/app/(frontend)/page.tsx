@@ -42,7 +42,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-      <section style={{ padding: '2rem 0' }}>
+      <section style={{ padding: '2rem 0', position: 'relative', zIndex: 10 }}>
         <h2
           style={{
             fontFamily: 'var(--font-brand)',

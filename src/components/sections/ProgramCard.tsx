@@ -29,7 +29,7 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
   }
 
   return (
-    <div className="program-card" onClick={handleClick}>
+    <div className="program-card" onClick={handleClick} style={{ zIndex: 10 }}>
       {/* Imagen de fondo: ocupa toda la tarjeta */}
       <div className="cover">
         <Image src={logo} alt={nombre} fill sizes="200px" style={{ objectFit: 'cover' }} />
