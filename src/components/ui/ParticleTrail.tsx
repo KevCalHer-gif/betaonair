@@ -55,6 +55,7 @@ export default function ParticleTrail() {
         zIndex: 0,
         pointerEvents: 'none',
         background: 'transparent',
+        mixBlendMode: 'screen',
       }}
     />
   )
