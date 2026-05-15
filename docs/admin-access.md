@@ -60,4 +60,46 @@ Revisa que el campo `role` esté definido con `required: true` y que las opcione
 
 ---
 
+## Diagnóstico CENTINELA — No se puede acceder a `/admin`
+
+### Causas probables (orden de verificación)
+
+1. **El servidor de desarrollo no está corriendo.**  
+   Ejecuta `npm run dev` en la raíz del proyecto y espera a que aparezca `ready - started server on 0.0.0.0:3000`.
+
+2. **La variable `PAYLOAD_SECRET` está vacía o no es segura.**  
+   El archivo `.env` debe contener `PAYLOAD_SECRET` con al menos 32 caracteres.  
+   Si está vacío, el servidor rechazará la autenticación del admin.  
+   **Solución:** copia `.env.example` a `.env` y reemplaza `YOUR_SECRET_HERE` por una clave aleatoria (`openssl rand -hex 32` en terminal o usa un generador online).
+
+3. **La base de datos PostgreSQL no está disponible.**  
+   - Si usas Docker, ejecuta `docker compose up -d` y verifica con `docker ps`.  
+   - Comprueba que la variable `DATABASE_URL` en `.env` coincida con `docker-compose.yml`  
+     (por defecto: `postgresql://admin:localpass@localhost:5432/betaonair_db`).
+
+4. **Error de compilación en `payload.config.ts` o en algún componente.**  
+   La sección `components.views` está comentada, lo cual es correcto.  
+   Sin embargo, cualquier error de sintaxis en `payload.config.ts` o en cualquiera de las colecciones importadas impedirá que el servidor compile.  
+   **Solución:** ejecuta `npm run dev` y lee los errores en la terminal. Si ves un error de importación o tipo, corrígelo.
+
+5. **El archivo `src/app/(payload)/admin/[[...segments]]/page.tsx` intenta importar `config` desde `@payload-config`.**  
+   El alias `@payload-config` está definido en `tsconfig.json` y apunta a `./src/payload.config.ts`.  
+   Si este alias falta o está mal definido, Next.js no podrá resolver la ruta y la página `/admin` fallará en el servidor.  
+   **Verificación:** revisa que `tsconfig.json` contenga `"@payload-config": ["./src/payload.config.ts"]`.
+
+6. **Problema con el puerto 3000 ya ocupado.**  
+   Ejecuta `netstat -ano | findstr :3000` (Windows) o `lsof -i :3000` (Mac/Linux).  
+   Si hay otro proceso usando el puerto, detenlo o usa otro puerto con `npm run dev -- --port 3001`.
+
+### Pasos recomendados
+
+1. Abre una terminal en la raíz del proyecto.
+2. Ejecuta `npm run dev` y espera a que aparezca `ready`.
+3. Abre `http://localhost:3000/admin`.
+4. Si aún no cargas, comparte aquí los mensajes de error que aparecen en la terminal.
+
+Si el problema persiste después de revisar todos los puntos anteriores, se requiere una revisión más profunda de `payload.config.ts` y de las colecciones.
+
+---
+
 *Última actualización: 2026-05-14*
