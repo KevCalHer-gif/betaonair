@@ -1,0 +1,98 @@
+/* Estilos para el grid de programas estilo muestra PROMPT.txt */
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+.grid {
+  display: grid;
+  grid-template: 1fr / 1fr 1fr 1fr;
+  gap: 5%;
+  aspect-ratio: 16 / 9;
+  max-width: 800px;
+  width: 100%;
+  transition: grid-template 300ms 120ms;
+  border: 2px solid #fff;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.grid:has(:hover) {
+  transition: grid-template 300ms;
+}
+
+.grid:has(> :nth-child(3n):hover) {
+  grid-template: 1fr / 1fr 1fr 2fr;
+}
+
+.grid:has(> :nth-child(3n - 1):hover) {
+  grid-template: 1fr / 1fr 2fr 1fr;
+}
+
+.grid:has(> :nth-child(3n - 2):hover) {
+  grid-template: 1fr / 2fr 1fr 1fr;
+}
+
+.item {
+  position: relative;
+  background: var(--c, deeppink);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.item:nth-child(2n) {
+  --c: turquoise;
+}
+
+.item:nth-child(3n) {
+  --c: darkorchid;
+}
+
+.item img {
+  width: 100%;
+  display: block;
+  position: absolute;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  mix-blend-mode: multiply;
+}
+
+.caption {
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 120ms;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.item:hover .caption {
+  opacity: 1;
+  transition: opacity 200ms 300ms;
+}
+
+.caption h3 {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 1.2rem;
+}
+
+.caption svg {
+  margin-top: auto;
+  align-self: end;
+  fill: currentColor;
+  width: 2em;
+  height: auto;
+  transform: translate3d(-1em, 0, 0);
+  transition: transform 200ms ease-out 300ms;
+}
+
+.item:hover .caption svg {
+  transform: translate3d(0, 0, 0);
+}
