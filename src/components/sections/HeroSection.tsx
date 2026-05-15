@@ -48,9 +48,10 @@ export default function HeroSection() {
         <Image
           src="/logo.png"
           alt="Beta On Air"
-          width={320}
-          height={480}
+          width={192}
+          height={288}
           priority
+          className="hero-sticker hero-sticker-logo"
           style={{ objectFit: 'contain' }}
         />
       </motion.div>
