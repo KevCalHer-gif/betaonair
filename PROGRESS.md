@@ -369,3 +369,26 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Acción:** Registrar que el repositorio remoto está actualizado con los últimos cambios (feat(admin), feat(fase3), etc.) y que la documentación de progreso refleja todas las fases completadas.
 **Archivos modificados:** PROGRESS.md (solo esta entrada)
 **Notas:** Tras ejecutar los commits correspondientes, el archivo se actualiza para reflejar el estado actual. El proyecto se encuentra listo para deploy.
+
+### [2026-05-14] — LEANDRO: Documentación de commits de UI y refactor visual
+
+**Rol:** LEANDRO (documentador)
+**Acción:** Documentar la serie de commits que mejoraron el frontend visual (ParticleTrail, BgCanvas, GalaxyButton, Chinese Rocks Rg, grid de programas).
+**Archivos modificados:** PROGRESS.md, BRAIN.md
+**Notas:** Se documentan los siguientes commits realizados después de la sesión anterior:
+
+- 70f7bf1 — refactor: reemplazar dependencia externa por implementación Canvas 2D nativa (ParticleTrail)
+- e13be71 — chore: agregar comentario de acceso faltante (BgCanvas)
+- 47363db — feat: agrega BgCanvas como fondo global en layout
+- 2fea3c0 — refactor: reemplazar partículas canvas con Three.js TubesCursor
+- 6a16726 — feat: agrega BgCanvas y mejora z-index en layout
+- 0e453c5 — feat: agregar componente GalaxyButton con animación galáctica
+- 0242f86 — feat: agrega efecto de luz hover a botones GalaxyButton y "VER NUESTRO TRABAJO"
+- 3e6147b — feat: aplicar efecto GalaxyButton en botones de inicio
+- f0eeb17 — feat: reemplazar fuente Bebas Neue por Chinese Rocks Rg
+- c0e874d — feat: rediseñar grid de programas con efecto hover expansivo
+- 266ffd3 — refactor: reorganizar estilos CSS con capas y corregir transiciones
+- d101165 — fix: corregir espacios en selectores CSS de nth-child
+- 1b10151 — fix: corregir sintaxis de nth-child en selectores CSS
+- 76f5d18 — fix: revertir ProgramCard a versión anterior para restaurar navegación
+- c6312bd — refactor: rediseñar tarjetas de programa con grid interactivo y estilos CSS
