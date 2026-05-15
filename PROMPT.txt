@@ -1,1 +1,1 @@
-LISANDRO: Abre src\payload.config.ts, importa Settings desde ./globals/Settings y Seo desde ./globals/Seo, y agregalos al array globals dentro de la configuracion de Payload. No toques nada mas del archivo.
+LISANDRO: Elimina toda referencia a la coleccion Projects del proyecto. Especificamente: 1) en src\payload.config.ts elimina el import de Projects y eliminala del array collections. 2) en src\lib\api\projects.ts reemplaza todo el contenido por un comentario: // eliminado - coleccion projects no aplica al modelo canal. No toques nada mas.
