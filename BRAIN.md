@@ -217,6 +217,18 @@ FASE:        4 — Deploy completado
 [x] Configuración de Cloudflare completada
 [x] Asegurada la funcionalidad del proyecto
 [x] Verificación de estado: todo commit está sincronizado — último commit: ccf63e2 (2026-05-12) "feat(repo): primer commit"
+[x] Se creó `scripts/diagnosis.bat` para regenerar import map y tipos (commit 288a70c)
+[x] Se eliminó importación de Dashboard en payload.config.ts (commit 77473f4)
+[x] Se eliminó colección Projects (commit 320a369)
+[x] Se actualizó configuración de componentes del admin (commits 1456801, 931b52c, 9c1788c)
+[x] Se convirtió página de noticias a Server Component con `params: Promise<...>` (commit 21328a4)
+[x] Se agregaron animaciones de stickers en noticias (commit 89c9a8f)
+[x] Se aplicó GalaxyButton en botones de inicio (commits 3e6147b, 0242f86)
+[x] Se reemplazó fuente Bebas Neue por Chinese Rocks Rg (commit f0eeb17)
+[x] Se rediseñó grid de programas (commits c0e874d, 266ffd3, d101165, 1b10151, 76f5d18, c6312bd)
+[x] Se documentó diagnóstico de acceso a /admin en docs/admin-access.md (commit e3a269b)
+[x] Se documentaron todos los commits de UI en PROGRESS.md y BRAIN.md (commit d733d1b)
+[x] Se agregó entrada documental del 2026-05-15 (este commit)
 ```
 
 ---
