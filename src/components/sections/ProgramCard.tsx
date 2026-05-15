@@ -29,49 +29,81 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
   }
 
   return (
-    <div className="movie-block" onClick={handleClick} style={{ background: blockColor }}>
-      <div className="genre">Programa</div>
-
-      <div className="main-inform">
-        <div className="main-inform_inner">
-          <div className="title">{nombre}</div>
-          <div className="subtitle">Ver programa</div>
-        </div>
-      </div>
-
-      <div className="big-hours">{firstLetter}</div>
-
-      <div className="extra-inform">
-        <div className="extra-inform_inner">
-          <div className="title">{nombre}</div>
-          <div className="subtitle">Ver programa</div>
-        </div>
-      </div>
-
+    <div className="program-card" onClick={handleClick}>
+      {/* Imagen de fondo: ocupa toda la tarjeta */}
       <div className="cover">
         <Image src={logo} alt={nombre} fill sizes="200px" style={{ objectFit: 'cover' }} />
       </div>
 
+      {/* Overlay semitransparente en estado normal, desaparece en hover */}
+      <div className="overlay" />
+
+      {/* Badge de género con color de bloque */}
+      <div className="genre" style={{ background: blockColor }}>
+        Programa
+      </div>
+
+      {/* Información principal que sube y desaparece en hover */}
+      <div className="main-inform">
+        <div className="title">{nombre}</div>
+        <div className="subtitle">Ver programa</div>
+      </div>
+
+      {/* Letra grande decorativa */}
+      <div className="big-letter">{firstLetter}</div>
+
+      {/* Información extra que aparece desde abajo en hover */}
+      <div className="extra-inform">
+        <div className="title">{nombre}</div>
+        <div className="subtitle">Ver programa</div>
+      </div>
+
       <style jsx>{`
-        .movie-block {
+        .program-card {
           width: 200px;
-          height: 220px;
+          height: 280px;
           border-radius: 12px;
           overflow: hidden;
           position: relative;
           cursor: pointer;
-          transition: all 0.4s ease;
+          color: white;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
           align-items: flex-start;
           padding: 1rem;
-          color: white;
           font-family: 'Bebas Neue', sans-serif;
         }
 
-        .movie-block:hover {
-          height: 320px;
+        .cover {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+        }
+
+        .cover img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .program-card:hover .cover img {
+          transform: scale(1.05);
+        }
+
+        .overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.45);
+          z-index: 1;
+          transition: background 0.4s ease;
+        }
+
+        .program-card:hover .overlay {
+          background: rgba(0, 0, 0, 0);
         }
 
         .genre {
@@ -81,7 +113,9 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
           font-size: 0.6rem;
           text-transform: uppercase;
           letter-spacing: 0.1em;
-          opacity: 0.8;
+          padding: 0.15rem 0.4rem;
+          border-radius: 4px;
+          color: white;
           z-index: 2;
         }
 
@@ -93,25 +127,25 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
           opacity: 1;
         }
 
-        .movie-block:hover .main-inform {
+        .program-card:hover .main-inform {
           transform: translateY(-20px);
           opacity: 0;
         }
 
-        .main-inform_inner .title {
+        .main-inform .title {
           font-size: 1.2rem;
           font-weight: bold;
           line-height: 1.2;
         }
 
-        .main-inform_inner .subtitle {
+        .main-inform .subtitle {
           font-size: 0.7rem;
           text-transform: uppercase;
           letter-spacing: 0.08em;
           opacity: 0.6;
         }
 
-        .big-hours {
+        .big-letter {
           position: absolute;
           bottom: 0.5rem;
           right: 0.5rem;
@@ -123,7 +157,7 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
           z-index: 1;
         }
 
-        .movie-block:hover .big-hours {
+        .program-card:hover .big-letter {
           transform: scale(1.1);
         }
 
@@ -139,43 +173,22 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
           transform: translateY(100%);
         }
 
-        .movie-block:hover .extra-inform {
+        .program-card:hover .extra-inform {
           transform: translateY(0);
           opacity: 1;
         }
 
-        .extra-inform_inner .title {
+        .extra-inform .title {
           font-size: 1.2rem;
           font-weight: bold;
           line-height: 1.2;
         }
 
-        .extra-inform_inner .subtitle {
+        .extra-inform .subtitle {
           font-size: 0.7rem;
           text-transform: uppercase;
           letter-spacing: 0.08em;
           opacity: 0.6;
-        }
-
-        .cover {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-          opacity: 0;
-          transition: all 0.4s ease;
-        }
-
-        .movie-block:hover .cover {
-          opacity: 0.3;
-        }
-
-        .cover img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
         }
       `}</style>
     </div>
