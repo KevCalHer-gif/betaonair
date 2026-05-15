@@ -392,3 +392,37 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 - 1b10151 — fix: corregir sintaxis de nth-child en selectores CSS
 - 76f5d18 — fix: revertir ProgramCard a versión anterior para restaurar navegación
 - c6312bd — refactor: rediseñar tarjetas de programa con grid interactivo y estilos CSS
+
+### [2026-05-15] — LEANDRO: Documentación de todo lo realizado hasta la fecha
+
+**Sesión:** 8 — Cierre de documentación general
+**Completado por:** LEANDRO (documentador)
+**Tareas completadas (desde el último documento):**
+
+1. **Diagnóstico de admin en blanco** – se creó `scripts/diagnosis.bat` para ejecutar pasos de regeneración de import map y tipos (commit 288a70c).
+2. **Eliminación de importación de Dashboard** – se eliminó la importación de `Dashboard` en `payload.config.ts` y se corrigió la variable `DATABASE_URI` (commit 77473f4).
+3. **Eliminación de colección Projects** – se eliminó `Projects` de las colecciones y de la importación en `payload.config.ts` (commit 320a369).
+4. **Mostrar contenido completo de payload.config.ts** – se mostró el archivo sin modificarlo, a petición del usuario.
+5. **Edición del bloque components en payload.config.ts** – se reemplazó el bloque comentado `components: { // views: { // Dashboard… } }` por una vista de dashboard usando la ruta `/src/components/admin/Dashboard#default` (commit 1456801).
+6. **Corrección de ruta del componente Dashboard** – se cambió a `@/components/admin/Dashboard` (commit 931b52c).
+7. **Vaciar configuración de componentes** – se dejó `components: {}` (commit 9c1788c).
+8. **Conversión de página de noticias a Server Component** – se actualizó `src/app/(frontend)/noticias/[slug]/page.tsx` para usar `params: Promise<{ slug: string }>` y `const { slug } = await params` (commit 21328a4).
+9. **Refactor de noticias con animaciones de stickers** – se agregaron animaciones CSS para los stickers del hero y se mejoró la presentación (commit 89c9a8f).
+10. **Aplicación de efecto GalaxyButton en botones de inicio** – se modificaron `HeroSection.tsx` y `ProgramCard.tsx` para usar `GalaxyButton` con efecto hover (commits 3e6147b, 0242f86).
+11. **Reemplazo de fuente Bebas Neue por Chinese Rocks Rg** – se actualizó `styles.css`, `layout.tsx` y se eliminó el link a Google Fonts (commit f0eeb17).
+12. **Rediseño de grid de programas con efecto hover expansivo** – se implementó el grid interactivo con CSS `:has()` y nth-child (commits c0e874d, 266ffd3, d101165, 1b10151, 76f5d18, c6312bd).
+13. **Diagnóstico de acceso a /admin** – se agregó al archivo `docs/admin-access.md` una guía detallada con causas probables y pasos para resolver problemas de carga del admin (commit e3a269b).
+14. **Documentación de todos los commits de UI** – se registraron los 15 commits visuales en PROGRESS.md y BRAIN.md (commit d733d1b).
+15. **Agregar nueva entrada documental** – esta misma entrada.
+
+**Archivos modificados en esta sesión:**
+- PROGRESS.md
+- BRAIN.md (estado actualizado)
+
+**Commit(s):** `docs: documentar todo lo realizado hasta la fecha`
+
+**Próximos pasos según backlog:**
+- Verificar que el admin carga en `localhost:3000/admin` tras las correcciones.
+- Implementar páginas restantes (servicios, blog completo, contacto con envío anónimo).
+- Añadir tests de contratos API.
+- Optimizar Docker y Nginx para producción.
