@@ -28,12 +28,11 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
-      // views: {
-      //   Dashboard: {
-      //     Component: Dashboard,
-      //     path: '/dashboard',
-      //   },
-      // },
+      views: {
+        dashboard: {
+          Component: '/src/components/admin/Dashboard#default',
+        },
+      },
     },
   },
   collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services],
