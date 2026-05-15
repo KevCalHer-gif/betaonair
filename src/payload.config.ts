@@ -30,12 +30,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
-      views: {
-        Dashboard: {
-          Component: Dashboard,
-          path: '/dashboard',
-        },
-      },
+      // views: {
+      //   Dashboard: {
+      //     Component: Dashboard,
+      //     path: '/dashboard',
+      //   },
+      // },
     },
   },
   collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects],
