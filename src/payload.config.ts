@@ -27,13 +27,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components: {
-      views: {
-        dashboard: {
-          Component: '@/components/admin/Dashboard',
-        },
-      },
-    },
+    components: {},
   },
   collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services],
   globals: [Settings, Seo],
