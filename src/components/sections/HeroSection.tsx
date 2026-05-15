@@ -49,7 +49,7 @@ export default function HeroSection() {
     STICKER_DATA.map((_, i) => ({
       top: 5,
       left: getZoneLeftVw(i),
-      opacity: 0.6,
+      opacity: 0.42,
       shaking: false,
       visible: true,
     })),
@@ -64,7 +64,7 @@ export default function HeroSection() {
         next[index] = {
           ...next[index],
           visible: true,
-          opacity: 0.6,
+          opacity: 0.42,
           top: randomTopVh(),
           left: getZoneLeftVw(index),
           shaking: false,
