@@ -28,6 +28,7 @@ export default function HeroSection() {
         width={90}
         height={90}
         className="hero-sticker hero-sticker-1"
+        loading="eager"
       />
       <Image
         src="/recuros-19.png"
