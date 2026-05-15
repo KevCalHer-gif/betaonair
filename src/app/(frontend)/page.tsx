@@ -1,6 +1,7 @@
 import React from 'react'
 import HeroSection from '../../components/sections/HeroSection'
 import ProgramCard from '../../components/sections/ProgramCard'
+import SocialMediaSection from '../../components/sections/SocialMediaSection'
 
 const programas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
@@ -73,6 +74,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+      <SocialMediaSection />
     </>
   )
 }
