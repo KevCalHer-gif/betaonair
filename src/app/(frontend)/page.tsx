@@ -1,7 +1,6 @@
 import React from 'react'
 import HeroSection from '../../components/sections/HeroSection'
 import ProgramCard from '../../components/sections/ProgramCard'
-import cardStyles from '../../components/sections/ProgramCard.module.css'
 
 const programas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
@@ -35,9 +34,11 @@ export default function HomePage() {
         >
           Nuestros Programas
         </h2>
-        <div className={`${cardStyles.grid} card-programa fade-in-up`}>
-          {programas.slice(0, 3).map((p) => (
-            <ProgramCard key={p.slug} nombre={p.nombre} logo={p.logo} slug={p.slug} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
+          {programas.map((p) => (
+            <div key={p.slug} className="card-programa fade-in-up" style={{ display: 'flex' }}>
+              <ProgramCard nombre={p.nombre} logo={p.logo} slug={p.slug} />
+            </div>
           ))}
         </div>
       </section>

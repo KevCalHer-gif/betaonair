@@ -1,7 +1,7 @@
 'use client'
 
+import Image from 'next/image'
 import React from 'react'
-import styles from './ProgramCard.module.css'
 
 interface ProgramCardProps {
   nombre: string
@@ -10,19 +10,57 @@ interface ProgramCardProps {
 }
 
 export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
-  const handleClick = () => {
-    window.location.href = `/programas/${slug}`
-  }
-
   return (
-    <div className={styles.item} onClick={handleClick}>
-      <img src={logo} alt={nombre} />
-      <div className={styles.caption}>
-        <h3>{nombre}</h3>
-        <svg viewBox="0 0 448 512" width="100" title="arrow-right">
-          <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" />
-        </svg>
+    <div
+      style={{
+        width: 200,
+        height: 280,
+        border: '1px solid #333',
+        background: '#0a0a0a',
+        borderRadius: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ position: 'relative', width: '100%', height: 180 }}>
+        <Image
+          src={logo}
+          alt={nombre}
+          fill
+          sizes="200px"
+          style={{ objectFit: 'contain' }}
+        />
       </div>
+      <span
+        style={{
+          fontFamily: 'var(--font-brand)',
+          color: '#f0f0f0',
+          fontSize: '1rem',
+          textAlign: 'center',
+          marginTop: '0.5rem',
+          lineHeight: 1.2,
+          padding: '0 0.25rem',
+        }}
+      >
+        {nombre}
+      </span>
+      <button
+        onClick={() => window.location.assign(`/programas/${slug}`)}
+        style={{
+          background: '#c61d4a',
+          color: '#fff',
+          border: 'none',
+          padding: '0.5rem 1rem',
+          cursor: 'pointer',
+          borderRadius: 4,
+          marginTop: 'auto',
+          marginBottom: '0.75rem',
+        }}
+      >
+        Ver programa
+      </button>
     </div>
   )
 }
