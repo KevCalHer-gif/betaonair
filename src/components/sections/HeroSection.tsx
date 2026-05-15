@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 60 },
@@ -9,7 +10,135 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.6, delay, ease: 'easeOut' },
 })
 
+type StickerState = {
+  top: number
+  left: number
+  opacity: number
+  shaking: boolean
+  visible: boolean
+}
+
+function randomTop() {
+  return 5 + Math.random() * 75 // 5% – 80%
+}
+
+function randomLeft() {
+  return 5 + Math.random() * 80 // 5% – 85%
+}
+
+const STICKER_DATA = [
+  {
+    src: '/recuros-13.png',
+    alt: 'Rayo',
+    width: 90,
+    height: 90,
+    initialDelay: 0,
+    zoneIndex: 0,
+  },
+  {
+    src: '/recuros-19.png',
+    alt: 'YIIAAA',
+    width: 120,
+    height: 120,
+    initialDelay: 2000,
+    zoneIndex: 1,
+  },
+  {
+    src: '/recuros-12.png',
+    alt: 'Awesome',
+    width: 100,
+    height: 100,
+    initialDelay: 4000,
+    zoneIndex: 2,
+  },
+]
+
+function getZoneLeft(zoneIndex: number): number {
+  // divide 5–85 into 3 zones
+  const zoneWidth = 80 / 3
+  const zoneStart = 5 + zoneIndex * zoneWidth
+  return zoneStart + Math.random() * zoneWidth * 0.7
+}
+
 export default function HeroSection() {
+  const [stickers, setStickers] = useState<StickerState[]>(
+    STICKER_DATA.map((d) => ({
+      top: 5,
+      left: getZoneLeft(d.zoneIndex),
+      opacity: 1,
+      shaking: false,
+      visible: true,
+    })),
+  )
+
+  const runCycle = useCallback((index: number) => {
+    const delay = STICKER_DATA[index].initialDelay
+    const zone = STICKER_DATA[index].zoneIndex
+
+    const tick = () => {
+      setStickers((prev) => {
+        const next = [...prev]
+        next[index] = {
+          ...next[index],
+          visible: true,
+          opacity: 1,
+          top: getZoneLeft(zone),
+          left: getZoneLeft(zone),
+          shaking: false,
+        }
+        return next
+      })
+
+      // 1 second idle
+      setTimeout(() => {
+        // start shake
+        setStickers((prev) => {
+          const next = [...prev]
+          next[index] = { ...next[index], shaking: true }
+          return next
+        })
+        // after 1.4s shake stops
+        setTimeout(() => {
+          setStickers((prev) => {
+            const next = [...prev]
+            next[index] = { ...next[index], shaking: false }
+            return next
+          })
+          // 1 second quiet after shake
+          setTimeout(() => {
+            // fade out
+            setStickers((prev) => {
+              const next = [...prev]
+              next[index] = { ...next[index], opacity: 0 }
+              return next
+            })
+            // after fade, hide and reposition
+            setTimeout(() => {
+              setStickers((prev) => {
+                const next = [...prev]
+                next[index] = {
+                  ...next[index],
+                  visible: false,
+                  top: getZoneLeft(zone),
+                  left: getZoneLeft(zone),
+                }
+                return next
+              })
+              // restart cycle after short pause
+              setTimeout(tick, 200)
+            }, 400) // fade time
+          }, 1000) // quiet 1s
+        }, 1400) // shake duration
+      }, 1000) // idle 1s
+    }
+
+    setTimeout(tick, delay)
+  }, [])
+
+  useEffect(() => {
+    STICKER_DATA.forEach((_, idx) => runCycle(idx))
+  }, [runCycle])
+
   return (
     <section
       style={{
@@ -22,28 +151,26 @@ export default function HeroSection() {
         justifyContent: 'center',
       }}
     >
-      <Image
-        src="/recuros-13.png"
-        alt="Rayo"
-        width={90}
-        height={90}
-        className="hero-sticker hero-sticker-1"
-        loading="eager"
-      />
-      <Image
-        src="/recuros-19.png"
-        alt="YIIAAA"
-        width={120}
-        height={120}
-        className="hero-sticker hero-sticker-2"
-      />
-      <Image
-        src="/recuros-12.png"
-        alt="Awesome"
-        width={100}
-        height={100}
-        className="hero-sticker hero-sticker-3"
-      />
+      {STICKER_DATA.map((data, idx) => (
+        <Image
+          key={data.alt}
+          src={data.src}
+          alt={data.alt}
+          width={data.width}
+          height={data.height}
+          style={{
+            position: 'absolute',
+            top: `${stickers[idx].top}%`,
+            left: `${stickers[idx].left}%`,
+            opacity: stickers[idx].opacity,
+            transition: 'opacity 0.4s ease',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+          className={stickers[idx].shaking ? 'sticker-shake' : 'sticker-base'}
+          loading={idx === 0 ? 'eager' : undefined}
+        />
+      ))}
       <motion.div {...fadeUp(0)}>
         <Image
           src="/logo.png"
@@ -51,7 +178,6 @@ export default function HeroSection() {
           width={192}
           height={288}
           priority
-          className="hero-sticker hero-sticker-logo"
           style={{ objectFit: 'contain' }}
         />
       </motion.div>
