@@ -22,9 +22,10 @@ interface NewsItem {
 export default async function NoticiaSlugPage({ 
   params 
 }: { 
-  params: { slug: string } 
+  params: Promise<{ slug: string }> 
 }) {
-  const noticia = await getNewsBySlug(params.slug) as unknown as NewsItem | null
+  const { slug } = await params
+  const noticia = await getNewsBySlug(slug) as unknown as NewsItem | null
   if (!noticia) notFound()
 
   return (
