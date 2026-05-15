@@ -207,17 +207,17 @@
 }
 
 .sticker-shake {
-  animation: wobble-sticker 1.4s ease-in-out;
+  animation: wobble-sticker 0.93s ease-in-out;
   transform-origin: center center;
 }
 
 @keyframes wobble-sticker {
   0%   { transform: rotate(0deg); }
-  15%  { transform: rotate(13deg); }
-  30%  { transform: rotate(-13deg); }
-  45%  { transform: rotate(10deg); }
-  60%  { transform: rotate(-9deg); }
-  78%  { transform: rotate(5deg); }
+  15%  { transform: rotate(19deg); }
+  30%  { transform: rotate(-19deg); }
+  45%  { transform: rotate(15deg); }
+  60%  { transform: rotate(-13deg); }
+  78%  { transform: rotate(7deg); }
   100% { transform: rotate(0deg); }
 }
 
