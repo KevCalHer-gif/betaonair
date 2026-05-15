@@ -30,7 +30,7 @@ export default buildConfig({
     components: {
       views: {
         dashboard: {
-          Component: '/src/components/admin/Dashboard#default',
+          Component: '@/components/admin/Dashboard',
         },
       },
     },
