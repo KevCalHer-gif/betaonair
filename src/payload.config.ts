@@ -18,7 +18,6 @@ import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
 import { Settings } from './globals/Settings'
 import { Seo } from './globals/Seo'
-import Dashboard from './components/admin/Dashboard'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,7 +46,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: process.env.DATABASE_URI || '',
     },
   }),
   sharp,
