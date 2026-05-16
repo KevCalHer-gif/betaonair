@@ -1,3 +1,4 @@
+import Stickers from '../../components/global/Stickers'
 import React from 'react'
 import Link from 'next/link'
 import './styles.css'
@@ -25,6 +26,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <Analytics />
         <BgCanvas />
         <ParticleTrail />
+        <Stickers />
         <nav style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem', background: '#111', borderBottom: '1px solid #333', position: 'relative', zIndex: 100 }}>
           <Link href="/" style={{ color: '#c61d4a', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
           <NavLink href="/programas">Programas</NavLink>
