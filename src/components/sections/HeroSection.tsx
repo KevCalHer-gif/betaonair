@@ -47,8 +47,8 @@ function randomTopVh(): number {
 export default function HeroSection() {
   const [stickers, setStickers] = useState<StickerState[]>(
     STICKER_DATA.map((_, i) => ({
-      top: 5,
-      left: getZoneLeftVw(i),
+      top: 0,
+      left: 0,
       opacity: 0.21,
       shaking: false,
       visible: true,
