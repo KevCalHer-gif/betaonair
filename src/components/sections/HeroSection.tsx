@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback } from 'react'
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: 'easeOut' },
+  transition: { duration: 0.8, delay, ease: 'easeOut' },
 })
 
 type StickerState = {
@@ -19,9 +19,9 @@ type StickerState = {
 }
 
 const STICKER_DATA = [
-  { src: '/recuros-13.png', alt: 'Rayo', width: 90, height: 90 },
-  { src: '/recuros-19.png', alt: 'YIIAAA', width: 120, height: 120 },
-  { src: '/recuros-12.png', alt: 'Awesome', width: 100, height: 100 },
+  { src: '/recurso-13.png', alt: 'Rayo', width: 90, height: 90 },
+  { src: '/recurso-19.png', alt: 'YIIAAA', width: 120, height: 120 },
+  { src: '/recurso-12.png', alt: 'Awesome', width: 100, height: 100 },
   { src: '/recurso-18.png', alt: 'Sticker 1', width: 90, height: 90 },
   { src: '/recurso-24.png', alt: 'Sticker 2', width: 90, height: 90 },
   { src: '/recurso-10.png', alt: 'Sticker 3', width: 90, height: 90 },
