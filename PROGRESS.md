@@ -426,3 +426,10 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 - Implementar páginas restantes (servicios, blog completo, contacto con envío anónimo).
 - Añadir tests de contratos API.
 - Optimizar Docker y Nginx para producción.
+
+### [2026-05-17] — LEANDRO: Documentación de correcciones y datos compartidos
+
+**Rol:** LEANDRO (documentador)
+**Acción:** Documentar las correcciones aplicadas: corregido script dev en package.json (eliminado `--no-turbopack`), creados archivos `src/lib/data/programas.ts` y `src/lib/data/noticias.ts` con datos estáticos para programas y noticias respectivamente, actualizadas las páginas `/programas/[slug]` y `/noticias/[slug]` para usar datos locales, y actualizada la página de noticias para importar desde el archivo compartido. También se agregó comentario de verificación en página de patrocinios.
+**Archivos modificados:** package.json, src/lib/data/programas.ts (nuevo), src/lib/data/noticias.ts (nuevo), src/app/(frontend)/programas/[slug]/page.tsx, src/app/(frontend)/noticias/[slug]/page.tsx, src/app/(frontend)/noticias/page.tsx, src/app/(frontend)/patrocinios/page.tsx
+**Notas:** Se ejecutaron commits con hashes 2bc50f4, 375c4fd, a703a5d, 0e02a8a, 5e4c51a, 2ff9172, f72269e.
