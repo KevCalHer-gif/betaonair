@@ -1,7 +1,7 @@
 # BRAIN.md — betaonair
 > Archivo de estado del proyecto. Leer completo al inicio de cada sesión.
 > Actualizar obligatoriamente al cerrar cada sesión.
-> Última actualización: 2026-05-12
+> Última actualización: 2026-05-17
 
 ## ANÁLISIS RED RANGER — 2026-05-13 (Plan de páginas /programas/[slug], /en-vivo, /contacto)
 
@@ -195,7 +195,7 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        4 — Deploy completado
+FASE:        3 — Frontend base (en progreso)
 ```
 
 ### Tarea en progreso
@@ -436,11 +436,15 @@ Ver GLOSSARY.md para nombres completos.
 
 ### Últimos cambios (documentado por LEANDRO — 2026-05-17)
 
+- Corregido script dev en package.json (eliminado `--no-turbopack`) — Turbopack viene deshabilitado por defecto en esta versión.
+- Creado `src/lib/data/programas.ts` con datos estáticos de los 5 programas.
+- Creado `src/lib/data/noticias.ts` con datos estáticos de 4 noticias.
+- Actualizadas páginas `/programas/[slug]` y `/noticias/[slug]` para usar datos estáticos locales.
 - Formulario de contacto: se habilitó `create: () => true` en colección Contacts para permitir envío anónimo.
-- Slug corregido de `the-bronta-time` a `the-bronca-time` en página programas y archivo de imagen.
-- Se renombró `beta-kids.png` para que Vercel reconozca el cambio de imagen al actualizar git.
-- Se creó la página `/servicios` con contenido de servicios reales (placeholder).
-- Se actualizó la documentación con este registro.
+- Slug corregido de `the-bronta-time` a `the-bronca-time` en listado de programas.
+- Se renombró `beta-kids.png` para que Vercel reconozca el cambio de imagen.
+- Se creó la página `/servicios` con contenido real placeholder.
+- Se actualizó esta documentación con el registro de cambios.
 
 ---
 
