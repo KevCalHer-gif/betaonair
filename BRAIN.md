@@ -281,8 +281,8 @@ FASE:        3 — Frontend base (en progreso)
 [ ] Configuración de Nginx
 [ ] Deploy en VPS
 [ ] Configuración de Cloudflare
-[~] Build de producción (pendiente)
-[~] Ejecutar `npm run build` (pendiente)
+[x] Build de producción
+[x] Ejecutar `npm run build`
 ```
 
 ---

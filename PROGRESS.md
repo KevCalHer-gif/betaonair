@@ -485,3 +485,12 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Bloqueos detectados:** Ninguno.
 
 **Recomendación:** LEANDRO puede proceder a ejecutar `npm run build` y documentar los cambios.
+
+### [2026-05-17] — LEANDRO: Ejecución de npm run build exitosa
+
+**Rol:** LEANDRO (implementador)
+**Acción:** Ejecutar `npm run build` en la raíz del proyecto.
+**Resultado:** Build completado sin errores.
+**Comando:** `npm run build`
+**Output resumido:** Todas las páginas compiladas correctamente. Sin warnings críticos.
+**Próximo paso:** Documentar avances y pasar a pruebas de integración.
