@@ -252,7 +252,7 @@ FASE:        4 — Deploy completado
 [x] Colección: Episodes
 [x] Colección: Live
 [x] Colección: News
-[ ] Servicios reorientados a promoción (Services modificado)
+[ ] Servicios: diseño gráfico, producción audiovisual, podcast, streaming (Services definido)
 [ ] Global: settings
 [ ] Global: seo
 [ ] Configurar acceso y roles en cada colección
@@ -266,7 +266,7 @@ FASE:        4 — Deploy completado
 [ ] Layout global (nav + footer)
 [x] Componentes UI: ParticleTrail, CustomCursor, BackgroundDrip
 [x] Página: homepage (HeroSection + ServicesSection)
-[ ] Página: servicios
+[ ] Página: /servicios — diseño, producción audiovisual, podcast, streaming para clientes
 [ ] Página: portafolio
 [ ] Página: blog (listado + detalle)
 [ ] Página: contacto
@@ -416,6 +416,7 @@ Ver GLOSSARY.md para nombres completos.
 - Ramas: `main` (producción), `dev` (desarrollo activo)
 - Archivos de colección: `src/collections/[NombreColeccion].ts`
 - Archivos de página Next.js: `src/app/[ruta]/page.tsx`
+- Servicios coexiste con /patrocinios: servicios = lo que Beta On Air produce para clientes externos | patrocinios = marcas que pautas en el canal
 
 ---
 
