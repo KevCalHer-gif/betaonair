@@ -5,7 +5,7 @@ import ProgramCard from '../../../components/ui/ProgramCard'
 const programas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
   { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino', descripcion: 'Conversaciones profundas sobre cultura, historia y el camino de Bolivia.' },
-  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronca-time.png', slug: 'the-bronta-time', descripcion: 'El programa de entretenimiento y humor que no te puedes perder.' },
+  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronca-time.png', slug: 'the-bronca-time', descripcion: 'El programa de entretenimiento y humor que no te puedes perder.' },
   { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas', descripcion: 'Las voces femeninas que rompen el silencio y generan conversación.' },
   { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast', descripcion: 'El podcast boliviano que habla de todo lo que importa.' },
 ]
