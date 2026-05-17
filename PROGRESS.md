@@ -439,3 +439,30 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Rol:** LEANDRO (documentador)
 **Acción:** Confirmar que todo el trabajo realizado hasta el momento (cambios de programa, noticias, patrocinios, configuraciones) ha sido documentado en PROGRESS.md y BRAIN.md, según el flujo de roles establecido.
 **Notas:** Se han completado las tareas indicadas por las fases 3 y 4, y el repositorio refleja los cambios. El proyecto está listo para continuar con futuras iteraciones.
+
+### [2026-05-17] — RED RANGER: Análisis de estado y tareas pendientes
+
+**Rol:** RED RANGER (analista)
+
+**ANÁLISIS DEL ESTADO ACTUAL:**
+- **Fase 3 (Frontend base):** en progreso.
+- **Fase 4 (Calidad y deploy):** pendiente.
+- Datos compartidos (programas.ts, noticias.ts) ya existen; las páginas `/programas/[slug]` y `/noticias/[slug]` los usan correctamente.
+- Colección `Contacts` permite `create: () => true` según corrección previa (se debe verificar).
+- Slug `the-bronca-time` corregido en datos y en archivo de logo.
+
+**TAREAS PENDIENTES (orden de prioridad):**
+
+1. **Layout global (nav + footer)** – no implementado. Sin esta capa la navegación entre páginas es inconsistente.
+2. **Página de contacto** – formulario visible, pero la integración con `POST /api/contacts` requiere confirmación de que el acceso anónimo funciona.
+3. **Página de servicios (`/servicios`)** – existe placeholder; falta contenido real (colección Services orientada a promoción).
+4. **Página de portafolio (`/portafolio`)** – actualmente redirige a `/programas`; necesita contenido propio (programas destacados o proyectos).
+5. **Blog dinámico** – datos estáticos funcionan, pero no hay conexión con la colección `News` de Payload para contenido en vivo.
+6. **Global settings + SEO** (Fase 2 pendiente) – no configurados; afecta meta tags y Open Graph.
+7. **Build de producción (`npm run build`)** – debe verificarse tras todos los cambios recientes.
+8. **Datos semilla (seed)** – sin seed inicial, las páginas que consuman Payload pueden quedar vacías.
+9. **Test de enlaces** – recorrer todas las rutas para confirmar que responden correctamente incluso sin Payload corriendo.
+
+**BLOQUEOS DETECTADOS:** Ninguno. Los riesgos críticos anteriores (contacto bloqueado, slug incorrecto) ya fueron corregidos.
+
+**RECOMENDACIÓN:** Iniciar con **Layout global** y **Página de contacto**, luego continuar con las demás tareas según el backlog de BRAIN.md.
