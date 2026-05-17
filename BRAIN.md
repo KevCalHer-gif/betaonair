@@ -433,3 +433,13 @@ Ver GLOSSARY.md para nombres completos.
 
 ---
 
+### Últimos cambios (documentado por LEANDRO — 2026-05-17)
+
+- Formulario de contacto: se habilitó `create: () => true` en colección Contacts para permitir envío anónimo.
+- Slug corregido de `the-bronta-time` a `the-bronca-time` en página programas y archivo de imagen.
+- Se renombró `beta-kids.png` para que Vercel reconozca el cambio de imagen al actualizar git.
+- Se creó la página `/servicios` con contenido de servicios reales (placeholder).
+- Se actualizó la documentación con este registro.
+
+---
+
