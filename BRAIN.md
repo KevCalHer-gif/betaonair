@@ -443,3 +443,23 @@ Ver GLOSSARY.md para nombres completos.
 
 ---
 
+### RED RANGER — Tareas pendientes (2026-05-17)
+
+**Tareas inmediatas por orden de prioridad:**
+
+1. **Layout global (nav + footer)** — No implementado (Fase 3). Sin esta capa los enlaces entre páginas no son consistentes.
+2. **Página de portafolio** — Actualmente redirige a `/programas`. Debe mostrar contenido real (programas propios o proyectos seleccionados).
+3. **Página de servicios** — Creada como placeholder (según BRAIN.md). Falta integrar datos reales (colección Services orientada a promoción).
+4. **Manejo de estados vacíos** — La mayoría de las páginas de detalle dependen de datos en Payload. Sin seed initial pueden quedar vacías.
+5. **Colección Services** — Aún orientada a promoción; necesita definición para que la página `/servicios` muestre contenido coherente.
+6. **Global settings + SEO** — No configurados (Fase 2 pendiente).
+7. **Build de producción** — No ejecutado (`npm run build`). Debe verificarse antes de deploy.
+8. **Test de enlaces** — Confirmar que `/noticias/[slug]`, `/programas/[slug]`, `/en‑vivo`, `/contacto`, `/portafolio` devuelven respuesta correcta incluso sin datos en la base.
+
+**Bloqueos detectados:**
+- Ningún bloqueo actual. La colección Contacts ya tiene `create: () => true`.
+- El slug `the-bronca-time` corregido.
+- Falta renombrar el archivo de imagen `beta-kids.png` para Git (según LEANDRO ya se hizo).
+
+---
+
