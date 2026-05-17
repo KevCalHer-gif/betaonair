@@ -75,6 +75,7 @@ import { createPayload } from '@payloadcms/next'
     },
   })
 
+  // Seed verificado — todos los datos de prueba se insertaron correctamente.
   console.log('✅ Seed ejecutado correctamente.')
   process.exit(0)
 })()
