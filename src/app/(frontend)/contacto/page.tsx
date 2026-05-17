@@ -5,7 +5,6 @@ import { useState, FormEvent } from 'react'
 export default function ContactoPage() {
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
-  const [tipo, setTipo] = useState('')
   const [mensaje, setMensaje] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [exito, setExito] = useState(false)
@@ -20,13 +19,12 @@ export default function ContactoPage() {
       const res = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email, tipo, mensaje }),
+        body: JSON.stringify({ name: nombre, email, message: mensaje }),
       })
       if (!res.ok) throw new Error('Error al enviar el mensaje')
       setExito(true)
       setNombre('')
       setEmail('')
-      setTipo('')
       setMensaje('')
     } catch (err: any) {
       setError(err.message || 'Error inesperado')
