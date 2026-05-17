@@ -1,127 +1,80 @@
-'use client'
+import { notFound } from 'next/navigation'
+import { programas } from '../../../../lib/data/programas'
+import Link from 'next/link'
+import Image from 'next/image'
 
-import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { getProgramBySlug } from '../../../../lib/api/programs'
-import { getEpisodesByProgram } from '../../../../lib/api/episodes'
-
-interface Program {
-  id: number
-  title: string
-  description?: string | null
-  coverImage?: { url?: string }
-}
-
-interface Episode {
-  id: number
-  title: string
-  embedUrl?: string | null
-}
-
-export default function ProgramSlugPage() {
-  const params = useParams()
-  const slug = params?.slug as string
-
-  const [program, setProgram] = useState<Program | null>(null)
-  const [episodes, setEpisodes] = useState<Episode[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    if (!slug) return
-    const load = async () => {
-      setLoading(true)
-      try {
-        const fetchedProgram = await getProgramBySlug(slug)
-        setProgram(fetchedProgram)
-        if (fetchedProgram) {
-          const episodesData = await getEpisodesByProgram(slug)
-          setEpisodes(episodesData)
-        }
-      } catch (error) {
-        console.error('Error loading program:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    load()
-  }, [slug])
-
-  if (loading) {
-    return (
-      <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
-        <p style={{ color: '#aaa' }}>Cargando programa…</p>
-      </main>
-    )
-  }
-
-  if (!program) {
-    return (
-      <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
-        <p style={{ color: '#aaa' }}>Programa no encontrado.</p>
-      </main>
-    )
-  }
+export default async function ProgramSlugPage({
+  params
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const programa = programas.find((p) => p.slug === slug)
+  if (!programa) notFound()
 
   return (
-    <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
-      {/* Cover image */}
-      {program.coverImage?.url && (
-        <img
-          src={program.coverImage.url}
-          alt={program.title}
-          style={{
-            width: '100%',
-            maxWidth: 600,
-            display: 'block',
-            margin: '0 auto',
-            borderRadius: 12,
-            marginBottom: '2rem',
-          }}
-        />
-      )}
-
-      <h1
+    <main style={{ minHeight: '100vh', padding: '2rem 1rem', maxWidth: '800px', margin: '0 auto' }}>
+      <Link
+        href="/programas"
         style={{
-          fontFamily: 'var(--font-brand)',
           color: '#c61d4a',
-          fontSize: '2rem',
-          marginBottom: '1rem',
+          textDecoration: 'none',
+          display: 'inline-block',
+          marginBottom: '1.5rem',
+          fontSize: '0.9rem',
+          fontWeight: 'bold',
         }}
       >
-        {program.title}
-      </h1>
-      {program.description && (
-        <p style={{ color: '#aaa', fontSize: '1rem', marginBottom: '2rem' }}>
-          {program.description}
-        </p>
-      )}
+        ← Volver a programas
+      </Link>
 
-      <h2 style={{ color: '#f0f0f0', fontSize: '1.5rem', marginBottom: '1rem' }}>
-        Episodios
-      </h2>
-      {episodes.length === 0 ? (
-        <p style={{ color: '#888' }}>No hay episodios disponibles aún.</p>
-      ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {episodes.map((ep) => (
-            <li key={ep.id} style={{ marginBottom: '1.5rem' }}>
-              <h3 style={{ color: '#f0f0f0', margin: '0 0 0.5rem' }}>{ep.title}</h3>
-              {ep.embedUrl ? (
-                <iframe
-                  src={ep.embedUrl}
-                  title={ep.title}
-                  width="100%"
-                  height="315"
-                  style={{ border: 'none', borderRadius: 8 }}
-                  allowFullScreen
-                />
-              ) : (
-                <p style={{ color: '#aaa' }}>Sin enlace de reproducción.</p>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <Image
+          src={programa.logo}
+          alt={programa.nombre}
+          width={300}
+          height={300}
+          style={{ objectFit: 'contain', maxHeight: '200px', width: 'auto' }}
+        />
+      </div>
+
+      <h1 style={{
+        fontFamily: 'var(--font-brand)',
+        color: '#c61d4a',
+        fontSize: '2rem',
+        marginBottom: '1rem',
+        textAlign: 'center',
+      }}>
+        {programa.nombre}
+      </h1>
+
+      <p style={{
+        color: '#aaa',
+        fontSize: '1rem',
+        lineHeight: '1.8',
+        marginBottom: '2rem',
+        textAlign: 'center',
+      }}>
+        {programa.descripcion}
+      </p>
+
+      <div style={{
+        background: '#0a0a0a',
+        border: '1px solid #333',
+        borderRadius: '8px',
+        padding: '2rem',
+        textAlign: 'center',
+      }}>
+        <h2 style={{ color: '#f0f0f0', fontSize: '1.2rem', marginBottom: '1rem' }}>
+          Episodios
+        </h2>
+        <p style={{ color: '#555', fontSize: '0.9rem' }}>
+          Los episodios estarán disponibles próximamente.
+        </p>
+        <p style={{ color: '#333', fontSize: '0.8rem', marginTop: '0.5rem' }}>
+          Seguinos en YouTube y TikTok para no perderte nada.
+        </p>
+      </div>
     </main>
   )
 }
