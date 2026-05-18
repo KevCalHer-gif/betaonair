@@ -494,3 +494,10 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Comando:** `npm run build`
 **Output resumido:** Todas las páginas compiladas correctamente. Sin warnings críticos.
 **Próximo paso:** Documentar avances y pasar a pruebas de integración.
+
+### [2026-05-17] — LEANDRO: Corrección de error onMouseEnter/Leave en Server Component
+
+**Rol:** LEANDRO (implementador)
+**Acción:** Se eliminaron los event handlers `onMouseEnter` y `onMouseLeave` del archivo `src/app/(frontend)/portafolio/page.tsx`, reemplazándolos por estilos CSS hover compatibles con Server Components de Next.js 16. El build de producción se ejecutó sin errores (`npm run build`).
+**Resultado:** Build exitoso. Sin warnings críticos.
+**Próximo paso:** Continuar con pruebas de integración.
