@@ -1,54 +1,38 @@
-LISANDRO: Necesito corregir un error de build de Next.js 16 relacionado con Server Components y eventos del mouse.
-
-ERROR ACTUAL:
-"Event handlers cannot be passed to Client Component props"
-
-El problema ocurre en:
-src/app/(frontend)/portafolio/page.tsx
-
-Actualmente existe un div con:
-
-* onMouseEnter
-* onMouseLeave
-
-El archivo es un Server Component y NO quiero convertir toda la página en 'use client'.
-
-OBJETIVO:
-
-* Mantener la página como Server Component.
-* Eliminar completamente el uso de onMouseEnter y onMouseLeave.
-* Reemplazar el efecto hover usando únicamente CSS o estilos compatibles con Server Components.
-* Mantener la animación visual del borde al hacer hover.
-* Mantener compatibilidad total con Next.js 16 y Vercel build.
-
-REQUISITOS IMPORTANTES:
-
-* NO agregar 'use client' al page.tsx.
-* NO romper SSR.
-* NO convertir toda la página en Client Component.
-* Mantener el diseño visual actual.
-* Usar una solución profesional y optimizada.
-
-La sección problemática actual es similar a:
-
-<div
-  style={{
-    background: '#0a0a0a',
-    border: '1px solid #333',
-    borderRadius: '8px',
-    padding: '1.5rem',
-    textAlign: 'center',
-    transition: 'border-color 0.3s ease'
+Aplica estas tres correcciones usando bloques SEARCH/REPLACE:
+CORRECCIÓN 1 — src/app/(frontend)/styles.css
+Agrega scroll-behavior: smooth; dentro del bloque html existente.
+CORRECCIÓN 2 — src/app/(frontend)/page.tsx
+Agrega id="contenido" a la sección de "Nuestros Programas". Busca esta línea exacta:
+<section style={{ padding: '2rem 0' }}>
+Y reemplázala por:
+<section id="contenido" style={{ padding: '2rem 0' }}>
+Pero solo en la primera sección que contiene el listado de programas, no en otras secciones.
+CORRECCIÓN 3 — src/components/sections/HeroSection.tsx
+Busca el elemento anchor o botón que navega a /#contenido y reemplázalo por un <button> con onClick que haga scroll suave:
+tsx<button
+  onClick={() => {
+    const el = document.getElementById('contenido')
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }}
-  onMouseEnter={e => e.currentTarget.style.borderColor = '#c61d4a'}
-  onMouseLeave={e => e.currentTarget.style.borderColor = '#333'}
+  style={{
+    display: 'inline-block',
+    backgroundColor: '#c61d4a',
+    color: '#fff',
+    padding: '0.75rem 2rem',
+    fontWeight: 700,
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase',
+    border: 'none',
+    cursor: 'pointer',
+    marginTop: '1.5rem',
+  }}
+  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#e0205a')}
+  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#c61d4a')}
 >
+  Ver nuestro trabajo
+</button>
+RESTRICCIONES:
 
-Quiero que reemplaces esto por una solución basada en CSS hover compatible con Server Components.
-
-Después de los cambios:
-
-1. ejecutar npm run build
-2. verificar que no existan errores
-3. asegurar compatibilidad con producción/Vercel
-4. no modificar otras páginas innecesariamente
+Usar SEARCH/REPLACE, NO crear archivos nuevos
+No modificar ningún otro elemento ni componente
+No cambiar el texto del botón ni sus estilos más allá de lo indicado
