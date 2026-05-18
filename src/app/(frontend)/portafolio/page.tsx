@@ -1,6 +1,7 @@
 import { programas } from '../../../lib/data/programas'
 import Image from 'next/image'
 import Link from 'next/link'
+import styles from './portafolio.module.css'
 
 export default function PortafolioPage() {
   return (
@@ -14,9 +15,7 @@ export default function PortafolioPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
         {programas.map((prog) => (
           <Link key={prog.slug} href={`/programas/${prog.slug}`} style={{ textDecoration: 'none' }}>
-            <div style={{ background: '#0a0a0a', border: '1px solid #333', borderRadius: '8px', padding: '1.5rem', textAlign: 'center', transition: 'border-color 0.3s ease' }}
-                 onMouseEnter={e => e.currentTarget.style.borderColor = '#c61d4a'}
-                 onMouseLeave={e => e.currentTarget.style.borderColor = '#333'}>
+            <div className={styles.card}>
               <Image src={prog.logo} alt={prog.nombre} width={200} height={200} style={{ objectFit: 'contain', height: '120px', width: 'auto', marginBottom: '1rem' }} />
               <h3 style={{ color: '#c61d4a', fontSize: '1rem', marginBottom: '0.5rem' }}>{prog.nombre}</h3>
               <p style={{ color: '#888', fontSize: '0.8rem', margin: 0 }}>{prog.descripcion}</p>
