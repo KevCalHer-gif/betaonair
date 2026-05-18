@@ -12,8 +12,11 @@ export default async function ProgramSlugPage({
   const programa = programas.find((p) => p.slug === slug)
   if (!programa) notFound()
 
+  const coverSrc = programa.coverImage ?? programa.logo
+  const coverAlt = `Portada de ${programa.nombre}`
+
   return (
-    <main style={{ minHeight: '100vh', padding: '2rem 1rem', maxWidth: '800px', margin: '0 auto' }}>
+    <main style={{ minHeight: '100vh', padding: '2rem 1rem', maxWidth: '900px', margin: '0 auto' }}>
       <Link
         href="/programas"
         style={{
@@ -28,13 +31,33 @@ export default async function ProgramSlugPage({
         ← Volver a programas
       </Link>
 
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      {/* Banner rectangular de portada */}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '0',
+          paddingBottom: '56.25%', // 16:9 ratio
+          borderRadius: '12px',
+          overflow: 'hidden',
+          marginBottom: '2rem',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+        }}
+      >
         <Image
-          src={programa.logo}
-          alt={programa.nombre}
-          width={300}
-          height={300}
-          style={{ objectFit: 'contain', maxHeight: '200px', width: 'auto' }}
+          src={coverSrc}
+          alt={coverAlt}
+          fill
+          style={{ objectFit: 'cover' }}
+          priority
+        />
+        {/* Overlay sutil para mejorar legibilidad del título (opcional) */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent 60%)',
+          }}
         />
       </div>
 
