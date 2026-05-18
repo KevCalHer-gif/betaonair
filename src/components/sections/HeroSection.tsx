@@ -47,8 +47,11 @@ export default function HeroSection() {
       </motion.h1>
 
       <motion.div {...fadeUp(0.4)}>
-        <a
-          href="#contenido"
+        <button
+          onClick={() => {
+            const el = document.getElementById('contenido')
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }}
           style={{
             display: 'inline-block',
             backgroundColor: '#c61d4a',
@@ -57,14 +60,15 @@ export default function HeroSection() {
             fontWeight: 700,
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            textDecoration: 'none',
+            border: 'none',
+            cursor: 'pointer',
             marginTop: '1.5rem',
           }}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#e0205a')}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#c61d4a')}
         >
           Ver nuestro trabajo
-        </a>
+        </button>
       </motion.div>
 
       {/* scroll indicator */}

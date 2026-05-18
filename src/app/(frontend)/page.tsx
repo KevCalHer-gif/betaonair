@@ -24,7 +24,7 @@ export default function HomePage() {
       <section>
         <h2>En Vivo</h2>
       </section>
-      <section style={{ padding: '2rem 0' }}>
+      <section id="contenido" style={{ padding: '2rem 0' }}>
         <h2
           style={{
             fontFamily: 'var(--font-brand)',
