@@ -169,3 +169,16 @@ Acelera la entrega de funcionalidad visible sin depender del backend de Payload.
 
 **Riesgo conocido:**
 - Al conectar Payload, se deberá reemplazar el contenido estático con llamadas API, manteniendo la misma estructura de rutas.
+## [009] Servicios profesionales coexisten con patrocinios
+**Fecha:** 2026-05-17
+**Decidido por:** Equipo
+**Estado:** FIRME
+
+**Decisión:**
+La ruta /servicios se mantiene y ofrece servicios profesionales:
+diseño gráfico, producción audiovisual, producción de podcast y streaming para clientes externos.
+NO se elimina. Coexiste con /patrocinios.
+
+**Distinción clave:**
+- /servicios → lo que Beta On Air produce PARA clientes (agencia)
+- /patrocinios → marcas que quieren aparecer EN el canal (publicidad)
