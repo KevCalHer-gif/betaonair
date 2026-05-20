@@ -9,7 +9,7 @@ import { createPayload } from '@payloadcms/next'
     secret: process.env.PAYLOAD_SECRET!,
     db: {
       adapter: 'postgres',
-      url: process.env.DATABASE_URL!,
+      url: process.env.DATABASE_URI!,
     },
   })
 

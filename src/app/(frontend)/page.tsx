@@ -6,7 +6,7 @@ import SocialMediaSection from '../../components/sections/SocialMediaSection'
 const programas = [
   { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
   { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino' },
-  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronca-time.png', slug: 'the-bronaa-time' },
+  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronca-time.png', slug: 'the-bronca-time' },
   { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas' },
   { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast' },
 ]
