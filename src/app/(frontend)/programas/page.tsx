@@ -1,6 +1,8 @@
 import ProgramCard from '../../../components/sections/ProgramCard'
 import { getPrograms } from '../../../lib/api/programs'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ProgramasPage() {
   const programas = await getPrograms()
 

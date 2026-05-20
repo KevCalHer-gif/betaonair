@@ -18,28 +18,14 @@ export default async function ProgramSlugPage({
   const coverAlt = `Portada de ${programa.title}`
 
   return (
-    <main style={{ minHeight: '100vh', padding: '2rem 1rem', maxWidth: '900px', margin: '0 auto' }}>
-      <Link
-        href="/programas"
-        style={{
-          color: '#c61d4a',
-          textDecoration: 'none',
-          display: 'inline-block',
-          marginBottom: '1.5rem',
-          fontSize: '0.9rem',
-          fontWeight: 'bold',
-        }}
-      >
-        ← Volver a programas
-      </Link>
-
+    <main style={{ minHeight: '100vh', padding: '0 1rem 2rem 1rem', maxWidth: '900px', margin: '0 auto' }}>
       {/* Banner rectangular de portada con relación 19:5 (1900×500) */}
       <div
         style={{
           position: 'relative',
           width: '100%',
           paddingBottom: `${(500 / 1900) * 100}%`, // 19:5 ratio (~26.3158%)
-          borderRadius: '12px',
+          borderRadius: '0 0 12px 12px',
           overflow: 'hidden',
           marginBottom: '2rem',
           boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
@@ -61,6 +47,20 @@ export default async function ProgramSlugPage({
           }}
         />
       </div>
+
+      <Link
+        href="/programas"
+        style={{
+          color: '#c61d4a',
+          textDecoration: 'none',
+          display: 'inline-block',
+          marginBottom: '1.5rem',
+          fontSize: '0.9rem',
+          fontWeight: 'bold',
+        }}
+      >
+        ← Volver a programas
+      </Link>
 
       <h1 style={{
         fontFamily: 'var(--font-brand)',

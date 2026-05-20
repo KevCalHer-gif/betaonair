@@ -21,6 +21,7 @@ export const Media: CollectionConfig = {
         height: 400,
         fit: 'cover',
         position: 'centre',
+        withoutEnlargement: true,
       },
       {
         name: 'program_cover',
@@ -28,6 +29,7 @@ export const Media: CollectionConfig = {
         height: 500,
         fit: 'cover',
         position: 'centre',
+        withoutEnlargement: true,
       },
     ],
   },

@@ -4,6 +4,8 @@ import ProgramCard from '../../components/sections/ProgramCard'
 import SocialMediaSection from '../../components/sections/SocialMediaSection'
 import { getPrograms } from '../../lib/api/programs'
 
+export const dynamic = 'force-dynamic'
+
 const noticias = [
   { titulo: 'Beta On Air lanza su nueva temporada de programas', fecha: '10 mayo 2026', resumen: 'La plataforma digital de contenidos bolivianos arranca con fuerza su nueva temporada con cinco programas renovados.' },
   { titulo: 'No Tan Calladitas: voces que rompen el silencio', fecha: '8 mayo 2026', resumen: 'El programa que da voz a las mujeres bolivianas regresa con historias que inspiran y generan conversación.' },
