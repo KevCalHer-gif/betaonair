@@ -4,7 +4,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 export async function getPrograms(): Promise<Program[]> {
   try {
-    const res = await fetch(`${API_URL}/api/programs`, {
+    const res = await fetch(`${API_URL}/api/programs?depth=2&limit=50`, {
       next: { revalidate: 3600 },
     })
     if (!res.ok) throw new Error('Failed to fetch programs')
@@ -19,7 +19,7 @@ export async function getPrograms(): Promise<Program[]> {
 export async function getProgramBySlug(slug: string): Promise<Program | null> {
   try {
     const res = await fetch(
-      `${API_URL}/api/programs?where[slug][equals]=${slug}`,
+      `${API_URL}/api/programs?where[slug][equals]=${slug}&depth=2`,
       { next: { revalidate: 3600 } },
     )
     if (!res.ok) throw new Error('Failed to fetch program')

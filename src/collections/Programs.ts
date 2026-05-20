@@ -48,12 +48,25 @@ export const Programs: CollectionConfig = {
     {
       name: 'description',
       type: 'textarea',
+      required: true,
+    },
+    {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      admin: {
+        description: 'Logo del programa. Subir imagen que será cropeada 1:1 (400×400).',
+      },
     },
     {
       name: 'coverImage',
-      type: 'relationship',
+      type: 'upload',
       relationTo: 'media',
-      hasMany: false,
+      required: true,
+      admin: {
+        description: 'Portada del programa. Subir imagen que será cropeada 1900×500 (19:5).',
+      },
     },
     {
       name: 'accentColor',

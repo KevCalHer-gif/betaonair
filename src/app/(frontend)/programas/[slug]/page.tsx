@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { programas } from '../../../../lib/data/programas'
+import { getProgramBySlug } from '../../../../lib/api/programs'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -9,11 +9,13 @@ export default async function ProgramSlugPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const programa = programas.find((p) => p.slug === slug)
+  const programa = await getProgramBySlug(slug)
   if (!programa) notFound()
 
-  const coverSrc = programa.coverImage ?? programa.logo
-  const coverAlt = `Portada de ${programa.nombre}`
+  const coverImage = (programa.coverImage as any)
+  const logo = (programa.logo as any)
+  const coverSrc = coverImage?.sizes?.program_cover?.url || coverImage?.url || logo?.sizes?.program_logo?.url || logo?.url || ''
+  const coverAlt = `Portada de ${programa.title}`
 
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem', maxWidth: '900px', margin: '0 auto' }}>
@@ -31,13 +33,12 @@ export default async function ProgramSlugPage({
         ← Volver a programas
       </Link>
 
-      {/* Banner rectangular de portada */}
+      {/* Banner rectangular de portada con relación 19:5 (1900×500) */}
       <div
         style={{
           position: 'relative',
           width: '100%',
-          height: '0',
-          paddingBottom: '56.25%', // 16:9 ratio
+          paddingBottom: `${(500 / 1900) * 100}%`, // 19:5 ratio (~26.3158%)
           borderRadius: '12px',
           overflow: 'hidden',
           marginBottom: '2rem',
@@ -51,7 +52,7 @@ export default async function ProgramSlugPage({
           style={{ objectFit: 'cover' }}
           priority
         />
-        {/* Overlay sutil para mejorar legibilidad del título (opcional) */}
+        {/* Overlay sutil para mejorar legibilidad */}
         <div
           style={{
             position: 'absolute',
@@ -68,7 +69,7 @@ export default async function ProgramSlugPage({
         marginBottom: '1rem',
         textAlign: 'center',
       }}>
-        {programa.nombre}
+        {programa.title}
       </h1>
 
       <p style={{
@@ -78,7 +79,7 @@ export default async function ProgramSlugPage({
         marginBottom: '2rem',
         textAlign: 'center',
       }}>
-        {programa.descripcion}
+        {programa.description}
       </p>
 
       <div style={{

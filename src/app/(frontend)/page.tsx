@@ -2,14 +2,7 @@ import React from 'react'
 import HeroSection from '../../components/sections/HeroSection'
 import ProgramCard from '../../components/sections/ProgramCard'
 import SocialMediaSection from '../../components/sections/SocialMediaSection'
-
-const programas = [
-  { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids' },
-  { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino' },
-  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronca-time.png', slug: 'the-bronca-time' },
-  { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas' },
-  { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast' },
-]
+import { getPrograms } from '../../lib/api/programs'
 
 const noticias = [
   { titulo: 'Beta On Air lanza su nueva temporada de programas', fecha: '10 mayo 2026', resumen: 'La plataforma digital de contenidos bolivianos arranca con fuerza su nueva temporada con cinco programas renovados.' },
@@ -17,7 +10,9 @@ const noticias = [
   { titulo: 'Beta Kids: entretenimiento educativo para los más pequeños', fecha: '5 mayo 2026', resumen: 'El espacio dedicado a niños y niñas continúa creciendo con contenido divertido y con valores.' },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const programas = await getPrograms()
+
   return (
     <>
       <HeroSection />
@@ -36,11 +31,14 @@ export default function HomePage() {
           Nuestros Programas
         </h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
-          {programas.map((p) => (
-            <div key={p.slug} className="card-programa fade-in-up" style={{ display: 'flex' }}>
-              <ProgramCard nombre={p.nombre} logo={p.logo} slug={p.slug} />
-            </div>
-          ))}
+          {programas.map((p) => {
+            const logoUrl = (p.logo as any)?.sizes?.program_logo?.url || (p.logo as any)?.url || ''
+            return (
+              <div key={p.slug} className="card-programa fade-in-up" style={{ display: 'flex' }}>
+                <ProgramCard nombre={p.title} logo={logoUrl} slug={p.slug || ''} descripcion={p.description || ''} />
+              </div>
+            )
+          })}
         </div>
       </section>
       <section style={{ padding: '2rem 0', position: 'relative', zIndex: 10 }}>

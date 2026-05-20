@@ -1,31 +1,28 @@
-'use client'
+import ProgramCard from '../../../components/sections/ProgramCard'
+import { getPrograms } from '../../../lib/api/programs'
 
-import ProgramCard from '../../../components/ui/ProgramCard'
+export default async function ProgramasPage() {
+  const programas = await getPrograms()
 
-const programas = [
-  { nombre: 'Beta Kids', logo: '/images/programas/beta-kids.png', slug: 'beta-kids', descripcion: 'El espacio de entretenimiento educativo para los más pequeños de la casa.' },
-  { nombre: 'Piedra y Camino', logo: '/images/programas/piedra-y-camino.png', slug: 'piedra-y-camino', descripcion: 'Conversaciones profundas sobre cultura, historia y el camino de Bolivia.' },
-  { nombre: 'The Bronca Time', logo: '/images/programas/the-bronca-time.png', slug: 'the-bronca-time', descripcion: 'El programa de entretenimiento y humor que no te puedes perder.' },
-  { nombre: 'No Tan Calladitas', logo: '/images/programas/no-tan-calladitas.png', slug: 'no-tan-calladitas', descripcion: 'Las voces femeninas que rompen el silencio y generan conversación.' },
-  { nombre: 'Yukast', logo: '/images/programas/yukast.png', slug: 'yukast', descripcion: 'El podcast boliviano que habla de todo lo que importa.' },
-]
-
-export default function ProgramasPage() {
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
       <h1 style={{ fontFamily: 'var(--font-brand)', color: '#c61d4a', fontSize: '2rem', marginBottom: '2rem', textAlign: 'center' }}>
         Nuestros Programas
       </h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'center' }}>
-        {programas.map((prog) => (
-          <ProgramCard
-            key={prog.slug}
-            nombre={prog.nombre}
-            logo={prog.logo}
-            slug={prog.slug}
-            descripcion={prog.descripcion}
-          />
-        ))}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
+        {programas.map((prog) => {
+          const logoUrl = (prog.logo as any)?.sizes?.program_logo?.url || (prog.logo as any)?.url || ''
+          return (
+            <div key={prog.slug} className="card-programa fade-in-up" style={{ display: 'flex' }}>
+              <ProgramCard
+                nombre={prog.title}
+                logo={logoUrl}
+                slug={prog.slug || ''}
+                descripcion={prog.description || ''}
+              />
+            </div>
+          )
+        })}
       </div>
     </main>
   )

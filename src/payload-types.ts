@@ -183,6 +183,24 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    program_logo?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    program_cover?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -220,8 +238,15 @@ export interface Program {
   id: number;
   title: string;
   slug?: string | null;
-  description?: string | null;
-  coverImage?: (number | null) | Media;
+  description: string;
+  /**
+   * Logo del programa. Subir imagen que será cropeada 1:1 (400×400).
+   */
+  logo: number | Media;
+  /**
+   * Portada del programa. Subir imagen que será cropeada 1900×500 (19:5).
+   */
+  coverImage: number | Media;
   accentColor?: string | null;
   isLive?: boolean | null;
   liveUrl?: string | null;
@@ -487,6 +512,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        program_logo?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        program_cover?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -522,6 +571,7 @@ export interface ProgramsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   description?: T;
+  logo?: T;
   coverImage?: T;
   accentColor?: T;
   isLive?: T;

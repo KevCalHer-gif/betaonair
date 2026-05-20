@@ -3,10 +3,19 @@
 import Image from 'next/image'
 import React from 'react'
 
+/** Extrae la URL de imagen desde un string directo o desde la respuesta populada de Payload */
+function getImageUrl(
+  image: string | { url?: string; sizes?: Record<string, { url?: string }> },
+): string {
+  if (typeof image === 'string') return image
+  return image?.sizes?.program_logo?.url || image?.url || ''
+}
+
 interface ProgramCardProps {
   nombre: string
-  logo: string
+  logo: string | { url?: string; sizes?: Record<string, { url?: string }> }
   slug: string
+  descripcion?: string
 }
 
 function getBlockColor(nombre: string): string {
@@ -20,9 +29,10 @@ function getBlockColor(nombre: string): string {
   return '#c61d4a'
 }
 
-export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
+export default function ProgramCard({ nombre, logo, slug, descripcion }: ProgramCardProps) {
   const blockColor = getBlockColor(nombre)
   const firstLetter = nombre.charAt(0).toUpperCase()
+  const logoSrc = getImageUrl(logo)
 
   const handleClick = () => {
     window.location.href = `/programas/${slug}`
@@ -32,7 +42,7 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
     <div className="program-card" onClick={handleClick} style={{ zIndex: 10 }}>
       {/* Imagen de fondo: ocupa toda la tarjeta */}
       <div className="cover">
-        <Image src={logo} alt={nombre} fill sizes="200px" style={{ objectFit: 'cover' }} />
+        <Image src={logoSrc} alt={nombre} fill sizes="200px" style={{ objectFit: 'cover' }} />
       </div>
 
       {/* Overlay semitransparente en estado normal, desaparece en hover */}
@@ -55,6 +65,7 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
       {/* Información extra que aparece desde abajo en hover */}
       <div className="extra-inform">
         <div className="title">{nombre}</div>
+        {descripcion && <div className="descripcion">{descripcion}</div>}
         <div className="subtitle">Ver programa</div>
       </div>
 
@@ -182,6 +193,17 @@ export default function ProgramCard({ nombre, logo, slug }: ProgramCardProps) {
           font-size: 1.2rem;
           font-weight: bold;
           line-height: 1.2;
+        }
+
+        .extra-inform .descripcion {
+          font-size: 0.6rem;
+          color: #ccc;
+          line-height: 1.3;
+          margin: 0.3rem 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
         .extra-inform .subtitle {
