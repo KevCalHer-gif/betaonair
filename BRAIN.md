@@ -1,7 +1,7 @@
 # BRAIN.md — betaonair
 > Archivo de estado del proyecto. Leer completo al inicio de cada sesión.
 > Actualizar obligatoriamente al cerrar cada sesión.
-> Última actualización: 2026-05-19
+> Última actualización: 2026-05-21
 
 ## ANÁLISIS RED RANGER — 2026-05-13 (Plan de páginas /programas/[slug], /en-vivo, /contacto)
 
@@ -199,36 +199,33 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 ```
 
 ### Tarea en progreso
-- Actualización de documentación y build de verificación (2026-05-19)
+- Cierre de sesión — documentación y commit (2026-05-21)
 
-### Completado
+### Completado (últimos)
+```
+[x] Fix formulario de contacto - campos alineados con colección Contacts + teléfono
+[x] Fix episodios - query REST de Payload v3 corregida (fetch all + filter)
+[x] Episodios dinámicos en /programas/[slug] conectados al CMS
+[x] Decisión: Vercel descartado, solo Git para versionado y backup
+[x] Decisión: Stack Docker + PostgreSQL confirmado para producción
+[x] Build de producción: 16 rutas, 0 errores
+```
+
+### Completado (histórico)
 ```
 [x] Definición de arquitectura y stack tecnológico
 [x] Definición de roles del equipo (RED RANGER, LISANDRO, CENTINELA, LEANDRO)
 [x] Definición de colecciones principales de Payload CMS
-[x] Creación del repositorio en GitHub y primer commit (ccf63e2)
+[x] Creación del repositorio en GitHub y primer commit
 [x] Ejecutar create-payload-app con Next.js + PostgreSQL
 [x] Configurar docker-compose.yml con servicio PostgreSQL
 [x] Verificar que Payload admin carga en localhost:3000/admin
 [x] Crear primer usuario administrador
 [x] Documentación README.md y PROGRESS.md creadas y commit
 [x] Build de producción ejecutado (npm run build)
-[x] Deploy en VPS completado (según deploy.bat)
-[x] Configuración de Cloudflare completada
-[x] Asegurada la funcionalidad del proyecto
-[x] Verificación de estado: todo commit está sincronizado — último commit: ccf63e2 (2026-05-12) "feat(repo): primer commit"
-[x] Se creó `scripts/diagnosis.bat` para regenerar import map y tipos (commit 288a70c)
-[x] Se eliminó importación de Dashboard en payload.config.ts (commit 77473f4)
-[x] Se eliminó colección Projects (commit 320a369)
-[x] Se actualizó configuración de componentes del admin (commits 1456801, 931b52c, 9c1788c)
-[x] Se convirtió página de noticias a Server Component con `params: Promise<...>` (commit 21328a4)
-[x] Se agregaron animaciones de stickers en noticias (commit 89c9a8f)
-[x] Se aplicó GalaxyButton en botones de inicio (commits 3e6147b, 0242f86)
-[x] Se reemplazó fuente Bebas Neue por Chinese Rocks Rg (commit f0eeb17)
-[x] Se rediseñó grid de programas (commits c0e874d, 266ffd3, d101165, 1b10151, 76f5d18, c6312bd)
-[x] Se documentó diagnóstico de acceso a /admin en docs/admin-access.md (commit e3a269b)
-[x] Se documentaron todos los commits de UI en PROGRESS.md y BRAIN.md (commit d733d1b)
-[x] Se agregó entrada documental del 2026-05-15 (este commit)
+[x] Colección Programs, Episodes, Live, News, Services, Contacts
+[x] Layout global (nav + footer) + UI components
+[x] Páginas: homepage, /programas, /programas/[slug], /servicios, /contacto, /en-vivo, /portafolio, /noticias, /noticias/[slug], /patrocinios
 ```
 
 ---
@@ -281,6 +278,8 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 [ ] Configuración de Nginx
 [ ] Deploy en VPS
 [ ] Configuración de Cloudflare
+[ ] Rate limiting en /admin/login y /api/contacto
+[ ] Hardening de seguridad (PAYLOAD_SECRET, credenciales DB, firewall)
 [x] Build de producción
 [x] Ejecutar `npm run build`
 ```
@@ -446,16 +445,22 @@ Ver GLOSSARY.md para nombres completos.
 
 ---
 
-### RED RANGER — Tareas pendientes (2026-05-19)
+### RED RANGER — Tareas pendientes (2026-05-21)
 
 **Tareas inmediatas por orden de prioridad:**
 
-1. **Conectar colecciones con frontend** — Programs y News vía Route Handler (Fase 4).
-2. **Página de servicios** — Integrar con datos dinámicos de la colección Services.
-3. **Manejo de estados vacíos** — Las páginas de detalle usan datos estáticos como fallback. Revisar cuando Payload tenga datos reales.
-4. **Colección Services** — Ya definida y orientada a promoción. La página /servicios usa placeholder; se puede migrar a datos dinámicos.
-5. **Test de enlaces** — Ejecutar tests e2e para verificar rutas.
-6. **Configuración de producción** — Nginx, variables de entorno para deploy.
+1. **Conectar /servicios con colección Services** — La colección ya está definida y la API existe. La página usa datos hardcodeados.
+2. **Sección de noticias dinámica en homepage** — Usar `getNews()` que ya existe en lugar de datos hardcodeados.
+3. **Sección "En Vivo" en homepage** — Usar `getLiveStreams()` (actualmente muestra solo un `<h2>` vacío).
+4. **Revisar /noticias, /patrocinios, /portafolio** — Verificar si usan CMS o datos estáticos.
+5. **Ajustar embedUrl en admin** — Cambiar URLs de YouTube de formato `/watch?v=` a `/embed/`.
+6. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
+
+**Completado en esta sesión:**
+- ✅ Fix formulario de contacto (campos `nombre`, `email`, `telefono`, `mensaje`)
+- ✅ Fix query REST de episodios en Payload v3
+- ✅ Episodios dinámicos en `/programas/[slug]`
+- ✅ Decisión de no usar Vercel — solo Git para versionado
 
 **Bloqueos detectados:**
 - Ningún bloqueo actual.

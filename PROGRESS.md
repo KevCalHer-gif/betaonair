@@ -501,3 +501,47 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 **Acción:** Se eliminaron los event handlers `onMouseEnter` y `onMouseLeave` del archivo `src/app/(frontend)/portafolio/page.tsx`, reemplazándolos por estilos CSS hover compatibles con Server Components de Next.js 16. El build de producción se ejecutó sin errores (`npm run build`).
 **Resultado:** Build exitoso. Sin warnings críticos.
 **Próximo paso:** Continuar con pruebas de integración.
+
+### [2026-05-20/21] — LEANDRO: Documentación de cierre de sesión
+
+**Sesión:** 9 — Corrección de bugs y conexión frontend-CMS
+**Completado por:** RED RANGER (análisis), LISANDRO (código), CENTINELA (diagnóstico), LEANDRO (commit, build, docs)
+
+**Tareas completadas:**
+
+1. **Prioridad 1 — Fix formulario de contacto** (`src/app/(frontend)/contacto/page.tsx`)
+   - Alineados nombres de campos con colección `Contacts`: `nombre`, `email`, `telefono`, `mensaje`
+   - Agregado campo `telefono` (opcional) al formulario
+   - Envío automático de `fechaRecibido`
+   - Mejor manejo de errores desde Payload
+   - Verificado: los mensajes se guardan correctamente en el admin
+
+2. **Prioridad 2 — Episodios reales en `/programas/[slug]`**
+   - Importado `getEpisodesByProgram` en `src/app/(frontend)/programas/[slug]/page.tsx`
+   - Detectado bug en query REST: `where[program.slug][equals]=` devolvía HTTP 400 en Payload v3
+   - Fix en `src/lib/api/episodes.ts`: cambiado a `fetch all + filter client-side` con `?depth=1`
+   - Verificado con curl: 2 episodios de Beta Kids devueltos correctamente
+   - Aclarado: `embedUrl` debe usar formato `youtube.com/embed/` (no watch)
+   - Aclarado: el dueño del canal debe habilitar "Permitir inserción" en YouTube Studio
+
+3. **Build de producción** — `npm run build` exitoso, 16 rutas, 0 errores
+
+4. **Commit y push** — `1c8c24d` con mensaje unificado
+
+**Archivos modificados:**
+- `src/app/(frontend)/contacto/page.tsx` — formulario corregido con campo teléfono
+- `src/app/(frontend)/programas/[slug]/page.tsx` — episodios dinámicos desde CMS
+- `src/lib/api/episodes.ts` — fix de query REST Payload v3
+
+**Próximas prioridades (backlog RED RANGER):**
+- Prioridad 3: Conectar `/servicios` con colección `Services` del CMS
+- Prioridad 4: Hacer dinámica la sección de noticias en homepage
+- Prioridad 5: Agregar contenido real a "En Vivo" en homepage
+- Prioridad 6: Revisar `/noticias`, `/patrocinios`, `/portafolio`
+- Prioridad 7: Fase 4 — Tests y configuración de producción
+
+**Notas:**
+- Vercel descartado como plataforma de testeo. Solo se usa Git para versionado.
+- Stack confirmado: Next.js + Payload CMS v3 + PostgreSQL + Docker (VPS al momento del release).
+- PostgreSQL + Docker validados como seguros para producción con hardening adecuado.
+- Próximo paso: continuar con Prioridad 3 en siguiente sesión.
