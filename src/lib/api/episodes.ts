@@ -18,13 +18,22 @@ export async function getEpisodes(): Promise<Episode[]> {
 
 export async function getEpisodesByProgram(slug: string): Promise<Episode[]> {
   try {
-    const res = await fetch(
-      `${API_URL}/api/episodes?where[program.slug][equals]=${slug}`,
-      { next: { revalidate: 3600 } },
-    )
-    if (!res.ok) throw new Error('Failed to fetch episodes by program')
+    // Payload REST API where clause para relaciones es inconsistente en v3.
+    // Solución robusta: obtener todos los episodios y filtrar por program.slug.
+    const res = await fetch(`${API_URL}/api/episodes?depth=1`, {
+      next: { revalidate: 3600 },
+    })
+    if (!res.ok) throw new Error('Failed to fetch episodes')
     const data = await res.json()
-    return data.docs as Episode[]
+    const episodes = data.docs as Episode[]
+    // Filtrar por el slug del programa relacionado
+    return episodes.filter((ep) => {
+      const program = ep.program as { slug?: string } | number
+      if (typeof program === 'object' && program !== null) {
+        return program.slug === slug
+      }
+      return false
+    })
   } catch (error) {
     console.error('Error fetching episodes by program:', error)
     return []

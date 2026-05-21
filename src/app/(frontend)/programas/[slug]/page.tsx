@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getProgramBySlug } from '../../../../lib/api/programs'
+import { getEpisodesByProgram } from '../../../../lib/api/episodes'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -11,6 +12,9 @@ export default async function ProgramSlugPage({
   const { slug } = await params
   const programa = await getProgramBySlug(slug)
   if (!programa) notFound()
+
+  // Obtener episodios reales del CMS filtrados por el slug del programa
+  const episodios = await getEpisodesByProgram(slug)
 
   const coverImage = (programa.coverImage as any)
   const logo = (programa.logo as any)
@@ -82,22 +86,83 @@ export default async function ProgramSlugPage({
         {programa.description}
       </p>
 
+      {/* Sección de episodios — datos reales desde el CMS */}
       <div style={{
         background: '#0a0a0a',
         border: '1px solid #333',
         borderRadius: '8px',
         padding: '2rem',
-        textAlign: 'center',
       }}>
-        <h2 style={{ color: '#f0f0f0', fontSize: '1.2rem', marginBottom: '1rem' }}>
+        <h2 style={{
+          fontFamily: 'var(--font-brand)',
+          color: '#c61d4a',
+          fontSize: '1.4rem',
+          marginBottom: '1.5rem',
+          textAlign: 'center',
+        }}>
           Episodios
         </h2>
-        <p style={{ color: '#555', fontSize: '0.9rem' }}>
-          Los episodios estarán disponibles próximamente.
-        </p>
-        <p style={{ color: '#333', fontSize: '0.8rem', marginTop: '0.5rem' }}>
-          Seguinos en YouTube y TikTok para no perderte nada.
-        </p>
+        {episodios.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            {episodios.map((ep) => (
+              <div key={ep.id} style={{
+                border: '1px solid #333',
+                borderRadius: '8px',
+                padding: '1.5rem',
+                background: '#111',
+              }}>
+                <h3 style={{
+                  color: '#f0f0f0',
+                  fontSize: '1.1rem',
+                  marginBottom: '0.75rem',
+                }}>
+                  {ep.title}
+                </h3>
+                {ep.publishedAt && (
+                  <p style={{ color: '#888', fontSize: '0.85rem', marginBottom: '1rem' }}>
+                    {new Date(ep.publishedAt).toLocaleDateString('es-BO', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </p>
+                )}
+                {ep.embedUrl ? (
+                  <div style={{
+                    width: '100%',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                  }}>
+                    <iframe
+                      src={ep.embedUrl}
+                      title={ep.title}
+                      style={{
+                        width: '100%',
+                        aspectRatio: '16 / 9',
+                        border: 'none',
+                        display: 'block',
+                      }}
+                      allowFullScreen
+                    />
+                  </div>
+                ) : (
+                  <p style={{ color: '#555', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                    Video no disponible aún.
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ color: '#555', fontSize: '0.9rem' }}>
+              Los episodios estarán disponibles próximamente.
+            </p>
+            <p style={{ color: '#333', fontSize: '0.8rem', marginTop: '0.5rem' }}>
+              Seguinos en YouTube y TikTok para no perderte nada.
+            </p>
+          </div>
+        )}
       </div>
     </main>
   )
