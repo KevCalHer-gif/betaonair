@@ -199,7 +199,7 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 ```
 
 ### Tarea en progreso
-- Prioridad 4 — Sección de noticias dinámica en homepage
+- Prioridad 5 — Sección "En Vivo" dinámica en homepage
 
 ### Completado (últimos)
 ```
@@ -215,6 +215,10 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 [x] API sponsorships.ts creada (getSponsorships)
 [x] ServiceCards convertidas en Links → /servicios/[slug]
 [x] Nueva página /servicios/[slug] con: detalle del servicio, grid de portafolio, marquee sponsors
+[x] Prioridad 4 — Sección "Últimas Noticias" conectada al CMS en homepage
+[x] getNews() corregido: filtro status=published + sort=-publishedAt + limit=10
+[x] Array hardcodeado de noticias reemplazado por getNews().slice(0,3)
+[x] Componente NewsCard usado en vez de divs inline (con link "Leer más →")
 ```
 
 ### Completado (histórico)
