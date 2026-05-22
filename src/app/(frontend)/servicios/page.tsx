@@ -44,7 +44,7 @@ export default async function ServiciosPage() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
           {servicios.map((s) => (
-            <div key={s.id} style={{ background: '#0a0a0a', border: '1px solid #333', borderRadius: '8px', padding: '1.5rem' }}>
+            <Link key={s.id} href={`/servicios/${s.slug}`} style={{ textDecoration: 'none', background: '#0a0a0a', border: '1px solid #333', borderRadius: '8px', padding: '1.5rem', transition: 'border-color 0.2s, box-shadow 0.2s' }}>
               <h3 style={{ color: '#c61d4a', fontSize: '1.1rem', marginBottom: '0.75rem', textAlign: 'center' }}>
                 {s.title}
               </h3>
@@ -70,7 +70,7 @@ export default async function ServiciosPage() {
                   Bs. {s.price.toLocaleString()}
                 </p>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       )}

@@ -15,6 +15,7 @@ import { News } from './collections/News'
 import { Live } from './collections/Live'
 import { Sponsorships } from './collections/Sponsorships'
 import { Services } from './collections/Services'
+import { Projects } from './collections/Projects'
 import { Settings } from './globals/Settings'
 import { Seo } from './globals/Seo'
 
@@ -29,7 +30,7 @@ export default buildConfig({
     },
     components: {},
   },
-  collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services],
+  collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects],
   globals: [Settings, Seo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
