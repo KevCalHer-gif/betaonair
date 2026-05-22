@@ -4,9 +4,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 export async function getNews(): Promise<News[]> {
   try {
-    const res = await fetch(`${API_URL}/api/news`, {
-      next: { revalidate: 3600 },
-    })
+    const res = await fetch(
+      `${API_URL}/api/news?where[status][equals]=published&sort=-publishedAt&limit=10`,
+      { next: { revalidate: 3600 } },
+    )
     if (!res.ok) throw new Error('Failed to fetch news')
     const data = await res.json()
     return data.docs as News[]

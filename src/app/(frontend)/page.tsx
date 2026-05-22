@@ -2,18 +2,15 @@ import React from 'react'
 import HeroSection from '../../components/sections/HeroSection'
 import ProgramCard from '../../components/sections/ProgramCard'
 import SocialMediaSection from '../../components/sections/SocialMediaSection'
+import NewsCard from '../../components/ui/NewsCard'
 import { getPrograms } from '../../lib/api/programs'
+import { getNews } from '../../lib/api/news'
 
 export const dynamic = 'force-dynamic'
 
-const noticias = [
-  { titulo: 'Beta On Air lanza su nueva temporada de programas', fecha: '10 mayo 2026', resumen: 'La plataforma digital de contenidos bolivianos arranca con fuerza su nueva temporada con cinco programas renovados.' },
-  { titulo: 'No Tan Calladitas: voces que rompen el silencio', fecha: '8 mayo 2026', resumen: 'El programa que da voz a las mujeres bolivianas regresa con historias que inspiran y generan conversación.' },
-  { titulo: 'Beta Kids: entretenimiento educativo para los más pequeños', fecha: '5 mayo 2026', resumen: 'El espacio dedicado a niños y niñas continúa creciendo con contenido divertido y con valores.' },
-]
-
 export default async function HomePage() {
   const programas = await getPrograms()
+  const noticias = (await getNews()).slice(0, 3)
 
   return (
     <>
@@ -54,25 +51,31 @@ export default async function HomePage() {
         >
           Últimas Noticias
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 700, margin: '0 auto' }}>
-          {noticias.map((n, i) => (
-            <div
-              key={i}
-              style={{
-                background: '#0a0a0a',
-                borderLeft: '3px solid #c61d4a',
-                borderRadius: 4,
-                padding: '1rem',
-              }}
-            >
-              <h3 style={{ fontFamily: 'var(--font-brand)', color: '#f0f0f0', margin: 0, fontSize: '1.1rem' }}>
-                {n.titulo}
-              </h3>
-              <p style={{ color: '#888', margin: '0.25rem 0 0.5rem', fontSize: '0.85rem' }}>{n.fecha}</p>
-              <p style={{ color: '#aaa', margin: 0, fontSize: '0.9rem' }}>{n.resumen}</p>
-            </div>
-          ))}
-        </div>
+        {noticias.length === 0 ? (
+          <p style={{ color: '#555', textAlign: 'center', padding: '2rem 0', fontStyle: 'italic' }}>
+            No hay noticias publicadas aún.
+          </p>
+        ) : (
+          <div style={{ maxWidth: 700, margin: '0 auto' }}>
+            {noticias.map((n) => (
+              <NewsCard
+                key={n.id}
+                titulo={n.title}
+                fecha={
+                  n.publishedAt
+                    ? new Date(n.publishedAt).toLocaleDateString('es-BO', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })
+                    : ''
+                }
+                slug={n.slug || ''}
+                resumen={n.excerpt || ''}
+              />
+            ))}
+          </div>
+        )}
       </section>
       <SocialMediaSection />
     </>
