@@ -544,4 +544,24 @@ Se requiere ejecutar `npm run payload generate:types` tras cualquier cambio en c
 - Vercel descartado como plataforma de testeo. Solo se usa Git para versionado.
 - Stack confirmado: Next.js + Payload CMS v3 + PostgreSQL + Docker (VPS al momento del release).
 - PostgreSQL + Docker validados como seguros para producción con hardening adecuado.
-- Próximo paso: continuar con Prioridad 3 en siguiente sesión.
+
+### [2026-05-21] — LEANDRO: Prioridad 3 — /servicios conectado al CMS + página detalle
+
+**Cambios realizados:**
+- Reconstruido `src/lib/api/services.ts` con `getServices()` y `getServiceBySlug()` (patrón programs.ts)
+- Rewrite de `/servicios` como Server Component consumiendo CMS vía `getServices()`
+- Corregido `payload.config.ts`: colección `Projects` no estaba registrada (nunca se generó el tipo)
+- Añadido campo `service` (relationship → services) a colección `Projects`
+- Regenerados tipos con `npx payload generate:types` → nuevo `Project` interface
+- Reconstruido `src/lib/api/projects.ts`: `getProjects()` + `getProjectsByService(slug)`
+- Creado `src/lib/api/sponsorships.ts`: `getSponsorships()` (sponsors activos)
+- Actualizado `src/lib/api/index.ts` con nuevos exports
+- ServiceCards en `/servicios` ahora son `<Link>` que redirigen a `/servicios/[slug]`
+- Nueva página dinámica `/servicios/[slug]`:
+  - Detalle del servicio (título, descripción richText→plain, features, precio)
+  - Grid de portafolio: proyectos filtrados por servicio (imagen, título, cliente, descripción)
+  - Marquee infinito de sponsors: CSS `@keyframes marqueeScroll`, pausa en hover
+- `npm run build`: 17 rutas, 0 errores
+- Commit + push a GitHub
+
+**Próximo paso:** Prioridad 4 — Sección de noticias dinámica en homepage.

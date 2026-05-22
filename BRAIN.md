@@ -199,7 +199,7 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 ```
 
 ### Tarea en progreso
-- Cierre de sesión — documentación y commit (2026-05-21)
+- Prioridad 4 — Sección de noticias dinámica en homepage
 
 ### Completado (últimos)
 ```
@@ -208,7 +208,13 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 [x] Episodios dinámicos en /programas/[slug] conectados al CMS
 [x] Decisión: Vercel descartado, solo Git para versionado y backup
 [x] Decisión: Stack Docker + PostgreSQL confirmado para producción
-[x] Build de producción: 16 rutas, 0 errores
+[x] Build de producción: 17 rutas, 0 errores
+[x] Prioridad 3 — /servicios conectado al CMS (Services collection) con getServices() + getServiceBySlug()
+[x] Colección Projects registrada en payload.config (faltaba) + campo 'service' (relationship → Services)
+[x] API projects.ts reconstruida (getProjects, getProjectsByService)
+[x] API sponsorships.ts creada (getSponsorships)
+[x] ServiceCards convertidas en Links → /servicios/[slug]
+[x] Nueva página /servicios/[slug] con: detalle del servicio, grid de portafolio, marquee sponsors
 ```
 
 ### Completado (histórico)
