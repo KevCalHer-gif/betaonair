@@ -235,4 +235,25 @@ Plataforma digital de contenidos bolivianos. Next.js + Payload CMS v3 + PostgreS
 - `npm run build`: 17 rutas, 0 errores
 - Commit + push a GitHub
 
-**Próximo paso:** Prioridad 6 — Revisar `/noticias`, `/patrocinios`, `/portafolio`.
+**Próximo paso:** Prioridad 6 — Revisar `/noticias`, `/patrocinios`, `/portafolio` (completada).
+
+### [2026-05-23] — LEANDRO: Prioridad 6 — Conectar /noticias, /portafolio y /patrocinios al CMS
+
+**Análisis RED RANGER:**
+- `/noticias` + `/noticias/[slug]` usaban `data/noticias.ts` (4 noticias hardcodeadas). No reflejaban el CMS.
+- `/portafolio` usaba `data/programas.ts` (5 programas hardcodeados). Logos, descripciones no se actualizaban.
+- `/patrocinios` era pitch de ventas estático sin mostrar sponsors reales. Se decidió Opción B: mantener pitch + agregar sección de sponsors reales.
+
+**Cambios realizados:**
+- [`noticias/page.tsx`](src/app/(frontend)/noticias/page.tsx): Convertido de `'use client'` con array hardcodeado a `async function` con `getNews()`. Usa `NewsCard` existente con `n.title`, `n.publishedAt` (formateado), `n.slug`, `n.excerpt`.
+- [`noticias/[slug]/page.tsx`](src/app/(frontend)/noticias/[slug]/page.tsx): Reemplazado `noticias.find()` por `getNewsBySlug(slug)`. Añadido `extractParagraphs()` para renderizar rich text Lexical. Fecha formateada con `toLocaleDateString('es-BO')`.
+- [`portafolio/page.tsx`](src/app/(frontend)/portafolio/page.tsx): Convertido a `async function` con `getPrograms()`. Logo extraído de relación Media con fallback "Sin logo". Descripción desde `prog.description`.
+- [`patrocinios/page.tsx`](src/app/(frontend)/patrocinios/page.tsx): Convertido a `async function`. Mantiene pitch de ventas (4 beneficios). Nueva sección "Marcas que confían en nosotros" con marquee animado de sponsors desde `getSponsorships()` (logos + nombres). Mismo patrón que `servicios/[slug]`.
+- `npm run build`: 17 rutas, 0 errores
+- Commit + push a GitHub
+
+**Archivos ahora obsoletos (datos hardcodeados reemplazados):**
+- `src/lib/data/noticias.ts` — solo lo usa `/noticias` y `/noticias/[slug]` (ya migrados)
+- `src/lib/data/programas.ts` — lo usaba `/portafolio` (ya migrado). También lo usa `ProgramsGrid.tsx`
+
+**Próximo paso:** Prioridad 7 — Revisar `ProgramsGrid.tsx` y componentes que usen `data/programas.ts`. Luego Fase 4: tests + producción.

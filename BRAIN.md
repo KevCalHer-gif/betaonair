@@ -462,12 +462,17 @@ Ver GLOSSARY.md para nombres completos.
 1. ~~Conectar /servicios con colección Services~~ ✅ Completado (Priority 3)
 2. ~~Sección de noticias dinámica en homepage~~ ✅ Completado (Priority 4)
 3. ~~Sección "En Vivo" en homepage~~ ✅ Completado (Priority 5)
-4. **Revisar /noticias, /patrocinios, /portafolio** — Verificar si usan CMS o datos estáticos.
-5. **Ajustar embedUrl en admin** — Cambiar URLs de YouTube de formato `/watch?v=` a `/embed/`.
-6. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
+4. ~~Revisar /noticias, /patrocinios, /portafolio~~ ✅ Completado (Priority 6)
+5. **Revisar `ProgramsGrid.tsx`** — Verificar si usa `data/programas.ts` hardcodeado.
+6. **Ajustar embedUrl en admin** — Cambiar URLs de YouTube de formato `/watch?v=` a `/embed/`.
+7. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
 
 **Completado en esta sesión (2026-05-23):**
-- ✅ **Priority 5 — Sección "En Vivo" dinámica:** Fix de `getLiveStreams()` (mismo bug Payload v3 checkbox que Priority 2). Sección con iframe 16:9, título, link al programa, y placeholder 📡 cuando no hay stream activo.
+- ✅ **Priority 5 — Sección "En Vivo" dinámica:** Fix de `getLiveStreams()` (mismo bug Payload v3 checkbox que Priority 2). Sección con iframe 16:9, título, link al programa, y placeholder.
+- ✅ **Priority 6 — Conectar /noticias, /portafolio, /patrocinios al CMS:**
+  - `/noticias` y `/noticias/[slug]`: migrado de `data/noticias.ts` a `getNews()` / `getNewsBySlug()` con rich text parsing.
+  - `/portafolio`: migrado de `data/programas.ts` a `getPrograms()`, logos desde relación Media.
+  - `/patrocinios`: pitch de ventas + sección marquee de sponsors reales desde `getSponsorships()`.
 
 **Completado histórico (2026-05-21):**
 - ✅ Fix formulario de contacto (campos `nombre`, `email`, `telefono`, `mensaje`)
@@ -476,7 +481,8 @@ Ver GLOSSARY.md para nombres completos.
 - ✅ Decisión de no usar Vercel — solo Git para versionado
 
 **Bloqueos detectados:**
-- Payload v3 no soporta `where[isActive][equals]=true` en campos checkbox (workaround: fetch-all + client-side filter). Mismo bug confirmado en Priority 2 (episodios) y Priority 5 (live).
+- Payload v3 no soporta `where[isActive][equals]=true` en campos checkbox (workaround: fetch-all + client-side filter). Confirmado en Priority 2, 5.
+- Archivos `data/noticias.ts` y `data/programas.ts` ahora obsoletos (sus consumidores ya usan CMS). Queda `ProgramsGrid.tsx` pendiente de revisión.
 
 ---
 

@@ -1,8 +1,9 @@
-'use client'
 import NewsCard from '../../../components/ui/NewsCard'
-import { noticias } from '../../../lib/data/noticias'
+import { getNews } from '../../../lib/api/news'
 
-export default function NoticiasPage() {
+export default async function NoticiasPage() {
+  const noticias = await getNews()
+
   return (
     <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
       <h1
@@ -16,15 +17,29 @@ export default function NoticiasPage() {
       >
         Últimas Noticias
       </h1>
-      {noticias.map((n) => (
-        <NewsCard
-          key={n.slug}
-          titulo={n.titulo}
-          fecha={n.fecha}
-          slug={n.slug}
-          resumen={n.resumen}
-        />
-      ))}
+      {noticias.length === 0 ? (
+        <p style={{ color: '#555', textAlign: 'center', padding: '2rem 0', fontStyle: 'italic' }}>
+          No hay noticias publicadas aún.
+        </p>
+      ) : (
+        noticias.map((n) => (
+          <NewsCard
+            key={n.id}
+            titulo={n.title}
+            fecha={
+              n.publishedAt
+                ? new Date(n.publishedAt).toLocaleDateString('es-BO', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })
+                : ''
+            }
+            slug={n.slug || ''}
+            resumen={n.excerpt || ''}
+          />
+        ))
+      )}
     </main>
   )
 }
