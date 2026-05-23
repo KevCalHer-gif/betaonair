@@ -219,4 +219,20 @@ Plataforma digital de contenidos bolivianos. Next.js + Payload CMS v3 + PostgreS
 - `npm run build`: 17 rutas, 0 errores
 - Commit + push a GitHub
 
-**Próximo paso:** Prioridad 5 — Sección "En Vivo" dinámica en homepage.
+**Próximo paso:** Prioridad 5 — Sección "En Vivo" dinámica en homepage (completada).
+
+### [2026-05-23] — LEANDRO: Prioridad 5 — Sección "En Vivo" dinámica en homepage
+
+**Análisis RED RANGER:**
+- **Error:** Sección En Vivo vacía (solo `<h2>`), sin datos del CMS.
+- **Causa:** `getLiveStreams()` usaba `?where[isActive][equals]=true` — Payload v3 no soporta filtros en checkbox (mismo bug de Priority 2).
+- **Solución (2 pasos):** (1) Cambiar a fetch-all `?depth=1` + client-side `.filter(s => s.isActive === true)`. (2) Reemplazar sección vacía por bloque dinámico con iframe 16:9, título, link al programa, y placeholder cuando no hay stream.
+- **Verificación:** API retorna stream con `isActive:true` y `embedUrl`. Build: 17 rutas, 0 errores.
+
+**Cambios realizados:**
+- Corregido `getLiveStreams()` en `src/lib/api/live.ts`: `?depth=1` + `.filter(s => s.isActive === true)` (mismo patrón que `getEpisodesByProgram()`)
+- Sección "En Vivo" en `page.tsx`: iframe 16:9 con `allowFullScreen`, título del stream, link al programa, placeholder con icono 📡
+- `npm run build`: 17 rutas, 0 errores
+- Commit + push a GitHub
+
+**Próximo paso:** Prioridad 6 — Revisar `/noticias`, `/patrocinios`, `/portafolio`.

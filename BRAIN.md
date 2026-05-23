@@ -455,25 +455,28 @@ Ver GLOSSARY.md para nombres completos.
 
 ---
 
-### RED RANGER — Tareas pendientes (2026-05-21)
+### RED RANGER — Tareas pendientes (2026-05-23)
 
 **Tareas inmediatas por orden de prioridad:**
 
-1. **Conectar /servicios con colección Services** — La colección ya está definida y la API existe. La página usa datos hardcodeados.
-2. **Sección de noticias dinámica en homepage** — Usar `getNews()` que ya existe en lugar de datos hardcodeados.
-3. **Sección "En Vivo" en homepage** — Usar `getLiveStreams()` (actualmente muestra solo un `<h2>` vacío).
+1. ~~Conectar /servicios con colección Services~~ ✅ Completado (Priority 3)
+2. ~~Sección de noticias dinámica en homepage~~ ✅ Completado (Priority 4)
+3. ~~Sección "En Vivo" en homepage~~ ✅ Completado (Priority 5)
 4. **Revisar /noticias, /patrocinios, /portafolio** — Verificar si usan CMS o datos estáticos.
 5. **Ajustar embedUrl en admin** — Cambiar URLs de YouTube de formato `/watch?v=` a `/embed/`.
 6. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
 
-**Completado en esta sesión:**
+**Completado en esta sesión (2026-05-23):**
+- ✅ **Priority 5 — Sección "En Vivo" dinámica:** Fix de `getLiveStreams()` (mismo bug Payload v3 checkbox que Priority 2). Sección con iframe 16:9, título, link al programa, y placeholder 📡 cuando no hay stream activo.
+
+**Completado histórico (2026-05-21):**
 - ✅ Fix formulario de contacto (campos `nombre`, `email`, `telefono`, `mensaje`)
 - ✅ Fix query REST de episodios en Payload v3
 - ✅ Episodios dinámicos en `/programas/[slug]`
 - ✅ Decisión de no usar Vercel — solo Git para versionado
 
 **Bloqueos detectados:**
-- Ningún bloqueo actual.
+- Payload v3 no soporta `where[isActive][equals]=true` en campos checkbox (workaround: fetch-all + client-side filter). Mismo bug confirmado en Priority 2 (episodios) y Priority 5 (live).
 
 ---
 
