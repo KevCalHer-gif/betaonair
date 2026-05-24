@@ -455,7 +455,7 @@ Ver GLOSSARY.md para nombres completos.
 
 ---
 
-### RED RANGER — Tareas pendientes (2026-05-23)
+### RED RANGER — Tareas pendientes (2026-05-24)
 
 **Tareas inmediatas por orden de prioridad:**
 
@@ -463,26 +463,28 @@ Ver GLOSSARY.md para nombres completos.
 2. ~~Sección de noticias dinámica en homepage~~ ✅ Completado (Priority 4)
 3. ~~Sección "En Vivo" en homepage~~ ✅ Completado (Priority 5)
 4. ~~Revisar /noticias, /patrocinios, /portafolio~~ ✅ Completado (Priority 6)
-5. **Revisar `ProgramsGrid.tsx`** — Verificar si usa `data/programas.ts` hardcodeado.
+5. ~~Revisar componentes + eliminar archivos obsoletos~~ ✅ Completado (Priority 7)
 6. **Ajustar embedUrl en admin** — Cambiar URLs de YouTube de formato `/watch?v=` a `/embed/`.
 7. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
 
-**Completado en esta sesión (2026-05-23):**
-- ✅ **Priority 5 — Sección "En Vivo" dinámica:** Fix de `getLiveStreams()` (mismo bug Payload v3 checkbox que Priority 2). Sección con iframe 16:9, título, link al programa, y placeholder.
-- ✅ **Priority 6 — Conectar /noticias, /portafolio, /patrocinios al CMS:**
-  - `/noticias` y `/noticias/[slug]`: migrado de `data/noticias.ts` a `getNews()` / `getNewsBySlug()` con rich text parsing.
-  - `/portafolio`: migrado de `data/programas.ts` a `getPrograms()`, logos desde relación Media.
-  - `/patrocinios`: pitch de ventas + sección marquee de sponsors reales desde `getSponsorships()`.
+**Completado (2026-05-24):**
+- ✅ **Priority 7 — Cleanup + fix ServicesSection:**
+  - Eliminados `data/noticias.ts` y `data/programas.ts` (0 imports en proyecto)
+  - Corregidos bugs: `live.titulo`→`live.title`, `prog.descripcionCorta`→`prog.description`
+  - Creado `docs/payload-admin-analysis.md` con análisis completo del panel
+  - Build: 17 rutas, 0 errores
+
+**Completado (2026-05-23):**
+- ✅ Priority 5 — Sección "En Vivo" dinámica con iframe 16:9
+- ✅ Priority 6 — Conexión de /noticias, /portafolio, /patrocinios al CMS
 
 **Completado histórico (2026-05-21):**
-- ✅ Fix formulario de contacto (campos `nombre`, `email`, `telefono`, `mensaje`)
-- ✅ Fix query REST de episodios en Payload v3
-- ✅ Episodios dinámicos en `/programas/[slug]`
-- ✅ Decisión de no usar Vercel — solo Git para versionado
+- ✅ Fix formulario de contacto, fix query REST episodios, episodios dinámicos
 
 **Bloqueos detectados:**
-- Payload v3 no soporta `where[isActive][equals]=true` en campos checkbox (workaround: fetch-all + client-side filter). Confirmado en Priority 2, 5.
-- Archivos `data/noticias.ts` y `data/programas.ts` ahora obsoletos (sus consumidores ya usan CMS). Queda `ProgramsGrid.tsx` pendiente de revisión.
+- Payload v3 no soporta `where[isActive][equals]=true` en checkbox (workaround aplicado en Priority 2, 5)
+- `data/noticias.ts` y `data/programas.ts` eliminados (Priority 7)
+- `ServicesSection.tsx`: bugs corregidos pero el componente sigue sin usarse en ninguna página (código muerto)
 
 ---
 

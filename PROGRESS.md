@@ -256,4 +256,21 @@ Plataforma digital de contenidos bolivianos. Next.js + Payload CMS v3 + PostgreS
 - `src/lib/data/noticias.ts` — solo lo usa `/noticias` y `/noticias/[slug]` (ya migrados)
 - `src/lib/data/programas.ts` — lo usaba `/portafolio` (ya migrado). También lo usa `ProgramsGrid.tsx`
 
-**Próximo paso:** Prioridad 7 — Revisar `ProgramsGrid.tsx` y componentes que usen `data/programas.ts`. Luego Fase 4: tests + producción.
+**Próximo paso:** Prioridad 7 — Revisar `ProgramsGrid.tsx` y componentes que usen `data/programas.ts` (completada).
+
+### [2026-05-24] — LEANDRO: Prioridad 7 — Cleanup de archivos obsoletos + fix de ServicesSection
+
+**Análisis RED RANGER:**
+- `ProgramsGrid.tsx`: no existe, nunca fue creado. Nada que hacer.
+- `ProgramCard.tsx` y `ExternalLinkCard.tsx`: componentes presentacionales limpios.
+- `ServicesSection.tsx`: 2 bugs (`live.titulo` → `live.title`, `prog.descripcionCorta` → `prog.description`). Código muerto (no se usa en ninguna página).
+- `data/noticias.ts` y `data/programas.ts`: 0 imports en todo el proyecto tras Priority 6. Obsoletos.
+
+**Cambios realizados:**
+- **Eliminados:** `src/lib/data/noticias.ts` y `src/lib/data/programas.ts` (archivos hardcodeados ya sin consumidores)
+- **Corregido** [`ServicesSection.tsx`](src/components/sections/ServicesSection.tsx): `live.titulo` → `live.title` (línea 52), `prog.descripcionCorta` → `prog.description` (línea 114)
+- **Creado** [`docs/payload-admin-analysis.md`](docs/payload-admin-analysis.md): análisis exhaustivo de las 11 colecciones + 2 globales + dashboard + bugs detectados
+- `npm run build`: 17 rutas, 0 errores
+- Commit `ee101eb` + push a GitHub
+
+**Próximo paso:** Verificación de colecciones en Payload CMS Admin para confirmar que todos los componentes del frontend reflejan correctamente los datos.
