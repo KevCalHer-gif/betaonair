@@ -7,16 +7,34 @@ import { Analytics } from '@vercel/analytics/react'
 import ParticleTrail from '../../components/ui/ParticleTrail'
 import BgCanvas from '../../components/ui/BgCanvas'
 import NavLink from '../../components/ui/NavLink'
+import { getSeo, getSettings } from '../../lib/api/settings'
+import type { Metadata } from 'next'
 
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeo()
+  const settings = await getSettings()
 
-export const metadata = {
-  description: 'Beta On Air — Hacemos que se note.',
-  title: 'Beta On Air',
+  const siteName = settings?.siteName || 'Beta On Air'
+  const defaultDescription = 'Beta On Air — Hacemos que se note.'
+
+  return {
+    title: seo?.metaTitle || siteName,
+    description: seo?.metaDescription || defaultDescription,
+    openGraph: {
+      title: seo?.metaTitle || siteName,
+      description: seo?.metaDescription || defaultDescription,
+      ...(seo?.ogImage && typeof seo.ogImage === 'object' && seo.ogImage.url
+        ? { images: [{ url: seo.ogImage.url }] }
+        : {}),
+    },
+  }
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const year = new Date().getFullYear()
+  const settings = await getSettings()
+  const siteName = settings?.siteName || 'Beta On Air'
 
   return (
     <html lang="es">
@@ -40,7 +58,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           {children}
         </main>
         <footer style={{ textAlign: 'center', padding: '1rem', borderTop: '1px solid #333', color: '#888', position: 'relative', zIndex: 2 }}>
-          © {year} Beta On Air &nbsp;|&nbsp; <span style={{ color: '#555' }}>Seguinos en YouTube, TikTok e Instagram</span>
+          © {year} {siteName} &nbsp;|&nbsp; <span style={{ color: '#555' }}>Seguinos en YouTube, TikTok e Instagram</span>
         </footer>
       </body>
     </html>

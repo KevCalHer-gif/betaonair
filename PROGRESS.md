@@ -274,3 +274,23 @@ Plataforma digital de contenidos bolivianos. Next.js + Payload CMS v3 + PostgreS
 - Commit `ee101eb` + push a GitHub
 
 **Próximo paso:** Verificación de colecciones en Payload CMS Admin para confirmar que todos los componentes del frontend reflejan correctamente los datos.
+
+### [2026-05-24] — LEANDRO: Prioridad 8 — Conectar Settings y SEO al frontend
+
+**Problema:** El frontend usaba datos hardcodeados en:
+- `layout.tsx`: metadata (`title: 'Beta On Air'`, `description: 'Beta On Air — Hacemos que se note.'`) + footer (`© Beta On Air`)
+- `HeroSection.tsx`: logo (`/logo.png`) + slogan (`Hacemos que se note.`)
+- `SocialMediaSection.tsx`: 4 URLs de redes sociales (TikTok, Facebook, YouTube, Instagram)
+
+Los globals `Settings` y `SEO` existían en Payload CMS pero no estaban conectados al frontend.
+
+**Cambios realizados:**
+- **Creado** [`src/lib/api/settings.ts`](src/lib/api/settings.ts): `getSettings()` → `GET /api/globals/settings`, `getSeo()` → `GET /api/globals/seo` (ISR 1h)
+- **Actualizado** [`src/lib/api/index.ts`](src/lib/api/index.ts): exporta `getSettings` y `getSeo`
+- **Actualizado** [`layout.tsx`](src/app/(frontend)/layout.tsx):
+  - `generateMetadata()` dinámico usando SEO global (metaTitle, metaDescription, ogImage)
+  - Footer muestra `© {year} {siteName}` desde Settings (fallback: `Beta On Air`)
+- **Actualizado** [`HeroSection.tsx`](src/components/sections/HeroSection.tsx): acepta props `logoUrl` (fallback `/logo.png`) y `slogan` (fallback `Hacemos que se note.`)
+- **Actualizado** [`SocialMediaSection.tsx`](src/components/sections/SocialMediaSection.tsx): acepta props `tiktokUrl`, `facebookUrl`, `youtubeUrl`, `instagramUrl` desde Settings (fallback a hardcoded defaults)
+- **Actualizado** [`page.tsx`](src/app/(frontend)/page.tsx): hace `getSettings()` y pasa datos como props a `<HeroSection>` y `<SocialMediaSection>`
+- `npm run build`: 17 rutas, 0 errores

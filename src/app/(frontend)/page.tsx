@@ -1,22 +1,115 @@
 import React from 'react'
+import Link from 'next/link'
 import HeroSection from '../../components/sections/HeroSection'
 import ProgramCard from '../../components/sections/ProgramCard'
 import SocialMediaSection from '../../components/sections/SocialMediaSection'
 import NewsCard from '../../components/ui/NewsCard'
 import { getPrograms } from '../../lib/api/programs'
 import { getNews } from '../../lib/api/news'
+import { getLiveStreams } from '../../lib/api/live'
+import { getSettings } from '../../lib/api/settings'
 
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const programas = await getPrograms()
   const noticias = (await getNews()).slice(0, 3)
+  const liveStreams = await getLiveStreams()
+  const activeStream = liveStreams[0] || null
+  const settings = await getSettings()
 
   return (
     <>
-      <HeroSection />
-      <section>
-        <h2>En Vivo</h2>
+      <HeroSection
+        logoUrl={settings?.logoUrl || null}
+        slogan={settings?.slogan || null}
+      />
+      <section style={{ padding: '2rem 1rem', position: 'relative', zIndex: 10 }}>
+        <h2
+          style={{
+            fontFamily: 'var(--font-brand)',
+            color: '#c61d4a',
+            marginBottom: '1.5rem',
+            textAlign: 'center',
+            fontSize: '1.8rem',
+          }}
+        >
+          En Vivo
+        </h2>
+        {activeStream && activeStream.embedUrl ? (
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            {activeStream.title && (
+              <p
+                style={{
+                  color: '#f0f0f0',
+                  textAlign: 'center',
+                  fontSize: '1rem',
+                  marginBottom: '0.75rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                {activeStream.title}
+              </p>
+            )}
+            <div
+              style={{
+                width: '100%',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: '1px solid #c61d4a55',
+              }}
+            >
+              <iframe
+                src={activeStream.embedUrl}
+                title={activeStream.title || 'Transmisión en vivo'}
+                style={{
+                  width: '100%',
+                  aspectRatio: '16 / 9',
+                  border: 'none',
+                  display: 'block',
+                }}
+                allowFullScreen
+              />
+            </div>
+            {activeStream.program && typeof activeStream.program === 'object' && (
+              <p style={{ textAlign: 'center', marginTop: '0.75rem' }}>
+                <Link
+                  href={`/programas/${(activeStream.program as any).slug}`}
+                  style={{
+                    color: '#c61d4a',
+                    fontSize: '0.85rem',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Ver más de {(activeStream.program as any).title} →
+                </Link>
+              </p>
+            )}
+          </div>
+        ) : (
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div
+              style={{
+                background: '#0a0a0a',
+                border: '1px solid #333',
+                borderRadius: '8px',
+                aspectRatio: '16 / 9',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#888',
+                textAlign: 'center',
+                padding: '2rem',
+              }}
+            >
+              <span>
+                <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.5rem' }}>📡</span>
+                No hay transmisión en vivo en este momento
+              </span>
+            </div>
+          </div>
+        )}
       </section>
       <section id="contenido" style={{ padding: '2rem 0' }}>
         <h2
@@ -77,7 +170,12 @@ export default async function HomePage() {
           </div>
         )}
       </section>
-      <SocialMediaSection />
+      <SocialMediaSection
+        tiktokUrl={settings?.tiktokUrl || null}
+        facebookUrl={settings?.facebookUrl || null}
+        youtubeUrl={settings?.youtubeUrl || null}
+        instagramUrl={settings?.instagramUrl || null}
+      />
     </>
   )
 }

@@ -3,13 +3,21 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
+interface HeroSectionProps {
+  logoUrl?: string | null
+  slogan?: string | null
+}
+
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.8, delay, ease: 'easeOut' },
 })
 
-export default function HeroSection() {
+export default function HeroSection({ logoUrl, slogan }: HeroSectionProps) {
+  const logoSrc = logoUrl || '/logo.png'
+  const sloganText = slogan || 'Hacemos que se note.'
+
   return (
     <section
       style={{
@@ -24,7 +32,7 @@ export default function HeroSection() {
     >
       <motion.div {...fadeUp(0)} style={{ zIndex: 10, position: 'relative' }}>
         <Image
-          src="/logo.png"
+          src={logoSrc}
           alt="Beta On Air"
           width={192}
           height={288}
@@ -43,7 +51,7 @@ export default function HeroSection() {
           textAlign: 'center',
         }}
       >
-        Hacemos que se note.
+        {sloganText}
       </motion.h1>
 
       <motion.div {...fadeUp(0.4)}>

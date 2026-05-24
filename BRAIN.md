@@ -468,6 +468,13 @@ Ver GLOSSARY.md para nombres completos.
 7. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
 
 **Completado (2026-05-24):**
+- ✅ **Priority 8 — Settings y SEO conectados al frontend:**
+  - Creado `src/lib/api/settings.ts` con `getSettings()` y `getSeo()` (fetch a `/api/globals/settings` y `/api/globals/seo`)
+  - `layout.tsx`: `generateMetadata()` dinámico desde SEO global (metaTitle, metaDescription, ogImage) + footer usa `siteName` de Settings
+  - `HeroSection.tsx`: acepta props `logoUrl` y `slogan` desde Settings (fallback a `/logo.png` y "Hacemos que se note.")
+  - `SocialMediaSection.tsx`: acepta props `tiktokUrl`, `facebookUrl`, `youtubeUrl`, `instagramUrl` desde Settings (fallback a hardcoded defaults)
+  - `page.tsx`: hace `getSettings()` y pasa datos como props a HeroSection + SocialMediaSection
+  - Build: 17 rutas, 0 errores
 - ✅ **Priority 7 — Cleanup + fix ServicesSection:**
   - Eliminados `data/noticias.ts` y `data/programas.ts` (0 imports en proyecto)
   - Corregidos bugs: `live.titulo`→`live.title`, `prog.descripcionCorta`→`prog.description`
