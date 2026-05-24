@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { isSuperAdmin } from '../lib/access'
+import { isSuperAdmin, isAdminOrSuperAdmin } from '../lib/access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -11,18 +11,30 @@ export const Users: CollectionConfig = {
     read: ({ req: { user } }: any) => {
       if (!user) return false
       if (user.role === 'superadmin') return true
-      // Non-superadmin users can only read their own profile
+      // Admin can read all users (to manage editors/admins). Editors only see themselves.
+      if (user.role === 'admin') return true
       return { id: { equals: user.id } }
     },
     update: ({ req: { user } }: any) => {
       if (!user) return false
-      // Only superadmin can update any user
       if (user.role === 'superadmin') return true
-      // Users can update their own profile (but not change their role)
-      return { id: { equals: user.id } }
+      // Admin can update non-superadmin users (editors and fellow admins)
+      if (user.role === 'admin') {
+        return { role: { not_equals: 'superadmin' } } as any
+      }
+      // Editors can update their own profile
+      return { id: { equals: user.id } } as any
     },
-    delete: isSuperAdmin,
-    create: isSuperAdmin,
+    delete: ({ req: { user } }: any) => {
+      if (!user) return false
+      if (user.role === 'superadmin') return true
+      // Admin can delete non-superadmin users
+      if (user.role === 'admin') {
+        return { role: { not_equals: 'superadmin' } } as any
+      }
+      return false
+    },
+    create: isAdminOrSuperAdmin,
     admin: ({ req: { user } }: any) => {
       if (!user) return false
       // superadmin, admin, and editor can access the admin panel
