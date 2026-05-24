@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isSuperAdmin } from '../lib/access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -9,40 +10,40 @@ export const Users: CollectionConfig = {
   access: {
     read: ({ req: { user } }: any) => {
       if (!user) return false
-      if (user.role === 'admin') return true
-      // Users can read their own profile
+      if (user.role === 'superadmin') return true
+      // Non-superadmin users can only read their own profile
       return { id: { equals: user.id } }
     },
     update: ({ req: { user } }: any) => {
       if (!user) return false
-      if (user.role === 'admin') return true
-      return false
+      // Only superadmin can update any user
+      if (user.role === 'superadmin') return true
+      // Users can update their own profile (but not change their role)
+      return { id: { equals: user.id } }
     },
-    delete: ({ req: { user } }: any) => {
-      if (!user) return false
-      if (user.role === 'admin') return true
-      return false
-    },
-    create: ({ req: { user } }: any) => {
-      if (!user) return false
-      if (user.role === 'admin') return true
-      return false
-    },
+    delete: isSuperAdmin,
+    create: isSuperAdmin,
     admin: ({ req: { user } }: any) => {
       if (!user) return false
-      if (user.role === 'admin') return true
-      return false
+      // superadmin, admin, and editor can access the admin panel
+      return user.role === 'superadmin' || user.role === 'admin' || user.role === 'editor'
     },
   },
   fields: [
     {
       name: 'role',
       type: 'select',
-      options: ['admin', 'editor', 'viewer'],
+      options: [
+        { label: 'Superadmin', value: 'superadmin' },
+        { label: 'Admin', value: 'admin' },
+        { label: 'Editor', value: 'editor' },
+      ],
       defaultValue: 'editor',
       required: true,
+      // Only superadmin can see/change the role field
+      admin: {
+        condition: ({ user }: any) => user?.role === 'superadmin',
+      },
     },
-    // Email added by default
-    // Add more fields as needed
   ],
 }

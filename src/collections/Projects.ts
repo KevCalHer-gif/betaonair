@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isEditorOrAbove, isSuperAdmin } from '../lib/access'
 
 function generateSlug(title: string): string {
   return title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '')
@@ -9,9 +10,9 @@ const Projects: CollectionConfig = {
   admin: { useAsTitle: 'title', group: 'Contenido' },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user && (user?.role === 'admin' || user?.role === 'editor'),
-    update: ({ req: { user } }) => !!user && (user?.role === 'admin' || user?.role === 'editor'),
-    delete: ({ req: { user } }) => !!user && user?.role === 'admin',
+    create: isEditorOrAbove,
+    update: isEditorOrAbove,
+    delete: isSuperAdmin,
   },
   fields: [
     { name: 'title', type: 'text', required: true, label: 'Título del proyecto' },

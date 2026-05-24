@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isEditorOrAbove } from '../lib/access'
 
 export const Contacts: CollectionConfig = {
   slug: 'contacts',
@@ -7,10 +8,10 @@ export const Contacts: CollectionConfig = {
     defaultColumns: ['nombre', 'email', 'leido'],
   },
   access: {
-    read: ({ req: { user } }) => !!user,
-    create: () => true,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    read: isEditorOrAbove,
+    create: () => true, // Public can submit the form
+    update: isEditorOrAbove,
+    delete: isEditorOrAbove,
   },
   fields: [
     {

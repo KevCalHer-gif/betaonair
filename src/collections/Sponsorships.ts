@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdminOrSuperAdmin, hideSlugFromNonSuperAdmin } from '../lib/access'
 
 function generateSlug(name: string): string {
   return name
@@ -16,9 +17,9 @@ export const Sponsorships: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    create: isAdminOrSuperAdmin,
+    update: isAdminOrSuperAdmin,
+    delete: isAdminOrSuperAdmin,
   },
   fields: [
     {
@@ -31,7 +32,10 @@ export const Sponsorships: CollectionConfig = {
       name: 'slug',
       type: 'text',
       unique: true,
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        condition: hideSlugFromNonSuperAdmin,
+      },
       hooks: {
         beforeChange: [
           ({ data, originalDoc, operation }) => {

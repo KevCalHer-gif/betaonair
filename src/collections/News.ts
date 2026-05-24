@@ -1,5 +1,14 @@
 import type { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { isEditorOrAbove, isSuperAdmin, hideSlugFromNonSuperAdmin } from '../lib/access'
+
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
 
 export const News: CollectionConfig = {
   slug: 'news',
@@ -9,9 +18,9 @@ export const News: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    create: isEditorOrAbove,
+    update: isEditorOrAbove,
+    delete: isSuperAdmin,
   },
   fields: [
     {
@@ -24,7 +33,10 @@ export const News: CollectionConfig = {
       name: 'slug',
       type: 'text',
       unique: true,
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        condition: hideSlugFromNonSuperAdmin,
+      },
       hooks: {
         beforeChange: [
           ({ data, originalDoc, operation }) => {
@@ -78,12 +90,4 @@ export const News: CollectionConfig = {
       defaultValue: 'published',
     },
   ],
-}
-
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_]+/g, '-')
-    .replace(/^-+|-+$/g, '')
 }

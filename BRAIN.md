@@ -468,6 +468,14 @@ Ver GLOSSARY.md para nombres completos.
 7. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
 
 **Completado (2026-05-24):**
+- ✅ **Priority 9 — Sistema de roles (superadmin/admin/editor):**
+  - Creado `src/lib/access.ts` con helpers: `isSuperAdmin`, `isAdmin`, `isAdminOrSuperAdmin`, `isEditorOrAbove`, `hideSlugFromNonSuperAdmin`
+  - `Users.ts`: roles renombrados a `superadmin`/`admin`/`editor`. Rol `viewer` eliminado. Panel access para los 3 roles. Solo superadmin ve el campo `role`.
+  - Slug oculto con `admin.condition` en Categories, Programs, Episodes, News, Sponsorships (solo superadmin lo ve)
+  - Matriz de accesos por colección: superadmin=CRUD total, admin=CRUD en contenido propio, editor=CRUD en News/Episodes/Live/Services/Projects, solo lectura en Programs/Categories/Sponsorships
+  - Globals Settings y SEO: update solo para admin y superadmin, read público
+  - `Contacts.ts`, `Media.ts`, `Live.ts`: accesos corregidos (antes `!!user` permitía a cualquiera)
+  - Build: 17 rutas, 0 errores
 - ✅ **Priority 8 — Settings y SEO conectados al frontend:**
   - Creado `src/lib/api/settings.ts` con `getSettings()` y `getSeo()` (fetch a `/api/globals/settings` y `/api/globals/seo`)
   - `layout.tsx`: `generateMetadata()` dinámico desde SEO global (metaTitle, metaDescription, ogImage) + footer usa `siteName` de Settings

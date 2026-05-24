@@ -271,6 +271,28 @@ Plataforma digital de contenidos bolivianos. Next.js + Payload CMS v3 + PostgreS
 - **Corregido** [`ServicesSection.tsx`](src/components/sections/ServicesSection.tsx): `live.titulo` → `live.title` (línea 52), `prog.descripcionCorta` → `prog.description` (línea 114)
 - **Creado** [`docs/payload-admin-analysis.md`](docs/payload-admin-analysis.md): análisis exhaustivo de las 11 colecciones + 2 globales + dashboard + bugs detectados
 - `npm run build`: 17 rutas, 0 errores
+
+### [2026-05-24] — LEANDRO: Priority 9 — Sistema de roles (superadmin/admin/editor)
+
+**Problema:** Solo existía rol `admin` con acceso total. El rol `viewer` era inútil (el frontend es público). Cualquier usuario autenticado (`!!user`) podía crear/editar/borrar en 7 colecciones. El campo `slug` era visible para todos los admins aunque es autogenerado.
+
+**Solución:** Renombrar 3 roles existentes con nueva matriz de accesos:
+
+| Rol | Panel | Crea | Edita | Borra | Ve slug |
+|---|---|---|---|---|---|
+| `superadmin` (Kevin) | ✅ | Todo | Todo | Todo | ✅ |
+| `admin` (cliente) | ✅ | Todo | Todo | ❌ | ❌ |
+| `editor` | ✅ | News/Episodes/Live/Services/Projects | News/Episodes/Live/Services/Projects | ❌ | ❌ |
+
+**Cambios realizados:**
+- **Creado** [`src/lib/access.ts`](src/lib/access.ts): helpers `isSuperAdmin`, `isAdmin`, `isAdminOrSuperAdmin`, `isEditorOrAbove`, `hideSlugFromNonSuperAdmin`
+- **Actualizado** [`Users.ts`](src/collections/Users.ts): roles `superadmin`/`admin`/`editor`, panel access para los 3, solo superadmin ve/edita campo `role`
+- **Slug oculto** con `admin.condition` en 5 colecciones: [`Categories.ts`](src/collections/Categories.ts), [`Programs.ts`](src/collections/Programs.ts), [`Episodes.ts`](src/collections/Episodes.ts), [`News.ts`](src/collections/News.ts), [`Sponsorships.ts`](src/collections/Sponsorships.ts)
+- **Accesos corregidos** en: [`Services.ts`](src/collections/Services.ts), [`Projects.ts`](src/collections/Projects.ts), [`Contacts.ts`](src/collections/Contacts.ts), [`Media.ts`](src/collections/Media.ts), [`Live.ts`](src/collections/Live.ts)
+- **Globals** [`Settings.ts`](src/globals/Settings.ts) y [`Seo.ts`](src/globals/Seo.ts): update solo `adminOrSuperAdmin`, read público
+- `npm run build`: 17 rutas, 0 errores
+
+**⚠️ ADVERTENCIA:** El usuario Kevin actual con `role: 'admin'` debe migrarse manualmente a `role: 'superadmin'` en la DB para no perder acceso al panel.
 - Commit `ee101eb` + push a GitHub
 
 **Próximo paso:** Verificación de colecciones en Payload CMS Admin para confirmar que todos los componentes del frontend reflejan correctamente los datos.

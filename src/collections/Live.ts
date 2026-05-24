@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isEditorOrAbove, isSuperAdmin } from '../lib/access'
 
 export const Live: CollectionConfig = {
   slug: 'live',
@@ -8,9 +9,9 @@ export const Live: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    create: isEditorOrAbove,
+    update: isEditorOrAbove,
+    delete: isSuperAdmin,
   },
   fields: [
     {

@@ -1,17 +1,14 @@
 import type { CollectionConfig } from 'payload'
-
-function generateSlug(title: string): string {
-  return title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '')
-}
+import { isEditorOrAbove, isSuperAdmin } from '../lib/access'
 
 const Services: CollectionConfig = {
   slug: 'services',
   admin: { useAsTitle: 'title', group: 'Contenido' },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => !!user && (user?.role === 'admin' || user?.role === 'editor'),
-    update: ({ req: { user } }) => !!user && (user?.role === 'admin' || user?.role === 'editor'),
-    delete: ({ req: { user } }) => !!user && user?.role === 'admin',
+    create: isEditorOrAbove,
+    update: isEditorOrAbove,
+    delete: isSuperAdmin,
   },
   fields: [
     { name: 'title', type: 'text', required: true, label: 'Título del servicio' },
@@ -23,6 +20,10 @@ const Services: CollectionConfig = {
     { name: 'order', type: 'number', label: 'Orden de visualización', admin: { position: 'sidebar' } },
   ],
   timestamps: true,
+}
+
+function generateSlug(title: string): string {
+  return title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '')
 }
 
 export { Services }
