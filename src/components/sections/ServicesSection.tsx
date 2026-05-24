@@ -49,7 +49,7 @@ export default function ServicesSection() {
                     flex: '1 1 300px',
                   }}
                 >
-                  {live.titulo && <h4 style={{ color: '#fff' }}>{live.titulo}</h4>}
+                  {live.title && <h4 style={{ color: '#fff' }}>{live.title}</h4>}
                   {live.embedUrl && (
                     <div
                       style={{
@@ -110,8 +110,8 @@ export default function ServicesSection() {
                   <h4 style={{ color: '#c61d4a', marginBottom: '0.5rem' }}>
                     {prog.title}
                   </h4>
-                  {prog.descripcionCorta && (
-                    <p style={{ color: '#ccc' }}>{prog.descripcionCorta}</p>
+                  {prog.description && (
+                    <p style={{ color: '#ccc' }}>{prog.description}</p>
                   )}
                 </div>
               ))}
