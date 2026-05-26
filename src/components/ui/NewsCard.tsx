@@ -15,9 +15,10 @@ interface NewsCardProps {
   slug: string
   resumen: string
   categories?: CategoryBadge[]
+  coverImage?: { url?: string; alt?: string } | null
 }
 
-export default function NewsCard({ titulo, fecha, slug, resumen, categories }: NewsCardProps) {
+export default function NewsCard({ titulo, fecha, slug, resumen, categories, coverImage }: NewsCardProps) {
   return (
     <article
       className="card-noticia fade-in-up"
@@ -29,6 +30,28 @@ export default function NewsCard({ titulo, fecha, slug, resumen, categories }: N
         borderLeft: '3px solid #c61d4a',
       }}
     >
+      {coverImage?.url && (
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          height: '160px',
+          borderRadius: '6px',
+          overflow: 'hidden',
+          marginBottom: '1rem',
+          background: '#111',
+        }}>
+          <img
+            src={coverImage.url}
+            alt={coverImage.alt || titulo}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </div>
+      )}
       {categories && categories.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.75rem' }}>
           {categories.map((cat, idx) => (

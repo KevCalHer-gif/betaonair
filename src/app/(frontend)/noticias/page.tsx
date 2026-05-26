@@ -30,6 +30,10 @@ export default async function NoticiasPage() {
             name: c.name,
             color: c.color,
           })) || []
+          const cover = n.coverImage as { url?: string; alt?: string } | null | undefined
+          const coverData = cover?.url
+            ? { url: cover.url, alt: cover.alt }
+            : null
           return (
             <NewsCard
               key={n.id}
@@ -46,6 +50,7 @@ export default async function NoticiasPage() {
               slug={n.slug || ''}
               resumen={n.excerpt || ''}
               categories={cats}
+              coverImage={coverData}
             />
           )
         })

@@ -156,6 +156,10 @@ export default async function HomePage() {
                 name: c.name,
                 color: c.color,
               })) || []
+              const cover = n.coverImage as { url?: string; alt?: string } | null | undefined
+              const coverData = cover?.url
+                ? { url: cover.url, alt: cover.alt }
+                : null
               return (
                 <NewsCard
                   key={n.id}
@@ -172,6 +176,7 @@ export default async function HomePage() {
                   slug={n.slug || ''}
                   resumen={n.excerpt || ''}
                   categories={cats}
+                  coverImage={coverData}
                 />
               )
             })}

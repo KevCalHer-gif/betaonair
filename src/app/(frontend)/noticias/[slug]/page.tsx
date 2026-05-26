@@ -56,6 +56,9 @@ export default async function NoticiaSlugPage({
   const noticia = await getNewsBySlug(slug)
   if (!noticia) notFound()
 
+  const coverRaw = noticia.coverImage as { url?: string; alt?: string } | null | undefined
+  const coverUrl = coverRaw?.url || null
+  const coverAlt = coverRaw?.alt || noticia.title
   const parrafos = extractParagraphs(noticia.content)
 
   return (
@@ -73,6 +76,27 @@ export default async function NoticiaSlugPage({
       >
         ← Volver a noticias
       </Link>
+      {coverUrl && (
+        <div style={{
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          marginBottom: '1.5rem',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+        }}>
+          <img
+            src={coverUrl}
+            alt={coverAlt}
+            style={{
+              width: '100%',
+              height: 'auto',
+              maxHeight: '400px',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </div>
+      )}
       <h1
         style={{
           fontFamily: 'var(--font-brand)',
