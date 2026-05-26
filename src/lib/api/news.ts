@@ -6,7 +6,7 @@ export async function getNews(): Promise<News[]> {
   try {
     const res = await fetch(
       `${API_URL}/api/news?where[status][equals]=published&sort=-publishedAt&limit=10`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 30 } },
     )
     if (!res.ok) throw new Error('Failed to fetch news')
     const data = await res.json()
@@ -21,7 +21,7 @@ export async function getNewsBySlug(slug: string): Promise<News | null> {
   try {
     const res = await fetch(
       `${API_URL}/api/news?where[slug][equals]=${slug}`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 30 } },
     )
     if (!res.ok) throw new Error('Failed to fetch news')
     const data = await res.json()

@@ -1,6 +1,8 @@
 import NewsCard from '../../../components/ui/NewsCard'
 import { getNews } from '../../../lib/api/news'
 
+export const dynamic = 'force-dynamic'
+
 export default async function NoticiasPage() {
   const noticias = await getNews()
 

@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import { getNewsBySlug } from '../../../../lib/api/news'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 /**
  * Extrae texto plano de la estructura richText (Lexical) de Payload.
  */
