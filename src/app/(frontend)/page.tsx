@@ -150,23 +150,31 @@ export default async function HomePage() {
           </p>
         ) : (
           <div style={{ maxWidth: 700, margin: '0 auto' }}>
-            {noticias.map((n) => (
-              <NewsCard
-                key={n.id}
-                titulo={n.title}
-                fecha={
-                  n.publishedAt
-                    ? new Date(n.publishedAt).toLocaleDateString('es-BO', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })
-                    : ''
-                }
-                slug={n.slug || ''}
-                resumen={n.excerpt || ''}
-              />
-            ))}
+            {noticias.map((n) => {
+              const cats = (n.categories as any[] | undefined)?.map((c: any) => ({
+                id: c.id,
+                name: c.name,
+                color: c.color,
+              })) || []
+              return (
+                <NewsCard
+                  key={n.id}
+                  titulo={n.title}
+                  fecha={
+                    n.publishedAt
+                      ? new Date(n.publishedAt).toLocaleDateString('es-BO', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                      : ''
+                  }
+                  slug={n.slug || ''}
+                  resumen={n.excerpt || ''}
+                  categories={cats}
+                />
+              )
+            })}
           </div>
         )}
       </section>

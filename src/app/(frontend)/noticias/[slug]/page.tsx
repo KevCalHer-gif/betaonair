@@ -92,6 +92,28 @@ export default async function NoticiaSlugPage({
             })
           : ''}
       </p>
+      {noticia.categories && Array.isArray(noticia.categories) && (noticia.categories as any[]).length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
+          {(noticia.categories as any[]).map((cat: any, idx: number) => (
+            <span
+              key={cat.id || idx}
+              style={{
+                display: 'inline-block',
+                padding: '0.3rem 0.8rem',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                background: cat.color || '#c61d4a',
+                color: '#fff',
+              }}
+            >
+              {cat.name}
+            </span>
+          ))}
+        </div>
+      )}
       {noticia.excerpt && (
         <p
           style={{

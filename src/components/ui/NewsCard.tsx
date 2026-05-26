@@ -3,14 +3,21 @@
 import Link from 'next/link'
 import '@/app/(frontend)/animations.css'
 
+interface CategoryBadge {
+  id?: number
+  name: string
+  color?: string | null
+}
+
 interface NewsCardProps {
   titulo: string
   fecha: string
   slug: string
   resumen: string
+  categories?: CategoryBadge[]
 }
 
-export default function NewsCard({ titulo, fecha, slug, resumen }: NewsCardProps) {
+export default function NewsCard({ titulo, fecha, slug, resumen, categories }: NewsCardProps) {
   return (
     <article
       className="card-noticia fade-in-up"
@@ -22,6 +29,28 @@ export default function NewsCard({ titulo, fecha, slug, resumen }: NewsCardProps
         borderLeft: '3px solid #c61d4a',
       }}
     >
+      {categories && categories.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.75rem' }}>
+          {categories.map((cat, idx) => (
+            <span
+              key={cat.id || idx}
+              style={{
+                display: 'inline-block',
+                padding: '0.2rem 0.6rem',
+                borderRadius: '4px',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                background: cat.color || '#c61d4a',
+                color: '#fff',
+              }}
+            >
+              {cat.name}
+            </span>
+          ))}
+        </div>
+      )}
       <h2
         style={{
           fontFamily: 'var(--font-brand)',

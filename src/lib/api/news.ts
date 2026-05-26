@@ -5,8 +5,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 export async function getNews(): Promise<News[]> {
   try {
     const res = await fetch(
-      `${API_URL}/api/news?where[status][equals]=published&sort=-publishedAt&limit=10`,
-      { next: { revalidate: 30 } },
+      `${API_URL}/api/news?depth=1&where[status][equals]=published&sort=-publishedAt&limit=10`,
+      { cache: 'no-store' },
     )
     if (!res.ok) throw new Error('Failed to fetch news')
     const data = await res.json()
@@ -20,8 +20,8 @@ export async function getNews(): Promise<News[]> {
 export async function getNewsBySlug(slug: string): Promise<News | null> {
   try {
     const res = await fetch(
-      `${API_URL}/api/news?where[slug][equals]=${slug}`,
-      { next: { revalidate: 30 } },
+      `${API_URL}/api/news?depth=1&where[slug][equals]=${slug}`,
+      { cache: 'no-store' },
     )
     if (!res.ok) throw new Error('Failed to fetch news')
     const data = await res.json()
