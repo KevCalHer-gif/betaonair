@@ -35,10 +35,22 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const year = new Date().getFullYear()
   const settings = await getSettings()
   const siteName = settings?.siteName || 'Beta On Air'
+  const gaId = process.env.NEXT_PUBLIC_GA_ID
 
   return (
     <html lang="es">
         <head>
+          {gaId && (
+            <>
+              <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+              <script dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`
+              }} />
+            </>
+          )}
+          <script dangerouslySetInnerHTML={{
+            __html: `(function(){var t=location.pathname;var s=null;if(t.startsWith("/programas/"))s="programs";else if(t.startsWith("/en-vivo"))s="live";else if(t.startsWith("/noticias/"))s="news";else if(t.startsWith("/patrocinios"))s="sponsorships";else if(t.startsWith("/servicios/"))s="services";else if(t==="/contacto")s="contact";else if(t==="/")s="home";else s="other";fetch("/api/track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({path:t,section:s})}).catch(function(){});})()`
+          }} />
         </head>
       <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'transparent', color: '#f0f0f0', fontFamily: "'Chinese Rocks Rg', sans-serif" }}>
         <Analytics />

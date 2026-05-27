@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { resendAdapter } from '@payloadcms/email-resend'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -16,6 +17,7 @@ import { Live } from './collections/Live'
 import { Sponsorships } from './collections/Sponsorships'
 import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
+import { PageViews } from './collections/PageViews'
 import { Settings } from './globals/Settings'
 import { Seo } from './globals/Seo'
 
@@ -30,7 +32,7 @@ export default buildConfig({
     },
     components: {},
   },
-  collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects],
+  collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects, PageViews],
   globals: [Settings, Seo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -41,6 +43,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+  }),
+  email: resendAdapter({
+    defaultFromAddress: 'no-reply@betaonair.com',
+    defaultFromName: 'Beta On Air',
+    apiKey: process.env.RESEND_API_KEY || '',
   }),
   sharp,
   plugins: [],

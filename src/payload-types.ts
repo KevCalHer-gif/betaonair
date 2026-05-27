@@ -78,6 +78,7 @@ export interface Config {
     sponsorships: Sponsorship;
     services: Service;
     projects: Project;
+    pageviews: Pageview;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     sponsorships: SponsorshipsSelect<false> | SponsorshipsSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    pageviews: PageviewsSelect<false> | PageviewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -403,6 +405,26 @@ export interface Project {
   createdAt: string;
 }
 /**
+ * Métricas de visitas registradas automáticamente.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageviews".
+ */
+export interface Pageview {
+  id: number;
+  /**
+   * Ej: /noticias/beta-on-air-crece
+   */
+  path: string;
+  section?: ('home' | 'programs' | 'live' | 'news' | 'sponsorships' | 'services' | 'contact' | 'other') | null;
+  program?: (number | null) | Program;
+  news?: (number | null) | News;
+  service?: (number | null) | Service;
+  timestamp: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -469,6 +491,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'pageviews';
+        value: number | Pageview;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -712,6 +738,20 @@ export interface ProjectsSelect<T extends boolean = true> {
   thumbnail?: T;
   status?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageviews_select".
+ */
+export interface PageviewsSelect<T extends boolean = true> {
+  path?: T;
+  section?: T;
+  program?: T;
+  news?: T;
+  service?: T;
+  timestamp?: T;
   updatedAt?: T;
   createdAt?: T;
 }
