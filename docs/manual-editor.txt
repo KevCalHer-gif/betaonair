@@ -1,0 +1,500 @@
+===============================================================================
+                    MANUAL DE USUARIO — ROL: EDITOR
+                    Plataforma Beta On Air
+===============================================================================
+
+¡Hola! Este manual te explica cómo usar cada sección del panel de
+administración. Como Editor, tu trabajo principal es crear y mantener
+el contenido que los visitantes ven en el sitio web.
+
+===============================================================================
+COLECCIONES A LAS QUE TENÉS ACCESO
+===============================================================================
+
+  ✅ Media (Imágenes)
+  ✅ Categories (Categorías) — solo lectura
+  ✅ Contacts (Mensajes de contacto)
+  ✅ Episodes (Episodios)
+  ✅ Live (Transmisión en vivo)
+  ✅ News (Noticias)
+  ✅ Services (Servicios)
+  ✅ Projects (Proyectos)
+
+  ❌ Programs, Sponsorships, Users, Settings, SEO
+     (estas secciones las maneja el Admin)
+
+===============================================================================
+1. MEDIA — Biblioteca de imágenes
+===============================================================================
+Vas a entrar mucho acá. Es donde se suben TODAS las imágenes que
+después usás en noticias, episodios, proyectos y servicios.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver todas las imágenes
+  ✔ Subir imágenes nuevas
+  ✔ Editar imágenes existentes (cambiar el "alt")
+
+CAMPOS AL SUBIR UNA IMAGEN:
+  > Alt
+    Una descripción corta de la imagen. Es importante para que
+    Google entienda de qué trata y para personas con lectores
+    de pantalla. Sé descriptivo pero breve.
+
+    Ejemplos:
+      "Logo del programa Beta Kids"
+      "Foto de la entrevista a Carlos Méndez"
+      "Portada de noticia sobre el torneo de fútbol"
+
+  > Archivo
+    El botón para elegir la imagen desde tu computadora.
+    Formatos aceptados: JPG, PNG, WebP.
+    Tamaño recomendado: menos de 2 MB para que el sitio cargue rápido.
+
+CONSEJO:
+Subí la imagen acá PRIMERO, y después cuando estés creando una
+noticia, episodio o proyecto, la seleccionás de la biblioteca.
+No se puede subir directamente desde la noticia.
+
+===============================================================================
+2. CATEGORIES — Categorías de noticias (SOLO LECTURA)
+===============================================================================
+Vas a ver la lista de categorías disponibles (DEPORTES, MÚSICA, etc.),
+pero NO podés crear nuevas ni editarlas.
+
+¿PARA QUÉ SIRVE?
+Cuando creás una noticia, le asignás una o más categorías. Esto
+hace que aparezca un badge (etiqueta) de color en la noticia.
+
+Si necesitás una categoría nueva (por ejemplo "CIENCIA"), pedile
+al Admin que la cree por vos.
+
+===============================================================================
+3. CONTACTS — Mensajes del formulario de contacto
+===============================================================================
+Cuando alguien llena el formulario en /contacto del sitio, el
+mensaje llega directamente a esta sección.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver todos los mensajes
+  ✔ Marcar mensajes como "Leido"
+  ✔ Eliminar mensajes viejos o spam
+
+CAMPOS QUE VES:
+  > Nombre
+    La persona que escribió.
+
+  > Email
+    Su correo electrónico. Podés responderle directamente desde
+    tu correo personal o empresarial.
+
+  > Telefono (opcional)
+    Si dejó su número, aparece acá.
+
+  > Mensaje
+    Lo que escribió la persona. Leelo completo.
+
+  > Leido
+    Una casilla de verificación. Cuando ya revisaste el mensaje,
+    marcá esta casilla y guardá. Así sabés cuáles ya atendiste
+    y cuáles no.
+
+  > Fecha Recibido
+    Cuándo se envió. Se asigna solo.
+
+FLUJO RECOMENDADO:
+  1. Entrás a Contacts
+  2. Ves los mensajes nuevos (sin palomita en "Leido")
+  3. Leés el mensaje
+  4. Si es spam o basura, lo eliminás
+  5. Si es un contacto real, lo revisás, respondés por email,
+     y después lo marcás como "Leido"
+
+===============================================================================
+4. EPISODES — Episodios de programas
+===============================================================================
+Cada video nuevo de un programa es un "episodio". Por ejemplo,
+si "The Bronca Time" saca un video cada semana, cada video es
+un episodio nuevo.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver todos los episodios
+  ✔ Crear episodios nuevos
+  ✔ Editar episodios existentes
+
+CAMPOS AL CREAR UN EPISODIO:
+
+  > Title
+    Nombre del episodio. Que sea descriptivo.
+    Ejemplo: "Temporada 2 — Capítulo 8: Entrevista a María"
+
+  > Slug (NO TOCAR)
+    Se genera solo. Ni siquiera lo vas a ver en el formulario.
+
+  > Program  ← MUY IMPORTANTE
+    Acá elegís a qué programa pertenece este episodio.
+    Es un campo obligatorio. Si no seleccionás un programa,
+    el episodio no va a aparecer en ningún lado.
+
+    Los programas ya están creados por el Admin. Vos solo
+    los seleccionás de la lista desplegable.
+
+  > Embed URL  ← MUY IMPORTANTE
+    El enlace del video de YouTube (o plataforma similar).
+
+    ⚠️ FORMATO CORRECTO:
+    Tenés que usar el enlace en formato "/embed/"
+
+    ✅ ASÍ SÍ:
+    https://www.youtube.com/embed/abc123
+
+    ❌ ASÍ NO:
+    https://www.youtube.com/watch?v=abc123
+
+    ¿CÓMO OBTENERLO?
+    1. Andá al video en YouTube
+    2. Click en "Compartir"
+    3. Click en "Insertar" (no en "Copiar enlace")
+    4. Te aparece un código HTML. Copiá SOLO el enlace que
+       está entre comillas después de src="..."
+    5. Ese enlace ya tiene el formato /embed/ correcto
+
+  > Thumbnail (opcional)
+    Imagen de portada del episodio. Actualmente no se muestra
+    en el sitio (se ve directamente el reproductor de video),
+    pero podés ponérsela igual para tenerla guardada.
+
+  > Published At
+    Fecha en que se publicó o se va a publicar el episodio.
+    Los episodios se ordenan por esta fecha.
+
+  > Status
+    "Published" = el episodio aparece en el sitio.
+    "Draft" = guardado pero invisible para el público.
+    Usá "Draft" si estás preparando algo que todavía no sale.
+
+¿DÓNDE APARECE EN EL SITIO?
+En la página de cada programa (/programas/nombre-del-programa).
+Por ejemplo, un episodio del programa "The Bronca Time" aparece
+en /programas/the-bronca-time, en la sección "Episodios".
+
+===============================================================================
+5. LIVE — Transmisión en vivo
+===============================================================================
+Esta es la sección que controla qué aparece en "En Vivo" en el sitio.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver la transmisión actual
+  ✔ Activar / cambiar la transmisión
+  ✔ Editar los datos
+
+⚠️ REGLA DE ORO: SOLO PUEDE HABER UNA TRANSMISIÓN ACTIVA A LA VEZ
+
+CAMPOS:
+
+  > Title
+    Título que describe qué está sonando.
+    Ejemplo: "En vivo ahora — Programa de la tarde"
+
+  > Embed URL
+    Mismo formato que en Episodios: enlace en formato /embed/
+    ✅ https://www.youtube.com/embed/abc123
+
+    También puede ser un enlace de streaming (Twitch, etc.),
+    siempre que sea "embebible" (que funcione dentro de un iframe).
+
+  > Is Active (LA PALOMITA IMPORTANTE)
+    Activá esta casilla para que la transmisión aparezca en el sitio.
+
+    IMPORTANTE: Si ya hay otra transmisión activa, DESACTIVALA
+    primero (andá a ese elemento, desmarcá "Is Active", guardá).
+    Después volvé a esta y activá "Is Active".
+
+    Si dejás dos activas al mismo tiempo, el sitio se confunde.
+
+  > Program (opcional)
+    Relación con un programa. Actualmente no se muestra en el
+    sitio, así que podés dejarlo vacío.
+
+FLUJO CUANDO EMPIEZA UN PROGRAMA EN VIVO:
+  1. Entrás a Live
+  2. Editás el elemento de transmisión (o creás uno nuevo)
+  3. Ponés el título y el Embed URL del streaming
+  4. Activás la casilla "Is Active"
+  5. Guardás
+  6. Verificás en el sitio que se vea el reproductor
+
+FLUJO CUANDO TERMINA:
+  1. Entrás a Live
+  2. Desmarcás "Is Active"
+  3. Guardás
+  4. El sitio automáticamente muestra "No hay transmisión en vivo"
+
+¿DÓNDE APARECE?
+- En la homepage (sección "En Vivo", arriba de todo)
+- En /en-vivo (página dedicada)
+
+===============================================================================
+6. NEWS — Noticias (TU SECCIÓN PRINCIPAL)
+===============================================================================
+Esta es probablemente la sección que más vas a usar. Todo lo que
+publiques acá aparece como noticia en el sitio.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver todas las noticias
+  ✔ Crear noticias nuevas
+  ✔ Editar noticias existentes
+
+CAMPOS AL CREAR UNA NOTICIA:
+
+  > Title
+    El título de la noticia. Atractivo, claro y directo.
+    Ejemplo: "Beta On Air llega a 10.000 oyentes mensuales"
+
+  > Slug (NO TOCAR)
+    Se genera automáticamente a partir del título. No lo ves.
+
+  > Excerpt (RESUMEN — muy recomendado)
+    Una o dos oraciones que resumen la noticia. Esto es lo que
+    la gente lee en la homepage y en /noticias antes de hacer
+    click en "Leer más".
+
+    Si no ponés nada, la tarjeta de la noticia queda sin
+    descripción y se ve vacía. Siempre escribí un resumen.
+
+    Ejemplo: "Beta On Air alcanzó un nuevo récord de audiencia
+    este mes, consolidándose como una de las radios online más
+    escuchadas de Bolivia."
+
+  > Content (CONTENIDO COMPLETO)
+    El cuerpo de la noticia. Usa el editor de texto enriquecido.
+    Podés:
+    - Escribir párrafos normales
+    - Poner texto en negrita (seleccionar texto → click en B)
+    - Poner texto en cursiva (seleccionar texto → click en I)
+    - Crear listas
+    - Y más opciones del editor
+
+    Escribí todo el contenido acá. Es lo que la gente lee cuando
+    hace click en "Leer más".
+
+  > Cover Image (IMAGEN DE PORTADA)
+    Seleccioná una imagen de la biblioteca (Media) para que sea
+    la portada de la noticia.
+
+    Aparece:
+    - Como miniatura en la tarjeta de la noticia (homepage y /noticias)
+    - Como imagen grande arriba en la página de la noticia
+
+    Si no seleccionás ninguna, simplemente no se muestra imagen.
+
+  > Source URL (opcional)
+    Si la noticia es de otra fuente, pegá acá el enlace original.
+    Actualmente no se muestra en el sitio, pero queda guardado.
+
+  > Source Name (opcional)
+    Nombre de la fuente. Ejemplo: "El Deber", "BBC", "Los Tiempos".
+
+  > Categories (CATEGORÍAS)
+    Elegí una o más categorías de la lista. Las categorías las
+    crea el Admin. Vos solo las seleccionás.
+
+    Cada categoría que elijas aparece como un badge de color en
+    la noticia. Ejemplo: si seleccionás "DEPORTES", aparece un
+    badge azul que dice "DEPORTES" arriba del título.
+
+    Podés seleccionar varias. Ejemplo: una noticia sobre un
+    festival de música rock podría tener "MÚSICA" y "EVENTOS".
+
+  > Published At (FECHA)
+    La fecha de publicación. Las noticias se ordenan por esta
+    fecha (la más reciente primero).
+
+    Podés poner una fecha futura si querés programar una noticia
+    (aunque el Status también influye — ver abajo).
+
+  > Status  ← NO OLVIDAR ESTO
+    "Published" = La noticia ya aparece en el sitio. VISIBLE.
+    "Draft" = Borrador. Solo visible en el panel de administración.
+
+    Si creás una noticia y no la ves en el sitio, REVISÁ EL STATUS.
+    Es la causa #1 de "no aparece lo que publiqué".
+
+FLUJO PARA PUBLICAR UNA NOTICIA:
+  1. Andá a News → Create New
+  2. Escribí el título
+  3. Escribí el resumen (excerpt) — 1 o 2 oraciones
+  4. Escribí el contenido completo en el editor
+  5. Seleccioná una imagen de portada de la biblioteca Media
+  6. Elegí una o más categorías
+  7. Poné la fecha (normalmente hoy)
+  8. Status: Published
+  9. Guardá
+  10. Andá al sitio y verificá que se vea bien
+
+¿DÓNDE APARECE?
+- En la homepage — sección "Últimas Noticias"
+- En /noticias — listado completo de todas las noticias
+- En /noticias/titulo-de-la-noticia — página individual
+
+===============================================================================
+7. SERVICES — Servicios profesionales
+===============================================================================
+Los servicios que ofrece Beta On Air como empresa.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver todos los servicios
+  ✔ Crear servicios nuevos
+  ✔ Editar servicios existentes
+
+CAMPOS AL CREAR UN SERVICIO:
+
+  > Título del servicio
+    Nombre claro y profesional.
+    Ejemplo: "Producción Audiovisual", "Marketing Digital",
+    "Diseño Gráfico"
+
+  > Slug (NO TOCAR)
+    Se genera solo a partir del título.
+
+  > Descripción
+    Describí el servicio en detalle. Usá el editor de texto
+    enriquecido para dar formato.
+
+    Explicá qué incluye, cómo se hace, por qué es bueno.
+    Es lo que el cliente lee para decidir si contrata.
+
+  > Precio (opcional)
+    Precio del servicio. Actualmente no se muestra en el sitio.
+
+  > Características
+    Lista de beneficios o puntos clave. Cada ítem es un texto
+    corto. Aparecen como viñetas en el sitio.
+
+    Ejemplos:
+      "Cámaras 4K profesionales"
+      "Edición de video en 48 horas"
+      "Incluye 3 revisiones gratuitas"
+      "Entrega en formato digital y DVD"
+
+  > Activo
+    Palomita. Si está activada, el servicio aparece en /servicios.
+    Si no, queda oculto.
+
+  > Orden de visualización
+    Un número. El servicio con 1 aparece primero, el 2 segundo, etc.
+    Si no ponés nada, se ordenan por fecha de creación.
+
+¿DÓNDE APARECE?
+- Listado en /servicios (tarjetas con título, características y link)
+- Página individual en /servicios/nombre-del-servicio
+  (incluye descripción completa, proyectos relacionados y
+  carrusel de patrocinadores)
+
+===============================================================================
+8. PROJECTS — Proyectos / Portafolio
+===============================================================================
+Trabajos que ya hicieron y quieren mostrar como portafolio.
+
+¿QUÉ PODÉS HACER?
+  ✔ Ver todos los proyectos
+  ✔ Crear proyectos nuevos
+  ✔ Editar existentes
+
+CAMPOS AL CREAR UN PROYECTO:
+
+  > Título del proyecto
+    Nombre del trabajo realizado.
+    Ejemplo: "Video institucional — Empresa Industrial S.A."
+
+  > Slug (NO TOCAR)
+    Se genera solo.
+
+  > Descripción
+    Describí en qué consistió el proyecto. Usá el editor.
+    Contá qué hizo Beta On Air, qué desafíos hubo, qué
+    resultado se obtuvo.
+
+  > Cliente
+    Nombre de la empresa o persona para quien se hizo.
+    Aparece en la tarjeta del proyecto: "Cliente: Empresa X"
+
+  > Servicio relacionado (IMPORTANTE)
+    Vinculá el proyecto con uno de los Servicios. Esto hace
+    que el proyecto aparezca automáticamente en la página de
+    ese servicio, en la sección "Proyectos relacionados".
+
+    Ejemplo: un video institucional lo vinculás a
+    "Producción Audiovisual".
+
+  > Imagen principal
+    Miniatura que representa el proyecto. Elegila de la
+    biblioteca Media. Se muestra en la tarjeta del proyecto.
+
+  > Estado
+    "Publicado" = visible en el sitio.
+    "Borrador" = oculto, todavía lo estás preparando.
+    "Archivado" = oculto, para proyectos viejos que querés guardar.
+
+  > Orden de visualización
+    Número. Menor número = aparece antes.
+
+¿DÓNDE APARECE?
+Los proyectos NO tienen página propia. Aparecen DENTRO de la
+página de cada servicio, en la sección "Proyectos relacionados".
+
+Ejemplo: Los proyectos vinculados a "Producción Audiovisual"
+aparecen en /servicios/produccion-audiovisual
+
+===============================================================================
+RESUMEN RÁPIDO PARA EL DÍA A DÍA
+===============================================================================
+
+Tarea                                    → Dónde ir
+
+📰 Publicar una noticia nueva             → News → Create New
+🎥 Agregar un video/episodio              → Episodes → Create New
+🔴 Activar transmisión en vivo            → Live → editar → Is Active ON
+🔴 Desactivar transmisión en vivo         → Live → editar → Is Active OFF
+📩 Revisar mensajes de contacto           → Contacts
+🖼️ Subir imágenes                         → Media → Create New
+🛠️ Agregar un servicio nuevo              → Services → Create New
+📂 Agregar un proyecto al portafolio      → Projects → Create New
+
+===============================================================================
+CHECKLIST ANTES DE PUBLICAR CUALQUIER COSA
+===============================================================================
+
+Antes de guardar y publicar, revisá:
+
+  ☐ ¿El título está bien escrito y sin errores?
+  ☐ ¿Seleccioné una imagen (si aplica)?
+  ☐ ¿Puse el Status en "Published" (o "Activo")?
+  ☐ ¿La fecha es correcta?
+  ☐ ¿El contenido tiene buen formato y se entiende?
+  ☐ Para episodios: ¿el Embed URL usa formato /embed/?
+  ☐ Para Live: ¿desactivé cualquier otra transmisión activa?
+
+===============================================================================
+PROBLEMAS COMUNES Y SOLUCIONES
+===============================================================================
+
+  "Publiqué una noticia y no aparece en el sitio"
+  → Revisá que el Status esté en "Published", no en "Draft".
+
+  "El video no se ve en la página del programa"
+  → Revisá que el Embed URL tenga formato /embed/.
+    Si usaste /watch?v=, cambialo por /embed/.
+
+  "La transmisión en vivo no se ve"
+  → Revisá que "Is Active" esté activado.
+    Revisá que no haya OTRA transmisión también activa.
+
+  "No encuentro el botón para crear una categoría nueva"
+  → El Editor no puede crear categorías. Pedile al Admin.
+
+  "No puedo entrar a Programs / Settings / SEO"
+  → Correcto. Esas secciones son solo para el Admin.
+
+===============================================================================
+                          FIN DEL MANUAL
+===============================================================================

@@ -60,7 +60,7 @@ export default async function HomePage() {
               }}
             >
               <iframe
-                src={activeStream.embedUrl}
+                src={`${activeStream.embedUrl}${activeStream.embedUrl.includes('?') ? '&' : '?'}autoplay=1&mute=1`}
                 title={activeStream.title || 'Transmisión en vivo'}
                 style={{
                   width: '100%',
@@ -68,6 +68,7 @@ export default async function HomePage() {
                   border: 'none',
                   display: 'block',
                 }}
+                allow="autoplay; fullscreen"
                 allowFullScreen
               />
             </div>

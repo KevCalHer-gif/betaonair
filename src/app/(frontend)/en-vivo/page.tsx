@@ -44,7 +44,7 @@ export default function EnVivoPage() {
         ) : stream && stream.embedUrl ? (
           <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
             <iframe
-              src={stream.embedUrl}
+              src={`${stream.embedUrl}${stream.embedUrl.includes('?') ? '&' : '?'}autoplay=1&mute=1`}
               title="Transmisión en vivo"
               style={{
                 width: '100%',
@@ -52,6 +52,7 @@ export default function EnVivoPage() {
                 border: 'none',
                 display: 'block',
               }}
+              allow="autoplay; fullscreen"
               allowFullScreen
             />
           </div>

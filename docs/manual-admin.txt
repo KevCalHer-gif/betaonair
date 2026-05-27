@@ -1,0 +1,499 @@
+===============================================================================
+                    MANUAL DE USUARIO — ROL: ADMIN
+                    Plataforma Beta On Air
+===============================================================================
+
+¡Hola! Este manual te explica cómo usar cada sección del panel de
+administración. Como Admin tenés acceso a todas las colecciones,
+incluyendo la configuración general del sitio.
+
+===============================================================================
+COLECCIONES A LAS QUE TENÉS ACCESO
+===============================================================================
+
+1. Media (Imágenes)
+2. Categories (Categorías de noticias)
+3. Contacts (Mensajes de contacto)
+4. Episodes (Episodios)
+5. Live (Transmisión en vivo)
+6. News (Noticias)
+7. Services (Servicios)
+8. Projects (Proyectos)
+9. Programs (Programas)             ← solo Admin
+10. Sponsorships (Patrocinadores)   ← solo Admin
+11. Users (Usuarios)                ← solo Admin
+12. Settings (Configuración)        ← solo Admin
+13. SEO (Metaetiquetas)             ← solo Admin
+
+===============================================================================
+1. MEDIA — Biblioteca de imágenes
+===============================================================================
+Acá subís todas las fotos e imágenes que después usás en otras secciones
+(logos, portadas, fotos de noticias, etc.).
+
+CAMPOS:
+  > Alt
+    Una descripción corta de la imagen. Sirve para accesibilidad y SEO.
+    Ejemplo: "Logo del programa Beta Kids"
+
+  > Archivo
+    El botón para elegir la imagen desde tu computadora. Formatos
+    aceptados: JPG, PNG, WebP.
+
+¿DÓNDE APARECE EN EL SITIO?
+Las imágenes subidas acá se usan en Programas (logo y portada),
+Noticias (imagen de portada), Proyectos (miniatura),
+Patrocinadores (logo) y SEO (imagen para redes sociales).
+
+===============================================================================
+2. CATEGORIES — Categorías de noticias
+===============================================================================
+Agrupá las noticias por tema. Ejemplo: "DEPORTES", "MÚSICA", "TECNOLOGÍA".
+
+CAMPOS:
+  > Name
+    Nombre de la categoría, en mayúsculas para que se vea bien.
+    Ejemplo: "DEPORTES"
+
+  > Slug
+    NO se modifica. Se genera solo a partir del nombre. El Admin no lo ve.
+
+  > Description (opcional)
+    Una breve descripción de la categoría. Actualmente solo queda
+    guardada en el sistema, no se muestra en el sitio público.
+
+  > Color
+    Color de fondo del badge (etiqueta). Escribilo en formato
+    hexadecimal. Ejemplo: #2c5a71 (azul oscuro), #c61d4a (rojo Beta).
+
+    IMPORTANTE: Usá colores que contrasten bien con texto blanco.
+    Colores muy claros (como #fff000, amarillo) harán que el texto
+    no se lea.
+
+¿DÓNDE APARECE EN EL SITIO?
+Cada noticia muestra badges de color con el nombre de su categoría
+en la página de inicio, en /noticias, y en cada noticia individual.
+
+===============================================================================
+3. CONTACTS — Mensajes del formulario de contacto
+===============================================================================
+Cuando alguien llena el formulario en /contacto, el mensaje llega acá.
+
+CAMPOS:
+  > Nombre
+    Nombre de la persona que escribió.
+
+  > Email
+    Correo electrónico de la persona.
+
+  > Telefono (opcional)
+    Número de teléfono si lo dejó.
+
+  > Mensaje
+    El texto que escribió la persona.
+
+  > Leido
+    Palomita para marcar si ya revisaste este mensaje. Te ayuda a
+    llevar control de cuáles ya atendiste.
+
+  > Fecha Recibido
+    La fecha en que se envió el mensaje. Se asigna automáticamente.
+
+ACCIÓN RECOMENDADA:
+Cuando revises un mensaje, marcá la casilla "Leido" y guardá.
+
+===============================================================================
+4. EPISODES — Episodios de programas
+===============================================================================
+Cada video o emisión de un programa es un episodio.
+
+CAMPOS:
+  > Title
+    Título del episodio. Ejemplo: "Episodio 5 — Entrevista con Juan"
+
+  > Slug
+    NO se modifica. Se genera solo.
+
+  > Program
+    Elegí a qué programa pertenece este episodio. Es obligatorio.
+    Relaciona el episodio con uno de tus Programas.
+
+  > Embed URL
+    El enlace del video de YouTube en formato "embed".
+    IMPORTANTE: Usá el formato /embed/, NO /watch?v=
+
+    ✅ Correcto: https://www.youtube.com/embed/abc123
+    ❌ Incorrecto: https://www.youtube.com/watch?v=abc123
+
+    Cómo obtenerlo: En YouTube, click en "Compartir" → "Insertar"
+    y copiá solo la URL que está entre comillas después de src="..."
+
+  > Thumbnail
+    Imagen en miniatura del episodio. Actualmente guardada pero
+    no visible en el sitio público (se muestra el reproductor de
+    video directamente).
+
+  > Published At
+    Fecha de publicación. Se usa para ordenar los episodios.
+
+  > Status
+    "Published" = visible en el sitio.
+    "Draft" = guardado pero no visible.
+
+¿DÓNDE APARECE EN EL SITIO?
+En la página de cada programa (/programas/nombre-del-programa).
+Se muestran como tarjetas con el reproductor de video embebido.
+
+===============================================================================
+5. LIVE — Transmisión en vivo
+===============================================================================
+Configurá cuál es la transmisión activa ahora mismo.
+
+CAMPOS:
+  > Title
+    Título de la transmisión. Ejemplo: "En vivo — Programa de la tarde"
+
+  > Embed URL
+    Mismo formato que en Episodios: enlace de YouTube en formato /embed/
+    o enlace de streaming embebible.
+    ✅ https://www.youtube.com/embed/abc123
+
+  > Is Active
+    Palomita. Solo UN elemento debe tenerla activa a la vez.
+    Si la activás acá, desactivá cualquier otra.
+    La transmisión activa aparece automáticamente en la homepage
+    y en /en-vivo.
+
+  > Program
+    Relación opcional con un Programa. Actualmente guardada pero
+    no visible en el sitio (se muestra solo el reproductor).
+
+¿DÓNDE APARECE EN EL SITIO?
+En la página de inicio (sección "En Vivo") y en /en-vivo.
+Si no hay ninguna transmisión activa, el sitio muestra un mensaje
+de "No hay transmisión en vivo en este momento".
+
+===============================================================================
+6. NEWS — Noticias
+===============================================================================
+El blog o sección de noticias del sitio.
+
+CAMPOS:
+  > Title
+    Título de la noticia. Atractivo y claro.
+
+  > Slug
+    NO se modifica. Se genera solo a partir del título.
+
+  > Excerpt (opcional pero recomendado)
+    Resumen corto de 1-2 oraciones. Aparece en las tarjetas de
+    noticias en la homepage y en /noticias. Si no ponés nada,
+    la tarjeta queda sin descripción.
+
+  > Content
+    El contenido completo de la noticia. Es un editor de texto
+    enriquecido (Lexical). Podés escribir párrafos, poner negritas,
+    listas, etc. Lo que escribas acá es el cuerpo de la noticia.
+
+  > Cover Image
+    Imagen de portada de la noticia. Elegí una imagen de la
+    biblioteca Media. Aparece arriba en la noticia individual
+    y como miniatura en las tarjetas del listado.
+
+  > Source URL (opcional)
+    Si la noticia es de otra fuente, poné el enlace original acá.
+    Actualmente guardado pero no visible en el sitio.
+
+  > Source Name (opcional)
+    Nombre de la fuente original. Ejemplo: "El Deber", "BBC".
+    Actualmente guardado pero no visible en el sitio.
+
+  > Categories
+    Elegí una o más categorías (las que creaste en Categories).
+    Cada categoría se muestra como un badge de color en la noticia.
+
+  > Published At
+    Fecha de publicación. Define el orden en que aparecen las
+    noticias (la más reciente primero).
+
+  > Status
+    "Published" = visible para todo el público.
+    "Draft" = solo visible en el panel de administración.
+
+¿DÓNDE APARECE EN EL SITIO?
+- Listado en la homepage (sección "Últimas Noticias")
+- Página /noticias (listado completo)
+- Página individual en /noticias/titulo-de-la-noticia
+
+===============================================================================
+7. SERVICES — Servicios profesionales
+===============================================================================
+Los servicios que ofrece Beta On Air como empresa (producción
+audiovisual, marketing digital, etc.).
+
+CAMPOS:
+  > Título del servicio
+    Nombre del servicio. Ejemplo: "Producción Audiovisual"
+
+  > Slug
+    NO se modifica. Se genera solo.
+
+  > Descripción
+    Descripción detallada del servicio. Usá el editor de texto
+    enriquecido para dar formato.
+
+  > Precio (opcional)
+    Precio del servicio. Actualmente guardado pero no visible
+    en el sitio público.
+
+  > Características
+    Lista de beneficios o características (array).
+    Cada ítem es un texto corto.
+    Ejemplo: "Cámaras 4K", "Edición profesional", "Entrega en 5 días"
+
+  > Activo
+    Palomita. Solo servicios activos aparecen en el sitio.
+
+  > Orden de visualización
+    Número. El servicio con número 1 aparece primero.
+    Si dos tienen el mismo número, se ordenan por fecha de creación.
+
+¿DÓNDE APARECE EN EL SITIO?
+- Listado en /servicios
+- Página individual en /servicios/nombre-del-servicio
+  (incluye proyectos relacionados y patrocinadores)
+
+===============================================================================
+8. PROJECTS — Proyectos / Portafolio
+===============================================================================
+Trabajos realizados que mostrás como portafolio.
+
+CAMPOS:
+  > Título del proyecto
+    Nombre del proyecto. Ejemplo: "Video institucional — Empresa X"
+
+  > Slug
+    NO se modifica. Se genera solo.
+
+  > Descripción
+    Descripción del proyecto con editor de texto enriquecido.
+
+  > Cliente
+    Nombre del cliente para el que se hizo el proyecto.
+
+  > Servicio relacionado
+    Vinculá este proyecto a uno de tus Servicios. Esto hace que
+    el proyecto aparezca en la página de detalle de ese servicio.
+
+  > Imagen principal
+    Miniatura del proyecto. Se muestra en las tarjetas del portafolio.
+
+  > Estado
+    "Publicado" = visible en el sitio.
+    "Borrador" = oculto.
+    "Archivado" = oculto (para proyectos viejos que querés guardar).
+
+  > Orden de visualización
+    Número. Menor número = aparece primero.
+
+¿DÓNDE APARECE EN EL SITIO?
+En la página de detalle de cada servicio, en la sección
+"Proyectos relacionados".
+
+===============================================================================
+9. PROGRAMS — Programas (SOLO ADMIN)
+===============================================================================
+Los programas de radio/TV que produce Beta On Air.
+
+CAMPOS:
+  > Title
+    Nombre del programa. Ejemplo: "The Bronca Time"
+
+  > Slug
+    NO se modifica. Se genera solo.
+
+  > Description
+    Descripción del programa. Se muestra en la página del programa
+    debajo del título. Escribila en texto plano, sin formato.
+
+  > Logo
+    Logo del programa. Se recorta automáticamente a 400×400 píxeles
+    (formato cuadrado 1:1). Se usa en las tarjetas y página del programa.
+
+  > Cover Image (Portada)
+    Imagen de portada del programa. Se recorta automáticamente a
+    1900×500 píxeles (formato apaisado 19:5). Se muestra como banner
+    superior en la página del programa.
+
+    IMPORTANTE: El logo y la portada son obligatorios. Si no subís uno,
+    la página del programa mostrará espacios vacíos.
+
+  > Accent Color
+    Color de acento. Actualmente guardado pero no visible en el sitio
+    (el sistema usa un color estándar).
+
+  > Is Live
+    Palomita. Actualmente guardada pero no afecta al sitio.
+
+  > Live URL
+    Enlace de transmisión. Actualmente guardado pero no usado.
+    La sección "En Vivo" se maneja desde la colección Live.
+
+  > Status
+    "Active" = visible en el sitio y portafolio.
+    "Inactive" = oculto.
+
+¿DÓNDE APARECE EN EL SITIO?
+- Listado en /programas (tarjetas con logo)
+- Página individual en /programas/nombre-del-programa
+  (banner de portada + descripción + episodios)
+- Sección de Programas en /portafolio
+
+===============================================================================
+10. SPONSORSHIPS — Patrocinadores (SOLO ADMIN)
+===============================================================================
+Empresas o marcas que patrocinan a Beta On Air.
+
+CAMPOS:
+  > Name
+    Nombre del patrocinador. Ejemplo: "Coca-Cola"
+
+  > Slug
+    NO se modifica. Se genera solo.
+
+  > Description
+    Descripción del patrocinador. Actualmente guardada pero no
+    visible en el sitio público.
+
+  > Logo
+    El logo del patrocinador. Se muestra en el carrusel de la
+    página /patrocinios y en cada página de servicio.
+
+  > URL
+    Enlace al sitio web del patrocinador. Actualmente guardado
+    pero los logos no son clickeables.
+
+  > Status
+    "Active" = se muestra en el sitio.
+    "Inactive" = oculto.
+
+¿DÓNDE APARECE EN EL SITIO?
+- Carrusel de logos en /patrocinios
+- Carrusel de logos al final de cada página de servicio
+
+===============================================================================
+11. USERS — Usuarios del panel (SOLO ADMIN)
+===============================================================================
+Gestioná quién puede entrar al panel de administración.
+
+CAMPOS:
+  > Email
+    Correo electrónico del usuario. Se usa para iniciar sesión.
+
+  > Password
+    Contraseña. Solo se configura al crear el usuario.
+
+  > Role
+    IMPORTANTE: Solo un Superadmin puede ver y cambiar este campo.
+
+    - Editor: Puede crear y editar contenido (noticias, episodios,
+      servicios, proyectos, medios). NO puede crear programas,
+      patrocinadores, ni modificar configuración.
+    - Admin: Igual que Editor, más acceso a Programas, Patrocinadores,
+      Configuración, SEO y gestión de usuarios (excepto Superadmins).
+    - Superadmin: Acceso total. Solo hay uno (Kevin, el dueño del sitio).
+
+¿CUÁNDO CREAR USUARIOS?
+Cuando entra alguien nuevo al equipo que necesita publicar contenido.
+Nunca compartas tu contraseña; creale su propio usuario a cada persona.
+
+===============================================================================
+12. SETTINGS — Configuración general del sitio (SOLO ADMIN)
+===============================================================================
+Datos generales que aparecen en todo el sitio.
+
+CAMPOS:
+  > Site Name
+    Nombre del sitio. Aparece en la pestaña del navegador y en el
+    footer (pie de página). Normalmente es "Beta On Air".
+
+  > Slogan
+    Frase corta que aparece en la sección HERO de la página de inicio.
+    Ejemplo: "Hacemos que se note."
+
+  > Logo URL
+    Dirección de la imagen del logo. Aparece en la sección HERO
+    de la página de inicio. Normalmente es "/logo.png"
+
+  > Facebook URL
+    Enlace a la página de Facebook. Aparece en la sección de
+    redes sociales al final de la homepage.
+
+  > Instagram URL
+    Enlace al perfil de Instagram.
+
+  > YouTube URL
+    Enlace al canal de YouTube.
+
+  > TikTok URL
+    Enlace al perfil de TikTok.
+
+¿DÓNDE APARECE EN EL SITIO?
+- Site Name: pestaña del navegador y footer
+- Slogan y Logo URL: sección principal (HERO) de la homepage
+- Redes sociales: íconos al final de la homepage
+
+===============================================================================
+13. SEO — Metaetiquetas (SOLO ADMIN)
+===============================================================================
+Configuración para Google y redes sociales.
+
+CAMPOS:
+  > Meta Title
+    Título que aparece en Google y en la pestaña del navegador.
+    Máximo recomendado: 60 caracteres.
+    Ejemplo: "Beta On Air — Radio y TV online desde Bolivia"
+
+  > Meta Description
+    Descripción que aparece debajo del título en Google.
+    Máximo recomendado: 160 caracteres.
+    Ejemplo: "Escuchá Beta On Air, la radio online con los mejores
+    programas, noticias y entretenimiento desde Santa Cruz, Bolivia."
+
+  > OG Image
+    Imagen que aparece cuando alguien comparte el enlace del sitio
+    en WhatsApp, Facebook, Twitter, etc. Tamaño recomendado: 1200×630px.
+
+¿DÓNDE APARECE?
+No se ve en la página, pero Google y las redes sociales la usan
+para mostrar la info del sitio en búsquedas y enlaces compartidos.
+
+===============================================================================
+RESUMEN RÁPIDO PARA EL DÍA A DÍA
+===============================================================================
+
++  Para publicar una noticia nueva:
+   → News → Create New → Llenar título, resumen, contenido,
+     categoría, fecha. Subir cover image. Status: Published.
+
++  Para activar una transmisión en vivo:
+   → Live → Edit → Poner Embed URL → Activar "Is Active".
+     Desactivar cualquier otra transmisión activa antes.
+
++  Para agregar un episodio:
+   → Episodes → Create New → Elegir programa, poner título,
+     embed URL de YouTube. Status: Published.
+
++  Para ver mensajes del formulario de contacto:
+   → Contacts → Ver lista. Marcar "Leido" después de revisar.
+
++  Para agregar un proyecto al portafolio:
+   → Projects → Create New → Vincular con un Servicio.
+     Status: Publicado.
+
++  Para agregar un patrocinador:
+   → Sponsorships → Create New → Subir logo. Status: Active.
+
+===============================================================================
+                        FIN DEL MANUAL
+===============================================================================

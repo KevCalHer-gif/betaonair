@@ -11,8 +11,10 @@ export const Users: CollectionConfig = {
     read: ({ req: { user } }: any) => {
       if (!user) return false
       if (user.role === 'superadmin') return true
-      // Admin can read all users (to manage editors/admins). Editors only see themselves.
-      if (user.role === 'admin') return true
+      // Admin can read non-superadmin users (editors and fellow admins). Editors only see themselves.
+      if (user.role === 'admin') {
+        return { role: { not_equals: 'superadmin' } } as any
+      }
       return { id: { equals: user.id } }
     },
     update: ({ req: { user } }: any) => {
