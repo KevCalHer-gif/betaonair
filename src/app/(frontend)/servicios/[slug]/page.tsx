@@ -254,8 +254,7 @@ export default async function ServicioSlugPage({
             `}</style>
 
             <div className="marquee-track" style={{ padding: '0 1rem' }}>
-              {/* Duplicated for seamless loop */}
-              {[...sponsors, ...sponsors].map((sp, i) => {
+              {sponsors.map((sp) => {
                 const logo = sp.logo as { url?: string; sizes?: { thumbnail?: { url?: string } } } | number | null | undefined
                 const logoSrc = typeof logo === 'object' && logo !== null
                   ? (logo.sizes?.thumbnail?.url || logo.url || '')
@@ -263,7 +262,7 @@ export default async function ServicioSlugPage({
 
                 return (
                   <div
-                    key={`${sp.id}-${i}`}
+                    key={sp.id}
                     style={{
                       flexShrink: 0,
                       display: 'flex',

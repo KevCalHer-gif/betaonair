@@ -21,7 +21,7 @@ const Projects: CollectionConfig = {
     { name: 'client', type: 'text', label: 'Cliente' },
     { name: 'service', type: 'relationship', relationTo: 'services', hasMany: false, label: 'Servicio relacionado', admin: { description: 'Vincula este proyecto a un servicio (ej. Producción Audiovisual)' } },
     { name: 'thumbnail', type: 'upload', relationTo: 'media', label: 'Imagen principal' },
-    { name: 'status', type: 'select', label: 'Estado', defaultValue: 'draft', options: [{ label: 'Borrador', value: 'draft' }, { label: 'Publicado', value: 'published' }, { label: 'Archivado', value: 'archived' }] },
+    { name: 'status', type: 'select', label: 'Estado', defaultValue: 'published', options: [{ label: 'Borrador', value: 'draft' }, { label: 'Publicado', value: 'published' }, { label: 'Archivado', value: 'archived' }] },
     { name: 'order', type: 'number', label: 'Orden de visualización', admin: { position: 'sidebar' } },
   ],
   timestamps: true,

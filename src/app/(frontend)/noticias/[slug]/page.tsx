@@ -163,6 +163,32 @@ export default async function NoticiaSlugPage({
           <p>{extractPlainText(noticia.content)}</p>
         )}
       </div>
+
+      {/* Fuente de la noticia */}
+      {noticia.sourceName && (
+        <div style={{
+          marginTop: '2rem',
+          paddingTop: '1rem',
+          borderTop: '1px solid #222',
+          color: '#888',
+          fontSize: '0.85rem',
+          fontStyle: 'italic',
+        }}>
+          Fuente:{' '}
+          {noticia.sourceUrl ? (
+            <a
+              href={noticia.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#c61d4a', textDecoration: 'underline' }}
+            >
+              {noticia.sourceName}
+            </a>
+          ) : (
+            <span style={{ color: '#ccc' }}>{noticia.sourceName}</span>
+          )}
+        </div>
+      )}
     </main>
   )
 }

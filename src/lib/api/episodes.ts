@@ -20,7 +20,7 @@ export async function getEpisodesByProgram(slug: string): Promise<Episode[]> {
   try {
     // Payload REST API where clause para relaciones es inconsistente en v3.
     // Solución robusta: obtener todos los episodios y filtrar por program.slug.
-    const res = await fetch(`${API_URL}/api/episodes?depth=1`, {
+    const res = await fetch(`${API_URL}/api/episodes?depth=2`, {
       cache: 'no-store',
     })
     if (!res.ok) throw new Error('Failed to fetch episodes')

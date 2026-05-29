@@ -27,7 +27,7 @@ export async function getProjects(): Promise<Project[]> {
 export async function getProjectsByService(serviceSlug: string): Promise<Project[]> {
   try {
     const res = await fetch(
-      `${API_URL}/api/projects?where[status][equals]=published&sort=order&limit=50&depth=2`,
+      `${API_URL}/api/projects?where[status][equals]=published&sort=order&limit=50&depth=3`,
       { next: { revalidate: 60 } },
     )
     if (!res.ok) throw new Error('Failed to fetch projects by service')

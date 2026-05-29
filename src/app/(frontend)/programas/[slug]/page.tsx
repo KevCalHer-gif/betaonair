@@ -113,6 +113,40 @@ export default async function ProgramSlugPage({
                 padding: '1.5rem',
                 background: '#111',
               }}>
+                {/* Thumbnail del episodio */}
+                {ep.thumbnail ? (
+                  <div style={{
+                    width: '100%',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                    marginBottom: '0.75rem',
+                    position: 'relative',
+                    aspectRatio: '16 / 9',
+                    background: '#0a0a0a',
+                  }}>
+                    <Image
+                      src={(ep.thumbnail as any).url}
+                      alt={ep.title}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </div>
+                ) : (
+                  <div style={{
+                    width: '100%',
+                    aspectRatio: '16 / 9',
+                    background: '#0a0a0a',
+                    borderRadius: '6px',
+                    marginBottom: '0.75rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#333',
+                    fontSize: '0.8rem',
+                  }}>
+                    Sin miniatura
+                  </div>
+                )}
                 <h3 style={{
                   color: '#f0f0f0',
                   fontSize: '1.1rem',

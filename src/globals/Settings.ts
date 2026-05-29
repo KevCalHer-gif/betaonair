@@ -1,12 +1,15 @@
 import type { GlobalConfig } from 'payload'
-import { isAdminOrSuperAdmin } from '../lib/access'
+import { isSuperAdmin } from '../lib/access'
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
   label: 'Settings',
+  admin: {
+    hidden: ({ user }: any) => user?.role !== 'superadmin',
+  },
   access: {
     read: () => true,
-    update: isAdminOrSuperAdmin,
+    update: isSuperAdmin,
   },
   fields: [
     {
