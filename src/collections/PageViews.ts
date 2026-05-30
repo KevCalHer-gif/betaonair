@@ -9,8 +9,20 @@ import { isAdminOrSuperAdmin, isSuperAdmin } from '../lib/access'
  */
 export const PageViews: CollectionConfig = {
   slug: 'pageviews',
+  labels: {
+    plural: '📊 Analytics',
+    singular: 'Analytics',
+  },
   admin: {
-    hidden: true,
+    hidden: false,
+    group: 'Contenido',
+    components: {
+      views: {
+        list: {
+          Component: '/components/admin/AnalyticsDashboard.tsx',
+        },
+      },
+    },
   },
   access: {
     read: isAdminOrSuperAdmin,
