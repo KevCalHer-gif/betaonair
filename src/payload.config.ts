@@ -1,6 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -57,5 +58,23 @@ export default buildConfig({
     apiKey: process.env.RESEND_API_KEY || '',
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    s3Storage({
+      collections: {
+        media: {
+          prefix: 'media',
+        },
+      },
+      bucket: process.env.R2_BUCKET_NAME || '',
+      config: {
+        endpoint: process.env.R2_ENDPOINT || undefined,
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+        },
+        region: 'auto',
+      },
+      acl: 'public-read',
+    }),
+  ],
 })

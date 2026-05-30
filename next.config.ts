@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
     const CSP_FRONTEND = [
       "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net",
       "style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com",
-      "img-src 'self' data: https:",
+      "img-src 'self' data: https: https://pub-ce3251289ec246b49347b11e6ef829df.r2.dev",
       "frame-src https://www.youtube.com https://player.twitch.tv",
       "connect-src 'self' https://www.google-analytics.com https://betaonair.com",
       "font-src 'self' data: https://fonts.cdnfonts.com",
