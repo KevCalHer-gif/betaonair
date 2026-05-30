@@ -30,7 +30,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components: {},
+    components: {
+      views: {
+        Analytics: {
+          Component: '/components/admin/AnalyticsDashboard.tsx',
+          path: '/analytics',
+        },
+      },
+    },
   },
   collections: [Users, Media, Categories, Contacts, Programs, Episodes, News, Live, Sponsorships, Services, Projects, PageViews],
   globals: [Settings, Seo],

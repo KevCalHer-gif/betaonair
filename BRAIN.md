@@ -1,7 +1,7 @@
 # BRAIN.md — betaonair
 > Archivo de estado del proyecto. Leer completo al inicio de cada sesión.
 > Actualizar obligatoriamente al cerrar cada sesión.
-> Última actualización: 2026-05-21
+> Última actualización: 2026-05-29 (sesión nocturna — RED RANGER + LISANDRO + LEANDRO)
 
 ## ANÁLISIS RED RANGER — 2026-05-13 (Plan de páginas /programas/[slug], /en-vivo, /contacto)
 
@@ -500,6 +500,61 @@ Ver GLOSSARY.md para nombres completos.
 - Payload v3 no soporta `where[isActive][equals]=true` en checkbox (workaround aplicado en Priority 2, 5)
 - `data/noticias.ts` y `data/programas.ts` eliminados (Priority 7)
 - `ServicesSection.tsx`: bugs corregidos pero el componente sigue sin usarse en ninguna página (código muerto)
+
+---
+
+### Cambios commit 80fb326 (documentado por LEANDRO — 2026-05-29)
+
+**8 fixes aplicados por LISANDRO tras análisis de RED RANGER:**
+(Ver historial completo arriba)
+
+### 4 FIXES APLICADOS — Sesión nocturna 2026-05-29 (RED RANGER + LISANDRO + LEANDRO)
+
+**Problemas reportados por el usuario:**
+1. No aparecía el enlace para ver los gráficos de analytics en el panel admin
+2. Error al ingresar directamente a `/admin/analytics`
+3. Vercel Analytics corriendo innecesariamente (ya se usa Google Analytics)
+4. Error `Mismatching "payload" dependency versions` con `@payloadcms/email-resend@3.85.0`
+
+**Fix #1 — Version mismatch @payloadcms/email-resend:**
+- `package.json`: `"@payloadcms/email-resend": "^3.85.0"` → `"3.84.1"` (exacta, sin `^`)
+- `npm install` ejecutado → sincronizado con el resto de paquetes Payload `3.84.1`
+
+**Fix #2 — Vercel Analytics eliminado:**
+- `src/app/(frontend)/layout.tsx`: removido `import { Analytics } from '@vercel/analytics/react'` y `<Analytics />`
+- `package.json`: removida dependencia `@vercel/analytics`
+- `npm install` ejecutado → paquete eliminado de node_modules
+- Google Analytics vía `NEXT_PUBLIC_GA_ID` sigue siendo el único tracker (correcto)
+
+**Fix #3 — AnalyticsDashboard en panel admin (import map):**
+- **Causa raíz:** `payload.config.ts` tenía `Component: '/src/components/admin/AnalyticsDashboard.tsx'` pero `baseDir` ya apunta a `src/` → generaba ruta `src/src/...` (doble)
+- **Corrección:** `payload.config.ts` línea 36: `'/src/components/...'` → `'/components/...'`
+- **Regenerado import map:** `npx payload generate:importmap` → `importMap.js` ahora apunta a `'../../../components/admin/AnalyticsDashboard.tsx'` (ruta correcta)
+- El enlace "Analytics" ahora debe aparecer en el menú del panel admin en `/admin/analytics`
+
+**Fix #4 — Verificación del endpoint /api/analytics-summary:**
+- `src/app/api/analytics-summary/route.ts` existe y responde correctamente (73 líneas)
+- Dependencias en `src/lib/api/pageviews.ts` (173 líneas): `getTotalViews`, `getUniqueSessions`, `getBounceRate`, `getTopContent`, `getViewsByType`, `getViewsByDevice`, `getViewsTimeline`, `getTopSections` — todas implementadas
+- Colección `PageViews` (`src/collections/PageViews.ts`) con campos: path, section, contentType, contentSlug, contentTitle, sessionId, device, country, referrer, duration, timestamp. 21 registros existentes.
+
+**Build de producción (2 builds):**
+- Build 1: ✓ Compiled successfully in 14.2s, 18 rutas, 0 errores
+- Build 2 (post pageviews.ts rewrite): ✓ Compiled successfully in 9.6s, 18 rutas, 0 errores
+
+**Fix #6 — pageviews.ts reescrito con Payload local API (payload.find):**
+- **Problema detectado en logs:** 8x `GET /api/pageviews?... 403 Forbidden` — "You are not allowed to perform this action"
+- **Causa:** `fetchAllPageViews()` usaba `fetch('${API_URL}/api/pageviews?...')` desde el servidor sin cookies de auth. La colección `pageviews` requiere `read: isAdminOrSuperAdmin`.
+- **Solución:** Reemplazado `fetch()` HTTP por `getPayload({ config })` + `payload.find({ collection: 'pageviews', ... })` — acceso directo a BD, sin HTTP, sin problemas de auth
+- **8 funciones exportadas mantenidas con mismas firmas:** `getTotalViews`, `getUniqueSessions`, `getBounceRate`, `getTopContent`, `getViewsByType`, `getViewsByDevice`, `getViewsTimeline`, `getTopSections`
+- **Ningún otro archivo roto** — los `ECONNREFUSED` en build son preexistentes de otros API files (settings, programs, sponsorships, services) que dependen de servidor corriendo
+
+**Archivos modificados esta sesión:** 5 archivos
+- `package.json` (2 cambios: fix versión + remover @vercel/analytics)
+- `src/app/(frontend)/layout.tsx` (remover Vercel Analytics)
+- `src/payload.config.ts` (corregir ruta Component)
+- `src/app/(payload)/admin/importMap.js` (regenerado con ruta correcta)
+- `src/lib/api/pageviews.ts` (reescrito con payload.find local)
+- `BRAIN.md` (este cierre)
 
 ---
 

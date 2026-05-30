@@ -405,22 +405,28 @@ export interface Project {
   createdAt: string;
 }
 /**
- * Métricas de visitas registradas automáticamente.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pageviews".
  */
 export interface Pageview {
   id: number;
-  /**
-   * Ej: /noticias/beta-on-air-crece
-   */
   path: string;
   section?: ('home' | 'programs' | 'live' | 'news' | 'sponsorships' | 'services' | 'contact' | 'other') | null;
   program?: (number | null) | Program;
   news?: (number | null) | News;
   service?: (number | null) | Service;
   timestamp: string;
+  contentType?: ('podcast' | 'video' | 'noticia' | 'servicio' | 'portafolio' | 'en-vivo' | 'otro') | null;
+  contentSlug?: string | null;
+  contentTitle?: string | null;
+  sessionId?: string | null;
+  device?: ('mobile' | 'desktop' | 'tablet') | null;
+  country?: string | null;
+  referrer?: string | null;
+  /**
+   * Tiempo que el usuario permaneció en la página
+   */
+  duration?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -752,6 +758,14 @@ export interface PageviewsSelect<T extends boolean = true> {
   news?: T;
   service?: T;
   timestamp?: T;
+  contentType?: T;
+  contentSlug?: T;
+  contentTitle?: T;
+  sessionId?: T;
+  device?: T;
+  country?: T;
+  referrer?: T;
+  duration?: T;
   updatedAt?: T;
   createdAt?: T;
 }
