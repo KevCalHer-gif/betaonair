@@ -556,5 +556,21 @@ Ver GLOSSARY.md para nombres completos.
 - `src/lib/api/pageviews.ts` (reescrito con payload.find local)
 - `BRAIN.md` (este cierre)
 
+**Fix #7 — Enlace "Analytics" no visible en sidebar (payload-preferences):**
+- **Causa:** Payload v3 cachea las preferencias de navegación del sidebar en la tabla `payload_preferences` (key = 'nav'). Al regenerar el import map durante los fixes #1/#2, el servidor ya estaba corriendo y el nav se cacheó sin el item "Analytics". La key "Analytics" en `views` ya genera el label automáticamente — no necesita `label` ni `title` (ambos rechazados por TypeScript: `AdminViewConfig` solo acepta `Component` y `path` en v3.84.1).
+- **Fix:** `DELETE FROM payload_preferences WHERE key = 'nav'` (2 filas eliminadas). Al reiniciar `npm run dev` y recargar `/admin`, el nav se regenera desde `payload.config.ts` actual e incluye "Analytics" en el sidebar.
+
+**Archivos modificados esta sesión:** 6 archivos
+- `package.json` (2 cambios: fix versión + remover @vercel/analytics)
+- `src/app/(frontend)/layout.tsx` (remover Vercel Analytics)
+- `src/payload.config.ts` (corregir ruta Component)
+- `src/app/(payload)/admin/importMap.js` (regenerado con ruta correcta)
+- `src/lib/api/pageviews.ts` (reescrito con payload.find local)
+- `BRAIN.md` (este cierre)
+
+**Base de datos modificada:** `payload_preferences` — 2 filas eliminadas (key = 'nav')
+
+---
+
 ---
 
