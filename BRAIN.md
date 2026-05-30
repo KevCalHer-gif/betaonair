@@ -3,6 +3,93 @@
 > Actualizar obligatoriamente al cerrar cada sesión.
 > Última actualización: 2026-05-29 (sesión nocturna — RED RANGER + LISANDRO + LEANDRO)
 
+## ANÁLISIS RED RANGER — CIERRE DE SESIÓN 2026-05-29 (Pre-producción)
+
+**ESTADO: PROYECTO LISTO PARA FASE DE PRODUCCIÓN (con condiciones)**
+
+### Lo que funciona (18 rutas, 0 errores)
+- ✅ 10 páginas frontend dinámicas (homepage, /programas, /programas/[slug], /servicios, /servicios/[slug], /en-vivo, /noticias, /noticias/[slug], /portafolio, /patrocinios, /contacto)
+- ✅ Panel admin Payload con 12 colecciones + 2 globals
+- ✅ Dashboard 📊 Analytics con gráficos Recharts dinámicos (datos reales de PostgreSQL)
+- ✅ Sistema de roles: superadmin / admin / editor con matriz de accesos
+- ✅ SEO dinámico desde globals Settings/SEO (generateMetadata)
+- ✅ Google Analytics configurado (NEXT_PUBLIC_GA_ID), Vercel Analytics eliminado
+- ✅ Build de producción: 3/3 exitosos (~10s, 18 rutas)
+- ✅ Payload v3.84.1 totalmente sincronizado (todos los paquetes @payloadcms/* en misma versión)
+- ✅ pageviews.ts usa payload.find() local (sin HTTP, sin problemas de auth)
+
+### Bloqueantes para deploy a producción
+| # | Bloqueante | Acción requerida |
+|---|-----------|-----------------|
+| 1 | PAYLOAD_SECRET débil | Generar secreto aleatorio de 64+ chars (`openssl rand -hex 32`) |
+| 2 | RESEND_API_KEY placeholder | Obtener API key real de Resend o desactivar email |
+| 3 | Docker no probado | Ejecutar `docker build` y verificar que la imagen funciona |
+| 4 | NEXT_PUBLIC_GA_ID placeholder | Configurar ID real de Google Analytics |
+
+### Pendientes post-deploy (Fase C)
+- [ ] Rate limiting en /admin/login y /api/contacto
+- [ ] HTTPS/SSL con Let's Encrypt + Nginx
+- [ ] Tests de contrato API (Playwright + Vitest ya configurados)
+- [ ] Backup automático de BD PostgreSQL
+- [ ] Firewall UFW en VPS
+- [ ] Ajustar embedUrl en admin (YouTube /watch?v= → /embed/)
+
+### Próxima sesión
+1. Resolver los 4 bloqueantes de Fase A
+2. Probar `docker build` local
+3. Preparar `.env.production`
+4. Deploy a VPS (Hostinger)
+
+### Plan de migración: PostgreSQL local → Neon + Hostinger Cloud Startup (MANAGED)
+
+**Decisión final:** Hostinger Cloud Startup (**managed**, no VPS — sin SSH, sin Docker, sin Nginx propio) + Neon PostgreSQL Serverless (Plan Launch $19/mes).
+
+**Stack de producción:**
+```
+Hostinger Cloud Startup Managed
+├── Node.js runtime nativo (Hostinger gestiona el web server + SSL)
+│   └── Next.js 16 + Payload CMS v3 (npm run build → npm start)
+├── SSL automático (Let's Encrypt gestionado por Hostinger)
+└── Neon PostgreSQL Serverless (endpoint DIRECTO, externo)
+```
+
+**Cambios requeridos (solo configuración, cero código de lógica):**
+- `next.config.ts` — Agregar `output: 'standalone'` (Hostinger requiere standalone output)
+- `.env` (local) — `DATABASE_URI` → string directo de Neon + `?sslmode=require`
+- Panel Hostinger — 5 variables de entorno (`DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GA_ID`, `RESEND_API_KEY`)
+- `docker-compose.yml` — Comentar servicio `postgres` (BD en Neon)
+- `Dockerfile` — No se usa en Cloud Startup Managed (Hostinger no soporta Docker)
+- `payload.config.ts` — Sin cambios. Opcional: `idleTimeoutMillis: 250000` en pool
+
+**Gotchas críticos de Neon con Payload CMS v3:**
+1. 🔴 **Endpoint directo obligatorio** — El endpoint pooled usa PgBouncer en modo `transaction` que no soporta prepared statements (Drizzle los usa). Usar el string "Direct connection" del dashboard Neon.
+2. 🔴 **SSL obligatorio** — Agregar `?sslmode=require` al connection string. Sin esto, Neon rechaza 100% de conexiones.
+3. 🟠 **Cold starts (plan gratuito)** — Primer request tras 5 min de inactividad tarda 5-17s. Usar plan **Launch** ($19/mes) para producción.
+4. 🟡 **IP allowlist** — Cloud Startup managed no tiene IP fija de salida. Configurar `0.0.0.0/0` en Neon o contactar soporte Hostinger para rango de IPs.
+5. 🟡 **Idle timeout (~5 min)** — Neon cierra conexiones inactivas. Mitigar con `idleTimeoutMillis: 250000` en pool de postgresAdapter si aparecen errores.
+
+**Pasos de migración (5 fases):**
+A. Crear proyecto en dashboard Neon → nombre `betaonair`, región US East, PostgreSQL 16, plan Launch ($19/mes), copiar connection string DIRECTO, IP allowlist
+B. `pg_dump` BD local → `psql` a Neon → verificar row counts
+C. Cambiar `DATABASE_URI` en `.env` local a Neon → `npm run build && npm run dev` → verificar 18 rutas
+D. Configurar panel Hostinger: repo URL, build command `npm run build`, start command `npm start`, Node.js 22.x, 5 variables de entorno
+E. Deploy → verificar 18 rutas 200 OK en producción
+
+**Costo estimado:** Cloud Startup ~$8-15/mes + Neon Launch $19/mes = ~$27-34/mes total.
+
+**Lo que necesitás hacer AHORA en dashboard Neon (antes de tocar código):**
+1. `https://console.neon.tech` → Create project
+2. Name: `betaonair`, Region: US East (Ohio), PostgreSQL: 16, Plan: Launch ($19/mes)
+3. Copiar "Direct connection" string (NO "Pooled connection")
+4. Settings → IP Allow → agregar tu IP local (la ves en `ifconfig.me`)
+5. Guardar ese connection string — es lo único que necesitás para `.env` y Hostinger
+
+---
+
+---
+
+---
+
 ## ANÁLISIS RED RANGER — 2026-05-13 (Plan de páginas /programas/[slug], /en-vivo, /contacto)
 
 **ANÁLISIS:**
@@ -556,9 +643,15 @@ Ver GLOSSARY.md para nombres completos.
 - `src/lib/api/pageviews.ts` (reescrito con payload.find local)
 - `BRAIN.md` (este cierre)
 
-**Fix #7 — Enlace "Analytics" no visible en sidebar (payload-preferences):**
-- **Causa:** Payload v3 cachea las preferencias de navegación del sidebar en la tabla `payload_preferences` (key = 'nav'). Al regenerar el import map durante los fixes #1/#2, el servidor ya estaba corriendo y el nav se cacheó sin el item "Analytics". La key "Analytics" en `views` ya genera el label automáticamente — no necesita `label` ni `title` (ambos rechazados por TypeScript: `AdminViewConfig` solo acepta `Component` y `path` en v3.84.1).
-- **Fix:** `DELETE FROM payload_preferences WHERE key = 'nav'` (2 filas eliminadas). Al reiniciar `npm run dev` y recargar `/admin`, el nav se regenera desde `payload.config.ts` actual e incluye "Analytics" en el sidebar.
+**Fix #7 — Enlace "📊 Analytics" visible en sidebar (colección PageViews):**
+- **Problema:** El view global en `admin.components.views` no renderizaba el enlace en el sidebar. Ni `label` ni `title` son aceptados por `AdminViewConfig` en Payload v3.84.1. Limpiar `payload_preferences` (2 filas) no fue suficiente — Payload simplemente no muestra views globales en el nav lateral.
+- **Solución final:** Convertir `PageViews` de colección oculta (`hidden: true`) a colección visible en el sidebar:
+  - `labels.plural`: `'📊 Analytics'`, `labels.singular`: `'Analytics'`
+  - `admin.hidden`: `false`, `admin.group`: `'Contenido'`
+  - `admin.components.views.list`: `AnalyticsDashboard.tsx` — al clickear "📊 Analytics" en vez del listado de pageviews, carga directamente el dashboard con gráficos Recharts
+  - `admin.components.views` global en `payload.config.ts` se mantiene como respaldo (ruta `/admin/analytics` directa)
+- **payload_preferences** limpiado 2 veces (3 filas totales eliminadas, key = 'nav')
+- **Build:** ✓ 18 rutas, 0 errores (3 builds exitosos en la sesión)
 
 **Archivos modificados esta sesión:** 6 archivos
 - `package.json` (2 cambios: fix versión + remover @vercel/analytics)
@@ -566,9 +659,10 @@ Ver GLOSSARY.md para nombres completos.
 - `src/payload.config.ts` (corregir ruta Component)
 - `src/app/(payload)/admin/importMap.js` (regenerado con ruta correcta)
 - `src/lib/api/pageviews.ts` (reescrito con payload.find local)
+- `src/collections/PageViews.ts` (hidden: false, label 📊 Analytics, list custom component)
 - `BRAIN.md` (este cierre)
 
-**Base de datos modificada:** `payload_preferences` — 2 filas eliminadas (key = 'nav')
+**Base de datos modificada:** `payload_preferences` — 3 filas eliminadas (key = 'nav', 2 limpiezas)
 
 ---
 
