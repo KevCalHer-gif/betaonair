@@ -3,86 +3,82 @@
 > Actualizar obligatoriamente al cerrar cada sesión.
 > Última actualización: 2026-05-29 (sesión nocturna — RED RANGER + LISANDRO + LEANDRO)
 
-## ANÁLISIS RED RANGER — CIERRE DE SESIÓN 2026-05-29 (Pre-producción)
+## 📦 SESIÓN DE PRODUCCIÓN — 2026-05-30
 
-**ESTADO: PROYECTO LISTO PARA FASE DE PRODUCCIÓN (con condiciones)**
+**ESTADO: EN PRODUCCIÓN** 🚀
 
-### Lo que funciona (18 rutas, 0 errores)
-- ✅ 10 páginas frontend dinámicas (homepage, /programas, /programas/[slug], /servicios, /servicios/[slug], /en-vivo, /noticias, /noticias/[slug], /portafolio, /patrocinios, /contacto)
-- ✅ Panel admin Payload con 12 colecciones + 2 globals
-- ✅ Dashboard 📊 Analytics con gráficos Recharts dinámicos (datos reales de PostgreSQL)
-- ✅ Sistema de roles: superadmin / admin / editor con matriz de accesos
-- ✅ SEO dinámico desde globals Settings/SEO (generateMetadata)
-- ✅ Google Analytics configurado (NEXT_PUBLIC_GA_ID), Vercel Analytics eliminado
-- ✅ Build de producción: 3/3 exitosos (~10s, 18 rutas)
-- ✅ Payload v3.84.1 totalmente sincronizado (todos los paquetes @payloadcms/* en misma versión)
-- ✅ pageviews.ts usa payload.find() local (sin HTTP, sin problemas de auth)
+### Base de datos — Neon PostgreSQL Serverless
 
-### Bloqueantes para deploy a producción
-| # | Bloqueante | Acción requerida |
-|---|-----------|-----------------|
-| 1 | PAYLOAD_SECRET débil | Generar secreto aleatorio de 64+ chars (`openssl rand -hex 32`) |
-| 2 | RESEND_API_KEY placeholder | Obtener API key real de Resend o desactivar email |
-| 3 | Docker no probado | Ejecutar `docker build` y verificar que la imagen funciona |
-| 4 | NEXT_PUBLIC_GA_ID placeholder | Configurar ID real de Google Analytics |
+Migración completada de PostgreSQL local a Neon. PostgreSQL local y Docker ya NO se usan para producción.
 
-### Pendientes post-deploy (Fase C)
-- [ ] Rate limiting en /admin/login y /api/contacto
-- [ ] HTTPS/SSL con Let's Encrypt + Nginx
-- [ ] Tests de contrato API (Playwright + Vitest ya configurados)
-- [ ] Backup automático de BD PostgreSQL
-- [ ] Firewall UFW en VPS
-- [ ] Ajustar embedUrl en admin (YouTube /watch?v= → /embed/)
+| Dato | Valor |
+|------|-------|
+| **Servicio** | Neon PostgreSQL Serverless |
+| **Plan** | Free (posibilidad de upgrade a Launch para eliminar cold starts) |
+| **Región** | AWS US East 1 (N. Virginia) |
+| **Branch** | production |
+| **PostgreSQL version** | 17 |
+| **Endpoint** | Directo (sin pooling) — `?sslmode=require&channel_binding=require` |
+| **Connection string** | `postgresql://neondb_owner:npg_***@ep-blue-paper-apxkcf89.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require` |
+| **Migraciones ejecutadas** | `20260515_040342`, `20260530_041846` |
+| **PostgreSQL local** | ❌ Desactivado |
+| **Docker PostgreSQL** | ❌ Fuera de uso para producción |
 
-### Próxima sesión
-1. Resolver los 4 bloqueantes de Fase A
-2. Probar `docker build` local
-3. Preparar `.env.production`
-4. Deploy a VPS (Hostinger)
+---
 
-### Plan de migración: PostgreSQL local → Neon + Hostinger Cloud Startup (MANAGED)
+### Hosting — Hostinger Cloud Startup
 
-**Decisión final:** Hostinger Cloud Startup (**managed**, no VPS — sin SSH, sin Docker, sin Nginx propio) + Neon PostgreSQL Serverless (Plan Launch $19/mes).
+| Dato | Valor |
+|------|-------|
+| **Plataforma** | Hostinger Cloud Startup (managed, sin root, sin Docker, sin Nginx propio) |
+| **Node.js** | 22.x |
+| **Deploy** | Automático desde GitHub (rama `main`) — cada `git push` dispara un deploy |
+| **SSL** | Gestionado automáticamente por Hostinger |
+| **Dominio** | `betaonair.com` — activo y conectado |
+| **WordPress** | Eliminado del hosting |
 
-**Stack de producción:**
-```
-Hostinger Cloud Startup Managed
-├── Node.js runtime nativo (Hostinger gestiona el web server + SSL)
-│   └── Next.js 16 + Payload CMS v3 (npm run build → npm start)
-├── SSL automático (Let's Encrypt gestionado por Hostinger)
-└── Neon PostgreSQL Serverless (endpoint DIRECTO, externo)
-```
+---
 
-**Cambios requeridos (solo configuración, cero código de lógica):**
-- `next.config.ts` — Agregar `output: 'standalone'` (Hostinger requiere standalone output)
-- `.env` (local) — `DATABASE_URI` → string directo de Neon + `?sslmode=require`
-- Panel Hostinger — 5 variables de entorno (`DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GA_ID`, `RESEND_API_KEY`)
-- `docker-compose.yml` — Comentar servicio `postgres` (BD en Neon)
-- `Dockerfile` — No se usa en Cloud Startup Managed (Hostinger no soporta Docker)
-- `payload.config.ts` — Sin cambios. Opcional: `idleTimeoutMillis: 250000` en pool
+### Email transaccional — Resend
 
-**Gotchas críticos de Neon con Payload CMS v3:**
-1. 🔴 **Endpoint directo obligatorio** — El endpoint pooled usa PgBouncer en modo `transaction` que no soporta prepared statements (Drizzle los usa). Usar el string "Direct connection" del dashboard Neon.
-2. 🔴 **SSL obligatorio** — Agregar `?sslmode=require` al connection string. Sin esto, Neon rechaza 100% de conexiones.
-3. 🟠 **Cold starts (plan gratuito)** — Primer request tras 5 min de inactividad tarda 5-17s. Usar plan **Launch** ($19/mes) para producción.
-4. 🟡 **IP allowlist** — Cloud Startup managed no tiene IP fija de salida. Configurar `0.0.0.0/0` en Neon o contactar soporte Hostinger para rango de IPs.
-5. 🟡 **Idle timeout (~5 min)** — Neon cierra conexiones inactivas. Mitigar con `idleTimeoutMillis: 250000` en pool de postgresAdapter si aparecen errores.
+| Dato | Valor |
+|------|-------|
+| **Proveedor** | Resend |
+| **Dominio verificado** | `betaonair.com` (región São Paulo) |
+| **API Key** | Configurada en variables de entorno de Hostinger |
 
-**Pasos de migración (5 fases):**
-A. Crear proyecto en dashboard Neon → nombre `betaonair`, región US East, PostgreSQL 16, plan Launch ($19/mes), copiar connection string DIRECTO, IP allowlist
-B. `pg_dump` BD local → `psql` a Neon → verificar row counts
-C. Cambiar `DATABASE_URI` en `.env` local a Neon → `npm run build && npm run dev` → verificar 18 rutas
-D. Configurar panel Hostinger: repo URL, build command `npm run build`, start command `npm start`, Node.js 22.x, 5 variables de entorno
-E. Deploy → verificar 18 rutas 200 OK en producción
+---
 
-**Costo estimado:** Cloud Startup ~$8-15/mes + Neon Launch $19/mes = ~$27-34/mes total.
+### Seguridad implementada
 
-**Lo que necesitás hacer AHORA en dashboard Neon (antes de tocar código):**
-1. `https://console.neon.tech` → Create project
-2. Name: `betaonair`, Region: US East (Ohio), PostgreSQL: 16, Plan: Launch ($19/mes)
-3. Copiar "Direct connection" string (NO "Pooled connection")
-4. Settings → IP Allow → agregar tu IP local (la ves en `ifconfig.me`)
-5. Guardar ese connection string — es lo único que necesitás para `.env` y Hostinger
+| Componente | Detalle | Archivo |
+|-----------|--------|---------|
+| **Rate limiting** | `rate-limiter-flexible` in-memory | `middleware.ts` |
+| **Headers de seguridad** | X-Frame-Options, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy | `next.config.ts` |
+| **CSP admin** | `unsafe-inline` + `unsafe-eval` (Payload + Recharts) | `next.config.ts` |
+| **CSP frontend** | Estricto con `unsafe-inline` para Next.js 16 Turbopack | `next.config.ts` |
+| **PAYLOAD_SECRET** | Regenerado con `crypto.randomBytes(32)` | `.env.production` |
+
+---
+
+### Variables de entorno de producción
+
+Configuradas en el panel de Hostinger (NO en el repo — `.env.production` está en `.gitignore`):
+
+| Variable | Valor | Estado |
+|----------|-------|--------|
+| `DATABASE_URI` | Neon endpoint directo | ✅ Configurado |
+| `PAYLOAD_SECRET` | Generado aleatoriamente | ✅ Configurado |
+| `NEXT_PUBLIC_API_URL` | `https://betaonair.com` | ✅ Configurado |
+| `RESEND_API_KEY` | API key real de Resend | ✅ Configurado |
+| `NEXT_PUBLIC_GA_ID` | Pendiente | ⚠️ Placeholder |
+
+---
+
+### Pendiente para próximas sesiones
+
+- [ ] `NEXT_PUBLIC_GA_ID` real de Google Analytics
+- [ ] Upgrade Neon a plan Launch si se necesita eliminar cold starts (plan Free actual)
 
 ---
 

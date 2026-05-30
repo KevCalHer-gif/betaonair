@@ -51,12 +51,12 @@ const nextConfig: NextConfig = {
     ].join('; ')
 
     const CSP_FRONTEND = [
-      "script-src 'self' https://www.googletagmanager.com",
-      "style-src 'self' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.jsdelivr.net",
+      "style-src 'self' 'unsafe-inline' https://fonts.cdnfonts.com",
       "img-src 'self' data: https:",
       "frame-src https://www.youtube.com https://player.twitch.tv",
-      "connect-src 'self' https://www.google-analytics.com",
-      "font-src 'self' data:",
+      "connect-src 'self' https://www.google-analytics.com https://betaonair.com",
+      "font-src 'self' data: https://fonts.cdnfonts.com",
       "default-src 'self'",
       "base-uri 'self'",
       "form-action 'self'",
