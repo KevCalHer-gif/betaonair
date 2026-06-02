@@ -17,15 +17,22 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteName = settings?.siteName || 'Beta On Air'
   const defaultDescription = 'Beta On Air — Hacemos que se note.'
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+
+  const ogImageUrl =
+    seo?.ogImage && typeof seo.ogImage === 'object' && seo.ogImage.url
+      ? seo.ogImage.url.startsWith('http')
+        ? seo.ogImage.url
+        : `${siteUrl}${seo.ogImage.url}`
+      : null
+
   return {
     title: seo?.metaTitle || siteName,
     description: seo?.metaDescription || defaultDescription,
     openGraph: {
       title: seo?.metaTitle || siteName,
       description: seo?.metaDescription || defaultDescription,
-      ...(seo?.ogImage && typeof seo.ogImage === 'object' && seo.ogImage.url
-        ? { images: [{ url: seo.ogImage.url }] }
-        : {}),
+      ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
     },
   }
 }
