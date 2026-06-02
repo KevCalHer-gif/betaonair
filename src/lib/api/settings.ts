@@ -1,11 +1,11 @@
 import type { Setting, Seo } from '../../payload-types'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+const API_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 export async function getSettings(): Promise<Setting | null> {
   try {
     const res = await fetch(`${API_URL}/api/globals/settings`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 60, tags: ['settings'] },
     })
     if (!res.ok) throw new Error('Failed to fetch settings')
     return (await res.json()) as Setting
@@ -18,7 +18,7 @@ export async function getSettings(): Promise<Setting | null> {
 export async function getSeo(): Promise<Seo | null> {
   try {
     const res = await fetch(`${API_URL}/api/globals/seo`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 60, tags: ['seo'] },
     })
     if (!res.ok) throw new Error('Failed to fetch SEO')
     return (await res.json()) as Seo

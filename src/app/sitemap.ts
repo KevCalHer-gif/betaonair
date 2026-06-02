@@ -1,11 +1,8 @@
 import type { MetadataRoute } from 'next'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
 
-  // Rutas estáticas
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
     { url: `${siteUrl}/programas`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
@@ -17,11 +14,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/contacto`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   ]
 
-  // Rutas dinámicas desde Payload
-  let dynamicRoutes: MetadataRoute.Sitemap = []
-
   try {
+    const API_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
     const collections = ['programs', 'news', 'services'] as const
+    let dynamicRoutes: MetadataRoute.Sitemap = []
 
     for (const collection of collections) {
       try {
@@ -38,11 +35,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           if (!doc.slug) continue
 
           const prefix =
-            collection === 'programs'
-              ? '/programas/'
-              : collection === 'news'
-                ? '/noticias/'
-                : '/servicios/'
+            collection === 'programs' ? '/programas/' :
+            collection === 'news' ? '/noticias/' :
+            '/servicios/'
 
           dynamicRoutes.push({
             url: `${siteUrl}${prefix}${doc.slug}`,
@@ -52,12 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           })
         }
       } catch {
-        // Ignorar colección si falla, no romper el sitemap
+        // continuar
       }
     }
-  } catch {
-    // Si toda la API falla, al menos servimos las rutas estáticas
-  }
 
-  return [...staticRoutes, ...dynamicRoutes]
+    return [...staticRoutes, ...dynamicRoutes]
+  } catch {
+    return staticRoutes
+  }
 }
