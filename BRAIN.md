@@ -1,7 +1,113 @@
 # BRAIN.md — betaonair
 > Archivo de estado del proyecto. Leer completo al inicio de cada sesión.
 > Actualizar obligatoriamente al cerrar cada sesión.
-> Última actualización: 2026-05-29 (sesión nocturna — RED RANGER + LISANDRO + LEANDRO)
+> Última actualización: 2026-06-02 (sesión SEO + Settings + OG Image + sitemap/robots)
+
+## ⚡ SESIÓN 2026-06-02 — SEO, Settings, OG Image, Sitemap, Robots
+
+**ESTADO: Fixes de SEO aplicados. Pendiente deploy y verificación en Google.**
+
+---
+
+### Análisis RED RANGER — Diagnóstico SEO
+
+Se realizó análisis táctico completo de la configuración de Payload CMS, los globals Settings/SEO, el flujo de datos al frontend, y las variables de entorno.
+
+**Archivos relevantes:**
+| Archivo | Rol |
+|---|---|
+| `payload.config.ts` | Configuración central: PostgreSQL (Neon), R2 (S3), Resend (email), Sharp, 13 colecciones, 2 globals |
+| `src/globals/Settings.ts` | 7 campos (siteName, slogan, logoUrl, redes sociales). Acceso: lectura pública, escritura superadmin |
+| `src/globals/Seo.ts` | 3 campos (metaTitle, metaDescription, ogImage→media). Acceso: lectura pública, escritura superadmin |
+| `src/lib/api/settings.ts` | `getSettings()` → `GET /api/globals/settings`, `getSeo()` → `GET /api/globals/seo`. Usa `fetch()` con `NEXT_PUBLIC_API_URL` |
+| `src/app/(frontend)/layout.tsx` | `generateMetadata()` → title, description, og:image desde SEO/Settings |
+
+**Problemas detectados:**
+| # | Problema | Severidad |
+|---|---|---|
+| 1 | OG Image con URL relativa (`/api/media/file/...`) → no funciona en WhatsApp/Facebook | 🔴 Crítico |
+| 2 | Sin `robots.txt` → Google no sabe qué indexar | 🟡 Alto |
+| 3 | Sin `sitemap.xml` → indexación muy lenta | 🟡 Alto |
+| 4 | `NEXT_PUBLIC_SITE_URL` podía quedar vacía → URLs relativas en sitemap/robots | 🟡 Alto |
+| 5 | Caché de 3600s (1 hora) en getSettings/getSeo → cambios tardan mucho en reflejarse | 🟡 Medio |
+| 6 | `logoUrl` es tipo `text` (no `upload`) → no se puede seleccionar de Media Library | 🟢 Mejorable |
+
+---
+
+### Fixes aplicados (LISANDRO)
+
+**Fix #1 — `src/lib/api/settings.ts`:**
+- `API_URL` ahora prioriza `NEXT_PUBLIC_SITE_URL` (fallback: `NEXT_PUBLIC_API_URL` → `localhost:3000`)
+- Caché reducido: `3600` → `60` segundos
+- Tags agregados: `['settings']` y `['seo']` para revalidación bajo demanda
+
+**Fix #2 — `src/app/(frontend)/layout.tsx`:**
+- `generateMetadata()`: OG Image ahora usa URL absoluta. Si `seo.ogImage.url` NO empieza con `http`, se prefija con `NEXT_PUBLIC_SITE_URL`
+
+**Fix #3 — `src/app/robots.ts` (NUEVO):**
+- Permite indexación total (`allow: '/'`)
+- Sitemap con URL absoluta (fallback hardcodeado: `https://betaonair.com`)
+
+**Fix #4 — `src/app/sitemap.ts` (NUEVO):**
+- 8 rutas estáticas: `/`, `/programas`, `/en-vivo`, `/noticias`, `/patrocinios`, `/servicios`, `/portafolio`, `/contacto`
+- Rutas dinámicas desde API: `programs`, `news`, `services` (con slug y updatedAt)
+- Fallback hardcodeado: `https://betaonair.com` si `NEXT_PUBLIC_SITE_URL` no está definida
+- Si la API falla, devuelve al menos las rutas estáticas
+
+**Fix #5 — `.env`:**
+- Ya tenía `NEXT_PUBLIC_SITE_URL=https://betaonair.com` (confirmado)
+
+---
+
+### Archivos modificados/creados esta sesión
+
+| Archivo | Estado |
+|---|---|
+| `src/lib/api/settings.ts` | ✏️ Modificado (API_URL + caché + tags) |
+| `src/app/robots.ts` | 🆕 Creado |
+| `src/app/sitemap.ts` | 🆕 Creado |
+| `src/app/(frontend)/layout.tsx` | ✏️ Modificado (OG Image absoluta) |
+| `.env` | ✅ Ya tenía NEXT_PUBLIC_SITE_URL |
+
+---
+
+### Variables de entorno necesarias en producción (Vercel/Hostinger)
+
+| Variable | Valor | Prioridad |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | `https://betaonair.com` | 🔴 Crítica — OG Image, sitemap, robots |
+| `NEXT_PUBLIC_API_URL` | `https://betaonair.com` | 🟡 Alta — fallback para fetch |
+| `NEXT_PUBLIC_GA_ID` | `G-XXXXXXXXXX` | 🟢 Media |
+| `PAYLOAD_SECRET` | (tu secret) | 🔴 Crítica |
+| `DATABASE_URI` | (Neon endpoint) | 🔴 Crítica |
+| `RESEND_API_KEY` | `re_...` | 🟡 Alta |
+| `R2_ENDPOINT` | (Cloudflare R2) | 🟡 Alta |
+| `R2_ACCESS_KEY_ID` | (tu key) | 🟡 Alta |
+| `R2_SECRET_ACCESS_KEY` | (tu secret) | 🟡 Alta |
+| `R2_BUCKET_NAME` | `betaonair-media` | 🟡 Alta |
+
+---
+
+### Pendiente post-deploy
+
+- [ ] **Google Search Console** → añadir dominio y subir `/sitemap.xml`
+- [ ] **Facebook Sharing Debugger** → limpiar caché de OG Image
+- [ ] Verificar que `NEXT_PUBLIC_SITE_URL` esté configurada en el panel de Hostinger
+- [ ] `NEXT_PUBLIC_GA_ID` real de Google Analytics
+- [ ] Upgrade Neon a plan Launch si se necesita eliminar cold starts
+
+---
+
+### No se tocó (sin cambios)
+
+- `src/globals/Settings.ts` — intacto
+- `src/globals/Seo.ts` — intacto
+- `src/payload-types.ts` — intacto
+- Base de datos — intacta
+
+---
+
+---
 
 ## 📦 SESIÓN DE PRODUCCIÓN — 2026-05-30
 
@@ -79,6 +185,7 @@ Configuradas en el panel de Hostinger (NO en el repo — `.env.production` está
 
 - [ ] `NEXT_PUBLIC_GA_ID` real de Google Analytics
 - [ ] Upgrade Neon a plan Launch si se necesita eliminar cold starts (plan Free actual)
+- [ ] Agregar `NEXT_PUBLIC_SITE_URL=https://betaonair.com` en Hostinger
 
 ---
 
@@ -278,30 +385,16 @@ Red Ranger marca tarea como BLOQUEADO         → NO CONTINUAR hasta resolver
 ## ESTADO ACTUAL DEL PROYECTO
 
 ```
-FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendiente)
+FASE:        3 — Frontend base (completa) | 4 — Calidad y deploy (pendiente)
 ```
 
 ### Tarea en progreso
-- Prioridad 5 — Sección "En Vivo" dinámica en homepage
+- SEO fixes aplicados (2026-06-02) — pendiente deploy y verificación en Google Search Console
 
 ### Completado (últimos)
 ```
-[x] Fix formulario de contacto - campos alineados con colección Contacts + teléfono
-[x] Fix episodios - query REST de Payload v3 corregida (fetch all + filter)
-[x] Episodios dinámicos en /programas/[slug] conectados al CMS
-[x] Decisión: Vercel descartado, solo Git para versionado y backup
-[x] Decisión: Stack Docker + PostgreSQL confirmado para producción
-[x] Build de producción: 17 rutas, 0 errores
-[x] Prioridad 3 — /servicios conectado al CMS (Services collection) con getServices() + getServiceBySlug()
-[x] Colección Projects registrada en payload.config (faltaba) + campo 'service' (relationship → Services)
-[x] API projects.ts reconstruida (getProjects, getProjectsByService)
-[x] API sponsorships.ts creada (getSponsorships)
-[x] ServiceCards convertidas en Links → /servicios/[slug]
-[x] Nueva página /servicios/[slug] con: detalle del servicio, grid de portafolio, marquee sponsors
-[x] Prioridad 4 — Sección "Últimas Noticias" conectada al CMS en homepage
-[x] getNews() corregido: filtro status=published + sort=-publishedAt + limit=10
-[x] Array hardcodeado de noticias reemplazado por getNews().slice(0,3)
-[x] Componente NewsCard usado en vez de divs inline (con link "Leer más →")
+[x] Fixes SEO: OG Image absoluta, robots.ts, sitemap.ts, caché reducido, fallback siteUrl
+[x] Análisis RED RANGER de SEO/Settings (2026-06-02)
 ```
 
 ### Completado (histórico)
@@ -319,6 +412,15 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 [x] Colección Programs, Episodes, Live, News, Services, Contacts
 [x] Layout global (nav + footer) + UI components
 [x] Páginas: homepage, /programas, /programas/[slug], /servicios, /contacto, /en-vivo, /portafolio, /noticias, /noticias/[slug], /patrocinios
+[x] Priority 3 — /servicios conectado al CMS (Services collection)
+[x] Priority 4 — Sección "Últimas Noticias" conectada al CMS
+[x] Priority 5 — Sección "En Vivo" dinámica en homepage
+[x] Priority 6 — Conexión /noticias, /portafolio, /patrocinios al CMS
+[x] Priority 7 — Cleanup + fix ServicesSection
+[x] Priority 8 — Settings y SEO conectados al frontend
+[x] Priority 9 — Sistema de roles (superadmin/admin/editor)
+[x] 4 fixes sesión nocturna 2026-05-29 (version mismatch, Vercel Analytics, AnalyticsDashboard, pageviews)
+[x] Migración a Neon PostgreSQL Serverless (2026-05-30)
 ```
 
 ---
@@ -375,116 +477,9 @@ FASE:        3 — Frontend base (casi completa) | 4 — Calidad y deploy (pendi
 [ ] Hardening de seguridad (PAYLOAD_SECRET, credenciales DB, firewall)
 [x] Build de producción
 [x] Ejecutar `npm run build`
+[ ] Subir sitemap.xml a Google Search Console
+[ ] Verificar OG Image con Facebook Sharing Debugger
 ```
-
----
-
-## ANÁLISIS RED RANGER — 2026-05-10 (Segunda)
-
-**Áreas a corregir por LISANDRO (orden priorizado):**
-
-1. **.env.example** — Agregar las variables `NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_API_URL` según GLOSSARY.md, con comentarios explicativos. (bridge-grox.bat queda descartado por ahora según instrucción.)
-
-2. **Fase 3 — Frontend base** — Una vez actualizado .env.example, Lisandro debe implementar:
-   - Layout global (nav + footer)
-   - Página de servicios (`src/app/servicios/page.tsx`) y su componente ServicesSection
-   - Página de portafolio (`src/app/portafolio/page.tsx`) – actualmente redirige a /, reemplazar con contenido real
-   - Página de blog (listado + detalle) (`src/app/blog/page.tsx`, `src/app/blog/[slug]/page.tsx`) – reemplazar redirecciones por contenido real
-   - Página de contacto (`src/app/contacto/page.tsx`) – ya tiene esqueleto, integrar con colección Contacts de Payload
-
-3. **Fase 2 — Colecciones Payload** — Modificar Services para que esté orientado a promoción (pendiente). Se puede hacer en paralelo.
-
-**RIESGOS:** Implementar páginas sin datos en Payload puede generar errores de fetch. Se recomienda manejar estados vacíos o seed inicial.
-
-**DEPENDENCIAS:** Deben existir colecciones news, programs, episodes, categories (ya creadas). La colección projects no existe en nueva arquitectura; portafolio deberá obtener datos de programs (se necesita confirmación de Red Ranger).
-
-**PREGUNTAS ABIERTAS:** ¿Portafolio debe mostrar programs (nuevo) o projects (antiguo)? ¿La página de contacto debe conectarse a la colección `contacts` ya definida?
-
-**APROBACIÓN:** APROBADO con la condición de resolver la duda sobre portafolio antes de implementar.
-
----
-
-## ANÁLISIS RED RANGER — 2026-05-10 (Tercera)
-
-**Correcciones pendientes para LISANDRO:**
-
-- **bridge-grox.bat** — Se ha descartado temporalmente según instrucción. No requiere cambios ahora.
-- **.env.example** — La variable `DATABASE_URL` ya fue corregida a PostgreSQL. Se alinea con `docker-compose.yml`. No hay más correcciones necesarias.
-- **Fase 3 — Frontend base** — Lisandro debe implementar en orden:
-  1. Layout global (nav + footer)
-  2. Página de servicios (`src/app/servicios/page.tsx`) y `ServicesSection`
-  3. Página de portafolio (`src/app/portafolio/page.tsx`) – **requiere confirmación sobre si debe usar programs o projects**
-  4. Página de blog (listado y detalle) – reemplazar redirecciones
-  5. Página de contacto – integrar con colección Contacts
-
-**RIESGOS:** Implementar portafolio sin decidir fuente de datos puede generar duplicidad de lógica. Se recomienda esperar respuesta de Red Ranger.
-
-**DEPENDENCIAS:** Las colecciones `programs`, `episodes`, `news`, `live`, `categories` ya existen. `contacts` también existe.
-
-**PREGUNTAS ABIERTAS:** ¿Portafolio debe obtener datos de `programs` (nueva arquitectura) o de una colección `projects` separada? La decisión afecta la ruta `/portafolio`.
-
-**APROBACIÓN:** APROBADO con la condición de resolver la duda sobre portafolio antes de comenzar esa página. Lisandro puede empezar con Layout global y servicios mientras tanto.
-
----
-
-## ANÁLISIS RED RANGER — 2026-05-10 (Cuarta)
-
-**ANÁLISIS:**
-
-Estado actual del proyecto: Fase 2 (colecciones Payload) completada en su mayoría; Fase 3 (frontend base) implementada excepto la página de inicio (homepage) que aún muestra un apartado estático "Nuestros Servicios" (Diseño gráfico, Producción audiovisual, etc.). Según la solicitud, ese contenido debe ser reemplazado por elementos que reflejen lo que realmente se transmite en Beta On Air: **streamings en vivo**, **podcasts** y **programas propios** del canal.
-
-**RIESGOS:**
-
-- El componente `ServicesSection` actual en la homepage (`src/components/sections/ServicesSection.tsx`) probablemente contiene texto estático o llama a la colección `services` (orientada a promoción). Modificarlo para que muestre datos dinámicos (en vivo de `Live`, programas de `Programs`, etc.) requerirá cambios en el componente y quizás en la lógica de fetching.
-- Si se elimina por completo la sección de "servicios promocionales", se perderá una funcionalidad planificada para la agencia. Se debe decidir si mantener ambas secciones separadas o fusionarlas bajo un nuevo enfoque.
-- Existe dependencia de que las colecciones `Live` y `Programs` tengan datos de prueba para evitar pantallas vacías.
-
-**DEPENDENCIAS:**
-
-- Las colecciones `Live`, `Programs` y `Episodes` ya existen en `payload.config.ts` y sus APIs en `src/lib/api/`.
-- El componente `ServicesSection` debe ser actualizado para usar `getLiveStreams()` y `getPrograms()` en lugar de `getServices()`.
-- Se requiere confirmación sobre si la sección debe llamarse "En Vivo y Podcast" o "Nuestros Contenidos".
-
-**PREGUNTAS ABIERTAS:**
-
-- ¿Debemos eliminar por completo la colección `Services` y su referencia en el frontend, o mantenerla como para futura página de "Servicios Profesionales"?
-- ¿El layout de la homepage debe incluir ahora un carrusel de programas en vivo y luego una grilla de podcasts (episodios recientes)?
-- ¿Los enlaces del menú de navegación deben conservar "Servicios" o cambiarse a "Programas" y "En Vivo"?
-
-**APROBACIÓN:** APROBADO con la condición de resolver las preguntas abiertas y de que Lisandro se encargue de modificar `ServicesSection` y concretar los cambios en la página de inicio.
-
----
-
-## ANÁLISIS DE ESTADO — 2026-05-19
-
-**ESTADO: Fase 3 (Frontend base) casi completa — Fase 4 (Calidad y deploy) pendiente.**
-
-**FASES PENDIENTES:**
-1. Fase 2 – Colecciones Payload (Services orientado a promoción), roles/accessos.
-2. Fase 3 – Frontend base (Falta: conectar colecciones programs y news con frontend via Route Handler).
-3. Fase 4 – Calidad y deploy (Tests de contratos API, configuración producción, Nginx).
-
-**ANÁLISIS DE ENLACES — ACTUALIZADO 2026-05-19:**
-
-- **/programas** – ✅ Funcional. Lista estática de 5 programas con slugs corregidos.
-- **/programas/[slug]** – ✅ Funcional. Usa `getProgramBySlug` y `getEpisodesByProgram`.
-- **/noticias** – ✅ Funcional. Lista estática de 4 noticias.
-- **/noticias/[slug]** – ✅ Funcional. Server Component con `params: Promise`.
-- **/en‑vivo** – ✅ Funcional. Llama a `getLiveStreams`, muestra embed o mensaje.
-- **/contacto** – ✅ Funcional. `create: () => true` habilitado en colección Contacts.
-- **/portafolio** – ✅ Funcional. Muestra grid de programas destacados con logos y descripciones.
-- **/servicios** – ✅ Funcional. Página con 4 servicios placeholder: Producción Audiovisual, Podcast, Streaming en Vivo, Diseño Gráfico.
-- **/patrocinios** – ✅ Funcional. Página con beneficios para patrocinadores.
-- **/blog** – ❌ ELIMINADA. Era redundante con /noticias.
-- **Navegación global** – ✅ Implementada. 7 enlaces: Inicio, Programas, En Vivo, Noticias, Patrocinios, Servicios, Contacto.
-
-**RIESGOS DETECTADOS:**
-- Sin datos de prueba en Payload, las páginas de detalle (/programas/[slug], /noticias/[slug]) dependen de datos estáticos locales.
-- La colección Services está definida pero la página /servicios usa datos placeholder; falta integrar con datos dinámicos del CMS.
-- El seed (`src/seed/index.ts`) usa `DATABASE_URI` (unificado con payload.config.ts) pero debe ejecutarse manualmente.
-- `/blog` fue eliminada. No quedan referencias huérfanas.
-
-**RECOMENDACIÓN:** Ejecutar seed manualmente desde Payload admin para poblar datos de prueba. Conectar páginas de detalle a datos dinámicos cuando el CMS tenga contenido real.
 
 ---
 
@@ -513,154 +508,3 @@ Ver GLOSSARY.md para nombres completos.
 7. Al detectar una decisión nueva, recordar al usuario agregarla a DECISIONS.md
 8. Cerrar cada sesión con la actualización de este archivo
 9. Responder SIEMPRE en español, sin excepción
-
----
-
-### Últimos cambios (documentado por LEANDRO — 2026-05-19)
-
-- **Unificado `DATABASE_URI`** en `src/seed/index.ts` — antes usaba `DATABASE_URL` (inconsistente con `payload.config.ts`).
-- **Eliminada carpeta `/blog`** — redundante con `/noticias`. Sin referencias huérfanas.
-- **Build de producción ejecutado** — `npm run build` exitoso. 13 páginas generadas. Sin errores.
-- **Verificados archivos fantasma** — `ProgramCover.ts`, `ProgramLogo.ts`, `lib/api/media.ts` no existen en disco ni son importados por nadie. Son solo tabs residuales en el editor.
-- **Actualizado BRAIN.md** — refleja estado real del proyecto.
-
-### Cambios anteriores (2026-05-17)
-
-- Corregido script dev en package.json (eliminado `--no-turbopack`).
-- Creado `src/lib/data/programas.ts` con datos estáticos de los 5 programas.
-- Creado `src/lib/data/noticias.ts` con datos estáticos de 4 noticias.
-- Actualizadas páginas `/programas/[slug]` y `/noticias/[slug]` para usar datos estáticos locales.
-- Formulario de contacto: se habilitó `create: () => true` en colección Contacts.
-- Slug corregido de `the-bronta-time` a `the-bronca-time`.
-- Creada página `/servicios` con contenido placeholder.
-- Layout global implementado con nav + footer.
-- Portafolio ahora muestra grid de programas (ya no redirige).
-
----
-
-### RED RANGER — Tareas pendientes (2026-05-24)
-
-**Tareas inmediatas por orden de prioridad:**
-
-1. ~~Conectar /servicios con colección Services~~ ✅ Completado (Priority 3)
-2. ~~Sección de noticias dinámica en homepage~~ ✅ Completado (Priority 4)
-3. ~~Sección "En Vivo" en homepage~~ ✅ Completado (Priority 5)
-4. ~~Revisar /noticias, /patrocinios, /portafolio~~ ✅ Completado (Priority 6)
-5. ~~Revisar componentes + eliminar archivos obsoletos~~ ✅ Completado (Priority 7)
-6. **Ajustar embedUrl en admin** — Cambiar URLs de YouTube de formato `/watch?v=` a `/embed/`.
-7. **Fase 4 — Tests y configuración de producción** — Nginx, variables de entorno, hardening de seguridad.
-
-**Completado (2026-05-24):**
-- ✅ **Priority 9 — Sistema de roles (superadmin/admin/editor):**
-  - Creado `src/lib/access.ts` con helpers: `isSuperAdmin`, `isAdmin`, `isAdminOrSuperAdmin`, `isEditorOrAbove`, `hideSlugFromNonSuperAdmin`
-  - `Users.ts`: roles renombrados a `superadmin`/`admin`/`editor`. Rol `viewer` eliminado. Panel access para los 3 roles. Solo superadmin ve el campo `role`.
-  - Slug oculto con `admin.condition` en Categories, Programs, Episodes, News, Sponsorships (solo superadmin lo ve)
-  - Matriz de accesos por colección: superadmin=CRUD total, admin=CRUD en contenido propio, editor=CRUD en News/Episodes/Live/Services/Projects, solo lectura en Programs/Categories/Sponsorships
-  - Globals Settings y SEO: update solo para admin y superadmin, read público
-  - `Contacts.ts`, `Media.ts`, `Live.ts`: accesos corregidos (antes `!!user` permitía a cualquiera)
-  - Build: 17 rutas, 0 errores
-- ✅ **Priority 8 — Settings y SEO conectados al frontend:**
-  - Creado `src/lib/api/settings.ts` con `getSettings()` y `getSeo()` (fetch a `/api/globals/settings` y `/api/globals/seo`)
-  - `layout.tsx`: `generateMetadata()` dinámico desde SEO global (metaTitle, metaDescription, ogImage) + footer usa `siteName` de Settings
-  - `HeroSection.tsx`: acepta props `logoUrl` y `slogan` desde Settings (fallback a `/logo.png` y "Hacemos que se note.")
-  - `SocialMediaSection.tsx`: acepta props `tiktokUrl`, `facebookUrl`, `youtubeUrl`, `instagramUrl` desde Settings (fallback a hardcoded defaults)
-  - `page.tsx`: hace `getSettings()` y pasa datos como props a HeroSection + SocialMediaSection
-  - Build: 17 rutas, 0 errores
-- ✅ **Priority 7 — Cleanup + fix ServicesSection:**
-  - Eliminados `data/noticias.ts` y `data/programas.ts` (0 imports en proyecto)
-  - Corregidos bugs: `live.titulo`→`live.title`, `prog.descripcionCorta`→`prog.description`
-  - Creado `docs/payload-admin-analysis.md` con análisis completo del panel
-  - Build: 17 rutas, 0 errores
-
-**Completado (2026-05-23):**
-- ✅ Priority 5 — Sección "En Vivo" dinámica con iframe 16:9
-- ✅ Priority 6 — Conexión de /noticias, /portafolio, /patrocinios al CMS
-
-**Completado histórico (2026-05-21):**
-- ✅ Fix formulario de contacto, fix query REST episodios, episodios dinámicos
-
-**Bloqueos detectados:**
-- Payload v3 no soporta `where[isActive][equals]=true` en checkbox (workaround aplicado en Priority 2, 5)
-- `data/noticias.ts` y `data/programas.ts` eliminados (Priority 7)
-- `ServicesSection.tsx`: bugs corregidos pero el componente sigue sin usarse en ninguna página (código muerto)
-
----
-
-### Cambios commit 80fb326 (documentado por LEANDRO — 2026-05-29)
-
-**8 fixes aplicados por LISANDRO tras análisis de RED RANGER:**
-(Ver historial completo arriba)
-
-### 4 FIXES APLICADOS — Sesión nocturna 2026-05-29 (RED RANGER + LISANDRO + LEANDRO)
-
-**Problemas reportados por el usuario:**
-1. No aparecía el enlace para ver los gráficos de analytics en el panel admin
-2. Error al ingresar directamente a `/admin/analytics`
-3. Vercel Analytics corriendo innecesariamente (ya se usa Google Analytics)
-4. Error `Mismatching "payload" dependency versions` con `@payloadcms/email-resend@3.85.0`
-
-**Fix #1 — Version mismatch @payloadcms/email-resend:**
-- `package.json`: `"@payloadcms/email-resend": "^3.85.0"` → `"3.84.1"` (exacta, sin `^`)
-- `npm install` ejecutado → sincronizado con el resto de paquetes Payload `3.84.1`
-
-**Fix #2 — Vercel Analytics eliminado:**
-- `src/app/(frontend)/layout.tsx`: removido `import { Analytics } from '@vercel/analytics/react'` y `<Analytics />`
-- `package.json`: removida dependencia `@vercel/analytics`
-- `npm install` ejecutado → paquete eliminado de node_modules
-- Google Analytics vía `NEXT_PUBLIC_GA_ID` sigue siendo el único tracker (correcto)
-
-**Fix #3 — AnalyticsDashboard en panel admin (import map):**
-- **Causa raíz:** `payload.config.ts` tenía `Component: '/src/components/admin/AnalyticsDashboard.tsx'` pero `baseDir` ya apunta a `src/` → generaba ruta `src/src/...` (doble)
-- **Corrección:** `payload.config.ts` línea 36: `'/src/components/...'` → `'/components/...'`
-- **Regenerado import map:** `npx payload generate:importmap` → `importMap.js` ahora apunta a `'../../../components/admin/AnalyticsDashboard.tsx'` (ruta correcta)
-- El enlace "Analytics" ahora debe aparecer en el menú del panel admin en `/admin/analytics`
-
-**Fix #4 — Verificación del endpoint /api/analytics-summary:**
-- `src/app/api/analytics-summary/route.ts` existe y responde correctamente (73 líneas)
-- Dependencias en `src/lib/api/pageviews.ts` (173 líneas): `getTotalViews`, `getUniqueSessions`, `getBounceRate`, `getTopContent`, `getViewsByType`, `getViewsByDevice`, `getViewsTimeline`, `getTopSections` — todas implementadas
-- Colección `PageViews` (`src/collections/PageViews.ts`) con campos: path, section, contentType, contentSlug, contentTitle, sessionId, device, country, referrer, duration, timestamp. 21 registros existentes.
-
-**Build de producción (2 builds):**
-- Build 1: ✓ Compiled successfully in 14.2s, 18 rutas, 0 errores
-- Build 2 (post pageviews.ts rewrite): ✓ Compiled successfully in 9.6s, 18 rutas, 0 errores
-
-**Fix #6 — pageviews.ts reescrito con Payload local API (payload.find):**
-- **Problema detectado en logs:** 8x `GET /api/pageviews?... 403 Forbidden` — "You are not allowed to perform this action"
-- **Causa:** `fetchAllPageViews()` usaba `fetch('${API_URL}/api/pageviews?...')` desde el servidor sin cookies de auth. La colección `pageviews` requiere `read: isAdminOrSuperAdmin`.
-- **Solución:** Reemplazado `fetch()` HTTP por `getPayload({ config })` + `payload.find({ collection: 'pageviews', ... })` — acceso directo a BD, sin HTTP, sin problemas de auth
-- **8 funciones exportadas mantenidas con mismas firmas:** `getTotalViews`, `getUniqueSessions`, `getBounceRate`, `getTopContent`, `getViewsByType`, `getViewsByDevice`, `getViewsTimeline`, `getTopSections`
-- **Ningún otro archivo roto** — los `ECONNREFUSED` en build son preexistentes de otros API files (settings, programs, sponsorships, services) que dependen de servidor corriendo
-
-**Archivos modificados esta sesión:** 5 archivos
-- `package.json` (2 cambios: fix versión + remover @vercel/analytics)
-- `src/app/(frontend)/layout.tsx` (remover Vercel Analytics)
-- `src/payload.config.ts` (corregir ruta Component)
-- `src/app/(payload)/admin/importMap.js` (regenerado con ruta correcta)
-- `src/lib/api/pageviews.ts` (reescrito con payload.find local)
-- `BRAIN.md` (este cierre)
-
-**Fix #7 — Enlace "📊 Analytics" visible en sidebar (colección PageViews):**
-- **Problema:** El view global en `admin.components.views` no renderizaba el enlace en el sidebar. Ni `label` ni `title` son aceptados por `AdminViewConfig` en Payload v3.84.1. Limpiar `payload_preferences` (2 filas) no fue suficiente — Payload simplemente no muestra views globales en el nav lateral.
-- **Solución final:** Convertir `PageViews` de colección oculta (`hidden: true`) a colección visible en el sidebar:
-  - `labels.plural`: `'📊 Analytics'`, `labels.singular`: `'Analytics'`
-  - `admin.hidden`: `false`, `admin.group`: `'Contenido'`
-  - `admin.components.views.list`: `AnalyticsDashboard.tsx` — al clickear "📊 Analytics" en vez del listado de pageviews, carga directamente el dashboard con gráficos Recharts
-  - `admin.components.views` global en `payload.config.ts` se mantiene como respaldo (ruta `/admin/analytics` directa)
-- **payload_preferences** limpiado 2 veces (3 filas totales eliminadas, key = 'nav')
-- **Build:** ✓ 18 rutas, 0 errores (3 builds exitosos en la sesión)
-
-**Archivos modificados esta sesión:** 6 archivos
-- `package.json` (2 cambios: fix versión + remover @vercel/analytics)
-- `src/app/(frontend)/layout.tsx` (remover Vercel Analytics)
-- `src/payload.config.ts` (corregir ruta Component)
-- `src/app/(payload)/admin/importMap.js` (regenerado con ruta correcta)
-- `src/lib/api/pageviews.ts` (reescrito con payload.find local)
-- `src/collections/PageViews.ts` (hidden: false, label 📊 Analytics, list custom component)
-- `BRAIN.md` (este cierre)
-
-**Base de datos modificada:** `payload_preferences` — 3 filas eliminadas (key = 'nav', 2 limpiezas)
-
----
-
----
-

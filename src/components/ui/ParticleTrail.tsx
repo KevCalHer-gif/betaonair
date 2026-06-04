@@ -34,7 +34,21 @@ export default function ParticleTrail() {
   `
     document.head.appendChild(script)
 
+    // Forward touch events as mouse events for mobile devices
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0]
+        const mouseEvent = new MouseEvent('mousemove', {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+        })
+        window.dispatchEvent(mouseEvent)
+      }
+    }
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+
     return () => {
+      window.removeEventListener('touchmove', handleTouchMove)
       if (window.__tubesCursor && window.__tubesCursor.dispose) {
         window.__tubesCursor.dispose()
         window.__tubesCursor = null

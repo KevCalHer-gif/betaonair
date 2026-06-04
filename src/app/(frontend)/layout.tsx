@@ -7,12 +7,15 @@ import ParticleTrail from '../../components/ui/ParticleTrail'
 import BgCanvas from '../../components/ui/BgCanvas'
 import NavLink from '../../components/ui/NavLink'
 import TrackPageView from '../../components/ui/TrackPageView'
-import { getSeo, getSettings } from '../../lib/api/settings'
+import { getSettings } from '../../lib/api/settings'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSeo()
-  const settings = await getSettings()
+  const payload = await getPayload({ config: configPromise })
+  const seoGlobal = await payload.findGlobal({ slug: 'seo' })
+  const settings = await payload.findGlobal({ slug: 'settings' })
 
   const siteName = settings?.siteName || 'Beta On Air'
   const defaultDescription = 'Beta On Air — Hacemos que se note.'
@@ -20,18 +23,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
 
   const ogImageUrl =
-    seo?.ogImage && typeof seo.ogImage === 'object' && seo.ogImage.url
-      ? seo.ogImage.url.startsWith('http')
-        ? seo.ogImage.url
-        : `${siteUrl}${seo.ogImage.url}`
+    seoGlobal?.ogImage && typeof seoGlobal.ogImage === 'object' && seoGlobal.ogImage.url
+      ? seoGlobal.ogImage.url.startsWith('http')
+        ? seoGlobal.ogImage.url
+        : `${siteUrl}${seoGlobal.ogImage.url}`
       : null
 
   return {
-    title: seo?.metaTitle || siteName,
-    description: seo?.metaDescription || defaultDescription,
+    title: seoGlobal?.metaTitle || siteName,
+    description: seoGlobal?.metaDescription || defaultDescription,
     openGraph: {
-      title: seo?.metaTitle || siteName,
-      description: seo?.metaDescription || defaultDescription,
+      title: seoGlobal?.metaTitle || siteName,
+      description: seoGlobal?.metaDescription || defaultDescription,
       ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
     },
   }
