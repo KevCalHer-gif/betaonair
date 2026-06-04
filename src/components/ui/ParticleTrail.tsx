@@ -34,15 +34,17 @@ export default function ParticleTrail() {
   `
     document.head.appendChild(script)
 
-    // Forward touch events as mouse events for mobile devices
+    // Forward touch events as pointer events for mobile devices
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0]
-        const mouseEvent = new MouseEvent('mousemove', {
+        const pointerEvent = new PointerEvent('pointermove', {
           clientX: touch.clientX,
           clientY: touch.clientY,
+          pointerId: 1,
+          pointerType: 'mouse',
         })
-        window.dispatchEvent(mouseEvent)
+        window.dispatchEvent(pointerEvent)
       }
     }
     window.addEventListener('touchmove', handleTouchMove, { passive: true })

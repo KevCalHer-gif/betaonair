@@ -12,31 +12,41 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const payload = await getPayload({ config: configPromise })
-  const seoGlobal = await payload.findGlobal({ slug: 'seo' })
-  const settings = await payload.findGlobal({ slug: 'settings' })
+export const dynamic = 'force-dynamic'
 
-  const siteName = settings?.siteName || 'Beta On Air'
+export async function generateMetadata(): Promise<Metadata> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
   const defaultDescription = 'Beta On Air — Hacemos que se note.'
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const seoGlobal = await payload.findGlobal({ slug: 'seo' })
+    const settings = await payload.findGlobal({ slug: 'settings' })
 
-  const ogImageUrl =
-    seoGlobal?.ogImage && typeof seoGlobal.ogImage === 'object' && seoGlobal.ogImage.url
-      ? seoGlobal.ogImage.url.startsWith('http')
-        ? seoGlobal.ogImage.url
-        : `${siteUrl}${seoGlobal.ogImage.url}`
-      : null
+    const siteName = settings?.siteName || 'Beta On Air'
 
-  return {
-    title: seoGlobal?.metaTitle || siteName,
-    description: seoGlobal?.metaDescription || defaultDescription,
-    openGraph: {
+    const ogImageUrl =
+      seoGlobal?.ogImage && typeof seoGlobal.ogImage === 'object' && seoGlobal.ogImage.url
+        ? seoGlobal.ogImage.url.startsWith('http')
+          ? seoGlobal.ogImage.url
+          : `${siteUrl}${seoGlobal.ogImage.url}`
+        : null
+
+    return {
       title: seoGlobal?.metaTitle || siteName,
       description: seoGlobal?.metaDescription || defaultDescription,
-      ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
-    },
+      openGraph: {
+        title: seoGlobal?.metaTitle || siteName,
+        description: seoGlobal?.metaDescription || defaultDescription,
+        ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
+      },
+    }
+  } catch (error) {
+    console.error('generateMetadata: failed to fetch SEO/Settings from Payload', error)
+    return {
+      title: 'Beta On Air',
+      description: defaultDescription,
+    }
   }
 }
 
