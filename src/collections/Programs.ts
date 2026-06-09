@@ -73,6 +73,15 @@ export const Programs: CollectionConfig = {
       },
     },
     {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description: 'Imagen de fondo personalizada para la página de este programa. Si no se establece, se usará el fondo animado global.',
+      },
+    },
+    {
       name: 'accentColor',
       type: 'text',
       defaultValue: '#c61d4a',

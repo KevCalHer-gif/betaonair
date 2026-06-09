@@ -252,6 +252,10 @@ export interface Program {
    * Portada del programa. Subir imagen que será cropeada 1900×500 (19:5).
    */
   coverImage: number | Media;
+  /**
+   * Imagen de fondo personalizada para la página de este programa. Si no se establece, se usará el fondo animado global.
+   */
+  backgroundImage?: (number | null) | Media;
   accentColor?: string | null;
   isLive?: boolean | null;
   liveUrl?: string | null;
@@ -647,6 +651,7 @@ export interface ProgramsSelect<T extends boolean = true> {
   description?: T;
   logo?: T;
   coverImage?: T;
+  backgroundImage?: T;
   accentColor?: T;
   isLive?: T;
   liveUrl?: T;
