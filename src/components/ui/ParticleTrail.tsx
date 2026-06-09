@@ -68,7 +68,7 @@ export default function ParticleTrail() {
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 10,
+        zIndex: 11,
         pointerEvents: 'none',
         background: 'transparent',
         mixBlendMode: 'screen',
