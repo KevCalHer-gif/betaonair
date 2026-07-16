@@ -39,17 +39,43 @@ interface AnalyticsData {
   mostViewedTitle: string
 }
 
+const ACCENT = '#c61d4a'
+
 const CARD: React.CSSProperties = {
-  background: '#0a0a0a',
-  border: '1px solid #333',
-  borderRadius: '10px',
-  padding: '1.5rem',
+  background: '#0f0f0f',
+  border: '1px solid #2a2a2a',
+  borderLeft: `3px solid ${ACCENT}`,
+  borderRadius: '14px',
+  padding: '1.75rem',
+  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.35)',
 }
 
-const TITLE: React.CSSProperties = {
-  color: '#c61d4a',
-  fontSize: '1.1rem',
-  marginBottom: '0.75rem',
+const SECTION_HEADER: React.CSSProperties = {
+  color: '#e0e0e0',
+  fontSize: '1rem',
+  fontWeight: 600,
+  marginBottom: '1rem',
+  paddingBottom: '0.6rem',
+  borderBottom: '1px solid #2a2a2a',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+}
+
+const TOOLTIP_STYLE: React.CSSProperties = {
+  background: '#161616',
+  border: '1px solid #3a3a3a',
+  borderRadius: '8px',
+  color: '#f0f0f0',
+  boxShadow: '0 6px 20px rgba(0,0,0,0.5)',
+  fontSize: '0.8rem',
+  padding: '8px 12px',
+}
+
+const KPI_CONTAINER: React.CSSProperties = {
+  maxWidth: '1100px',
+  margin: '0 auto',
+  marginBottom: '2rem',
 }
 
 export default function AnalyticsDashboard() {
@@ -73,21 +99,21 @@ export default function AnalyticsDashboard() {
 
   if (loading) {
     return (
-      <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
+      <div style={{ padding: '3rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
         <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}`}</style>
-        <h1 style={{ color: '#c61d4a' }}>📊 Panel de Analytics</h1>
-        <p style={{ color: '#888' }}>Cargando...</p>
+        <h1 style={{ color: ACCENT, fontSize: '1.5rem', marginBottom: '1rem' }}>📊 Panel de Analytics</h1>
+        <p style={{ color: '#777', animation: 'pulse 1.5s infinite' }}>Cargando métricas...</p>
       </div>
     )
   }
 
   if (error || !data) {
     return (
-      <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
-        <h1 style={{ color: '#c61d4a' }}>📊 Panel de Analytics</h1>
-        <div style={{ ...CARD, textAlign: 'center', padding: '3rem' }}>
-          <p style={{ color: '#888' }}>{error || 'Sin datos disponibles.'}</p>
-          <p style={{ color: '#555', fontSize: '0.85rem' }}>
+      <div style={{ padding: '3rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+        <h1 style={{ color: ACCENT, fontSize: '1.5rem', marginBottom: '1rem' }}>📊 Panel de Analytics</h1>
+        <div style={{ ...CARD, borderLeft: `3px solid ${ACCENT}`, textAlign: 'center', padding: '3rem' }}>
+          <p style={{ color: '#999', fontSize: '1rem' }}>{error || 'Sin datos disponibles.'}</p>
+          <p style={{ color: '#555', fontSize: '0.85rem', marginTop: '0.5rem' }}>
             Los datos aparecerán cuando los visitantes naveguen por el sitio.
           </p>
         </div>
@@ -98,46 +124,58 @@ export default function AnalyticsDashboard() {
   const timeline = data.timeline.map((d) => ({ ...d, date: d.date.substring(5) }))
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
-      <h1 style={{ color: '#c61d4a', fontSize: '1.6rem', marginBottom: '1.5rem' }}>
+    <div style={{ padding: '2.5rem 3rem', maxWidth: '1200px', margin: '0 auto' }}>
+      <h1 style={{
+        color: ACCENT,
+        fontSize: '1.5rem',
+        fontWeight: 700,
+        marginBottom: '2rem',
+        textAlign: 'center',
+      }}>
         📊 Panel de Analytics
       </h1>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <KpiCard title="Visitas totales" value={data.totalViews.toLocaleString()} sub="Últimos 30 días" />
-        <KpiCard title="Sesiones únicas" value={data.uniqueSessions.toLocaleString()} sub="Visitantes" />
-        <KpiCard title="Sponsors activos" value={String(data.activeSponsors)} sub="Patrocinadores" />
-        <KpiCard title="Más visto" value={data.mostViewedTitle} sub="Contenido estrella" small />
-        <KpiCard title="Rebote" value={`${data.bounceRate}%`} sub="Visitas < 10s" />
+      <div style={KPI_CONTAINER}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '1rem',
+        }}>
+          <KpiCard icon="👁️" title="Visitas totales" value={data.totalViews.toLocaleString()} sub="Últimos 30 días" />
+          <KpiCard icon="👤" title="Sesiones únicas" value={data.uniqueSessions.toLocaleString()} sub="Visitantes" />
+          <KpiCard icon="🤝" title="Sponsors activos" value={String(data.activeSponsors)} sub="Patrocinadores" />
+          <KpiCard icon="⭐" title="Más visto" value={data.mostViewedTitle} sub="Contenido estrella" small />
+          <KpiCard icon="📉" title="Tasa de rebote" value={`${data.bounceRate}%`} sub="Visitas &lt; 10s" />
+        </div>
       </div>
 
       {/* Visitas por día */}
       <div style={{ ...CARD, marginBottom: '2rem' }}>
-        <h2 style={TITLE}>📈 Visitas por día (últimos 30 días)</h2>
-        <ResponsiveContainer width="100%" height={300}>
+        <h2 style={SECTION_HEADER}>📈 Visitas por día (últimos 30 días)</h2>
+        <ResponsiveContainer width="100%" height={320}>
           <LineChart data={timeline}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#222" />
-            <XAxis dataKey="date" stroke="#666" fontSize={11} />
-            <YAxis stroke="#666" fontSize={11} />
-            <Tooltip contentStyle={{ background: '#111', border: '1px solid #333', borderRadius: '6px', color: '#f0f0f0' }} />
-            <Line type="monotone" dataKey="views" stroke="#c61d4a" strokeWidth={2} dot={{ r: 2 }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
+            <XAxis dataKey="date" stroke="#555" fontSize={11} />
+            <YAxis stroke="#555" fontSize={11} />
+            <Tooltip contentStyle={TOOLTIP_STYLE} />
+            <Line type="monotone" dataKey="views" stroke={ACCENT} strokeWidth={2.5} dot={{ r: 3, fill: ACCENT }} />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
       {/* Top contenidos */}
       <div style={{ ...CARD, marginBottom: '2rem' }}>
-        <h2 style={TITLE}>🏆 Contenidos más vistos</h2>
-        <ResponsiveContainer width="100%" height={Math.max(250, data.topContent.length * 40)}>
-          <BarChart data={data.topContent} layout="vertical" margin={{ left: 150, right: 30 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#222" />
-            <XAxis type="number" stroke="#666" fontSize={11} />
-            <YAxis dataKey="title" type="category" stroke="#666" fontSize={11} width={140} />
-            <Tooltip contentStyle={{ background: '#111', border: '1px solid #333', borderRadius: '6px', color: '#f0f0f0' }} />
+        <h2 style={SECTION_HEADER}>🏆 Contenidos más vistos</h2>
+        <ResponsiveContainer width="100%" height={Math.max(280, data.topContent.length * 42)}>
+          <BarChart data={data.topContent} layout="vertical" margin={{ left: 160, right: 40 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
+            <XAxis type="number" stroke="#555" fontSize={11} />
+            <YAxis dataKey="title" type="category" stroke="#555" fontSize={11} width={150} />
+            <Tooltip contentStyle={TOOLTIP_STYLE} />
             <Bar dataKey="views" radius={[0, 6, 6, 0]}>
               {data.topContent.map((entry, i) => (
-                <rect key={i} fill={COLORS[entry.contentType] || '#c61d4a'} />
+                <rect key={i} fill={COLORS[entry.contentType] || ACCENT} />
               ))}
             </Bar>
           </BarChart>
@@ -146,32 +184,69 @@ export default function AnalyticsDashboard() {
 
       {/* Tabla */}
       <div style={CARD}>
-        <h2 style={TITLE}>📋 Contenidos — Detalle</h2>
+        <h2 style={SECTION_HEADER}>📋 Contenidos — Detalle</h2>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', color: '#ccc', fontSize: '0.85rem' }}>
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            color: '#ccc',
+            fontSize: '0.85rem',
+            borderRadius: '8px',
+            overflow: 'hidden',
+          }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid #333', textAlign: 'left' }}>
-                <th style={{ padding: '0.5rem 0.75rem', color: '#888' }}>#</th>
-                <th style={{ padding: '0.5rem 0.75rem', color: '#888' }}>Título</th>
-                <th style={{ padding: '0.5rem 0.75rem', color: '#888' }}>Tipo</th>
-                <th style={{ padding: '0.5rem 0.75rem', color: '#888', textAlign: 'right' }}>Vistas</th>
+              <tr style={{ borderBottom: '2px solid #2a2a2a', textAlign: 'left' }}>
+                <th style={{ padding: '0.6rem 0.75rem', color: '#888', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>#</th>
+                <th style={{ padding: '0.6rem 0.75rem', color: '#888', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Título</th>
+                <th style={{ padding: '0.6rem 0.75rem', color: '#888', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tipo</th>
+                <th style={{ padding: '0.6rem 0.75rem', color: '#888', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Vistas</th>
               </tr>
             </thead>
             <tbody>
               {data.topContent.map((item, idx) => (
-                <tr key={item.slug} style={{ borderBottom: '1px solid #1a1a1a' }}>
-                  <td style={{ padding: '0.5rem 0.75rem', color: '#666' }}>{idx + 1}</td>
-                  <td style={{ padding: '0.5rem 0.75rem' }}>{item.title}</td>
-                  <td style={{ padding: '0.5rem 0.75rem' }}>
-                    <span style={{ display: 'inline-block', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, background: COLORS[item.contentType] || '#555', color: '#fff' }}>
+                <tr
+                  key={item.slug}
+                  style={{
+                    borderBottom: '1px solid #1a1a1a',
+                    background: idx % 2 === 0 ? 'transparent' : '#0c0c0c',
+                    transition: 'background 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#1a1a1a' }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = idx % 2 === 0 ? 'transparent' : '#0c0c0c'
+                  }}
+                >
+                  <td style={{ padding: '0.6rem 0.75rem', color: '#555', fontWeight: 600 }}>{idx + 1}</td>
+                  <td style={{ padding: '0.6rem 0.75rem', fontWeight: 500 }}>{item.title}</td>
+                  <td style={{ padding: '0.6rem 0.75rem' }}>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '6px',
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      background: COLORS[item.contentType] || '#555',
+                      color: '#fff',
+                    }}>
                       {typeLabel(item.contentType)}
                     </span>
                   </td>
-                  <td style={{ padding: '0.5rem 0.75rem', textAlign: 'right', fontWeight: 700, color: '#c61d4a' }}>{item.views.toLocaleString()}</td>
+                  <td style={{
+                    padding: '0.6rem 0.75rem',
+                    textAlign: 'right',
+                    fontWeight: 700,
+                    color: ACCENT,
+                  }}>
+                    {item.views.toLocaleString()}
+                  </td>
                 </tr>
               ))}
               {data.topContent.length === 0 && (
-                <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#555' }}>Sin datos aún</td></tr>
+                <tr>
+                  <td colSpan={4} style={{ padding: '2.5rem', textAlign: 'center', color: '#555' }}>
+                    Sin datos aún
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
@@ -181,17 +256,72 @@ export default function AnalyticsDashboard() {
   )
 }
 
-function KpiCard({ title, value, sub, small }: { title: string; value: string; sub: string; small?: boolean }) {
+function KpiCard({ icon, title, value, sub, small }: {
+  icon: string
+  title: string
+  value: string
+  sub: string
+  small?: boolean
+}) {
   return (
-    <div style={CARD}>
-      <p style={{ color: '#888', fontSize: '0.75rem', margin: '0 0 0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</p>
-      <p style={{ color: '#c61d4a', fontSize: small ? '0.9rem' : '1.5rem', fontWeight: 700, margin: '0 0 0.25rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: small ? 'normal' : 'nowrap' }}>{value}</p>
-      <p style={{ color: '#555', fontSize: '0.7rem', margin: 0 }}>{sub}</p>
+    <div style={{
+      background: 'linear-gradient(145deg, #111111, #0a0a0a)',
+      border: '1px solid #2a2a2a',
+      borderRadius: '14px',
+      padding: '1.35rem 1.25rem',
+      textAlign: 'center',
+      boxShadow: '0 3px 16px rgba(0, 0, 0, 0.3)',
+      transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+      cursor: 'default',
+    }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = '#3a3a3a'
+        el.style.boxShadow = '0 4px 24px rgba(0, 0, 0, 0.45)'
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.borderColor = '#2a2a2a'
+        el.style.boxShadow = '0 3px 16px rgba(0, 0, 0, 0.3)'
+      }}
+    >
+      <div style={{ fontSize: '1.3rem', marginBottom: '0.35rem', lineHeight: 1 }}>{icon}</div>
+      <p style={{
+        color: '#999',
+        fontSize: '0.7rem',
+        margin: '0 0 0.3rem',
+        textTransform: 'uppercase',
+        letterSpacing: '0.06em',
+        fontWeight: 500,
+      }}>
+        {title}
+      </p>
+      <p style={{
+        color: ACCENT,
+        fontSize: small ? '0.85rem' : '1.55rem',
+        fontWeight: 700,
+        margin: '0 0 0.25rem',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: small ? 'normal' : 'nowrap',
+        lineHeight: 1.2,
+      }}>
+        {value}
+      </p>
+      <p style={{ color: '#555', fontSize: '0.68rem', margin: 0 }}>{sub}</p>
     </div>
   )
 }
 
 function typeLabel(t: string): string {
-  const m: Record<string, string> = { podcast: 'Podcast', video: 'Video', noticia: 'Noticia', servicio: 'Servicio', portafolio: 'Portafolio', 'en-vivo': 'En Vivo', otro: 'Otro' }
+  const m: Record<string, string> = {
+    podcast: 'Podcast',
+    video: 'Video',
+    noticia: 'Noticia',
+    servicio: 'Servicio',
+    portafolio: 'Portafolio',
+    'en-vivo': 'En Vivo',
+    otro: 'Otro',
+  }
   return m[t] || t
 }
