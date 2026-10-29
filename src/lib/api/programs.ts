@@ -6,7 +6,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 export async function getPrograms(): Promise<Program[]> {
   try {
-    const res = await fetch(`${API_URL}/api/programs?depth=2&limit=50`, {
+    const res = await fetch(`${API_URL}/api/programs?depth=2&limit=50&where[status][equals]=active`, {
       next: { revalidate: 60 },
     })
     if (!res.ok) throw new Error('Failed to fetch programs')
@@ -24,7 +24,7 @@ export async function getProgramBySlug(slug: string): Promise<Program | null> {
     const payload = await getPayload({ config: configPromise })
     const result = await payload.find({
       collection: 'programs',
-      where: { slug: { equals: slug } },
+      where: { and: [{ slug: { equals: slug } }, { status: { equals: 'active' } }] },
       depth: 2,
       limit: 1,
     })

@@ -98,7 +98,10 @@ export const Programs: CollectionConfig = {
     {
       name: 'status',
       type: 'select',
-      options: ['active', 'inactive'],
+      options: [
+        { label: 'Activo', value: 'active' },
+        { label: 'Inactivo', value: 'inactive' },
+      ],
       defaultValue: 'active',
     },
   ],

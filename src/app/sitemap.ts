@@ -22,8 +22,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const collection of collections) {
       try {
+        const where =
+          collection === 'programs'
+            ? '&where[status][equals]=active'
+            : ''
+
         const res = await fetch(
-          `${API_URL}/api/${collection}?limit=100&depth=0&select[slug]=true&select[updatedAt]=true`,
+          `${API_URL}/api/${collection}?limit=100&depth=0&select[slug]=true&select[updatedAt]=true${where}`,
           { next: { revalidate: 3600 } }
         )
         if (!res.ok) continue
