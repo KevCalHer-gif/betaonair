@@ -9,6 +9,9 @@ interface YouTubePlaylistGridProps {
 
 export default function YouTubePlaylistGrid({ videos }: YouTubePlaylistGridProps) {
   const [activeVideo, setActiveVideo] = useState<PlaylistVideo | null>(null)
+  const [visibleCount, setVisibleCount] = useState(12)
+
+  const visibleVideos = videos.slice(0, visibleCount)
 
   return (
     <div>
@@ -45,7 +48,7 @@ export default function YouTubePlaylistGrid({ videos }: YouTubePlaylistGridProps
           gap: '1rem',
         }}
       >
-        {videos.map((video) => (
+        {visibleVideos.map((video) => (
           <button
             key={video.id}
             type="button"
@@ -129,6 +132,37 @@ export default function YouTubePlaylistGrid({ videos }: YouTubePlaylistGridProps
           </button>
         ))}
       </div>
+
+      {visibleCount < videos.length && (
+        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+          <button
+            type="button"
+            onClick={() => setVisibleCount((count) => count + 12)}
+            style={{
+              background: 'transparent',
+              border: '1px solid #c61d4a',
+              color: '#c61d4a',
+              borderRadius: '4px',
+              padding: '0.6rem 1.5rem',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontFamily: 'var(--font-brand)',
+              fontSize: '0.95rem',
+              transition: 'background 0.2s ease, color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#c61d4a'
+              e.currentTarget.style.color = '#fff'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.color = '#c61d4a'
+            }}
+          >
+            Ver más
+          </button>
+        </div>
+      )}
     </div>
   )
 }

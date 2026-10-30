@@ -1,5 +1,3 @@
-import { XMLParser } from 'fast-xml-parser'
-
 export interface PlaylistVideo {
   id: string
   title: string
@@ -8,53 +6,52 @@ export interface PlaylistVideo {
 }
 
 const CACHE_TTL_MS = 60 * 60 * 1000
+const MAX_PAGES = 10
 const cache = new Map<string, { expires: number; videos: PlaylistVideo[] }>()
 const inflight = new Map<string, Promise<PlaylistVideo[]>>()
 
-interface FeedEntry {
-  'yt:videoId'?: string
-  title?: string
-  published?: string
-  'media:group'?: {
-    'media:thumbnail'?: { '@_url'?: string; '@_width'?: number } | { '@_url'?: string; '@_width'?: number }[]
+interface Thumbnails {
+  maxres?: { url?: string }
+  high?: { url?: string }
+  medium?: { url?: string }
+}
+
+interface PlaylistItem {
+  snippet?: {
+    title?: string
+    publishedAt?: string
+    resourceId?: { videoId?: string }
+    thumbnails?: Thumbnails
   }
 }
 
-function pickThumbnail(group: FeedEntry['media:group'], videoId: string): string {
-  const thumbs = group?.['media:thumbnail']
-  if (!thumbs) return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
-  const list = Array.isArray(thumbs) ? thumbs : [thumbs]
-  let best = ''
-  let bestWidth = 0
-  for (const t of list) {
-    const width = Number(t['@_width'] || 0)
-    if (t['@_url'] && width > bestWidth) {
-      best = t['@_url']
-      bestWidth = width
-    }
-  }
-  return best || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+interface PlaylistItemsResponse {
+  items?: PlaylistItem[]
+  nextPageToken?: string
 }
 
-function parseFeed(xml: string): PlaylistVideo[] {
-  const parser = new XMLParser({ ignoreAttributes: false })
-  const doc = parser.parse(xml)
-  const rawEntries = doc?.feed?.entry
-  if (!rawEntries) return []
-  const entries = Array.isArray(rawEntries) ? rawEntries : [rawEntries]
-  const videos: PlaylistVideo[] = []
-  for (const entry of entries as FeedEntry[]) {
-    const id = entry['yt:videoId']
-    if (!id) continue
-    videos.push({
-      id,
-      title: entry.title || id,
-      publishedAt: entry.published || '',
-      thumbnail: pickThumbnail(entry['media:group'], id),
-    })
-  }
-  videos.sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
-  return videos
+function pickThumbnail(item: PlaylistItem, videoId: string): string {
+  const t = item.snippet?.thumbnails
+  const url = t?.maxres?.url || t?.high?.url || t?.medium?.url
+  return url || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+}
+
+async function fetchPage(playlistId: string, pageToken?: string): Promise<PlaylistItemsResponse> {
+  const params = new URLSearchParams({
+    part: 'snippet',
+    maxResults: '50',
+    playlistId,
+  })
+  if (pageToken) params.set('pageToken', pageToken)
+  const res = await fetch(
+    `https://www.googleapis.com/youtube/v3/playlistItems?${params.toString()}`,
+    {
+      headers: { 'X-Goog-Api-Key': process.env.YOUTUBE_API_KEY || '' },
+      cache: 'no-store',
+    },
+  )
+  if (!res.ok) throw new Error(`YouTube API error ${res.status}`)
+  return (await res.json()) as PlaylistItemsResponse
 }
 
 export async function getPlaylistVideos(playlistId: string): Promise<PlaylistVideo[]> {
@@ -69,15 +66,29 @@ export async function getPlaylistVideos(playlistId: string): Promise<PlaylistVid
 
   const promise = (async () => {
     try {
-      const res = await fetch(`https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`, {
-        cache: 'no-store',
-      })
-      if (!res.ok) return []
-      const xml = await res.text()
-      const videos = parseFeed(xml)
+      const videos: PlaylistVideo[] = []
+      let pageToken: string | undefined
+      for (let page = 0; page < MAX_PAGES; page += 1) {
+        const data = await fetchPage(playlistId, pageToken)
+        for (const item of data.items || []) {
+          const videoId = item.snippet?.resourceId?.videoId
+          const title = item.snippet?.title
+          if (!videoId) continue
+          if (title === 'Private video' || title === 'Deleted video') continue
+          videos.push({
+            id: videoId,
+            title: title || videoId,
+            publishedAt: item.snippet?.publishedAt || '',
+            thumbnail: pickThumbnail(item, videoId),
+          })
+        }
+        if (!data.nextPageToken) break
+        pageToken = data.nextPageToken
+      }
       cache.set(playlistId, { expires: Date.now() + CACHE_TTL_MS, videos })
       return videos
-    } catch {
+    } catch (error) {
+      console.error('Error fetching playlist videos:', error)
       return []
     } finally {
       inflight.delete(playlistId)
