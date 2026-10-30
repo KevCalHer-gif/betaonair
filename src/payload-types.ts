@@ -257,6 +257,10 @@ export interface Program {
    */
   backgroundImage?: (number | null) | Media;
   accentColor?: string | null;
+  /**
+   * ID de la lista de reproducción de YouTube. Es el valor que aparece después de list= en la URL de la lista.
+   */
+  youtubePlaylistId?: string | null;
   isLive?: boolean | null;
   liveUrl?: string | null;
   status?: ('active' | 'inactive') | null;
@@ -653,6 +657,7 @@ export interface ProgramsSelect<T extends boolean = true> {
   coverImage?: T;
   backgroundImage?: T;
   accentColor?: T;
+  youtubePlaylistId?: T;
   isLive?: T;
   liveUrl?: T;
   status?: T;

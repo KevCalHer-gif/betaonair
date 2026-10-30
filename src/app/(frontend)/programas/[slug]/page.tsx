@@ -1,6 +1,9 @@
 import { notFound } from 'next/navigation'
 import { getProgramBySlug } from '../../../../lib/api/programs'
 import { getEpisodesByProgram } from '../../../../lib/api/episodes'
+import { getPlaylistVideos } from '../../../../lib/youtube'
+import EpisodeCard from '../../../../components/ui/EpisodeCard'
+import YouTubePlaylistGrid from '../../../../components/ui/YouTubePlaylistGrid'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -17,6 +20,10 @@ export default async function ProgramSlugPage({
 
   // Obtener episodios reales del CMS filtrados por el slug del programa
   const episodios = await getEpisodesByProgram(slug)
+
+  // Cargar videos de YouTube si el programa tiene una playlist configurada
+  const playlistId = (programa as any).youtubePlaylistId as string | undefined
+  const playlistVideos = playlistId ? await getPlaylistVideos(playlistId) : []
 
   const coverImage = (programa.coverImage as any)
   const logo = (programa.logo as any)
@@ -135,89 +142,18 @@ export default async function ProgramSlugPage({
           }}>
             Episodios
           </h2>
-          {episodios.length > 0 ? (
+          {playlistVideos.length > 0 ? (
+            <YouTubePlaylistGrid videos={playlistVideos} />
+          ) : episodios.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
               {episodios.map((ep) => (
-                <div key={ep.id} style={{
-                  border: '1px solid #333',
-                  borderRadius: '8px',
-                  padding: '1.5rem',
-                  background: '#111',
-                }}>
-                  {/* Thumbnail del episodio */}
-                  {ep.thumbnail ? (
-                    <div style={{
-                      width: '100%',
-                      borderRadius: '6px',
-                      overflow: 'hidden',
-                      marginBottom: '0.75rem',
-                      position: 'relative',
-                      aspectRatio: '16 / 9',
-                      background: '#0a0a0a',
-                    }}>
-                      <Image
-                        src={(ep.thumbnail as any).url}
-                        alt={ep.title}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                      />
-                    </div>
-                  ) : (
-                    <div style={{
-                      width: '100%',
-                      aspectRatio: '16 / 9',
-                      background: '#0a0a0a',
-                      borderRadius: '6px',
-                      marginBottom: '0.75rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#333',
-                      fontSize: '0.8rem',
-                    }}>
-                      Sin miniatura
-                    </div>
-                  )}
-                  <h3 style={{
-                    color: '#f0f0f0',
-                    fontSize: '1.1rem',
-                    marginBottom: '0.75rem',
-                  }}>
-                    {ep.title}
-                  </h3>
-                  {ep.publishedAt && (
-                    <p style={{ color: '#888', fontSize: '0.85rem', marginBottom: '1rem' }}>
-                      {new Date(ep.publishedAt).toLocaleDateString('es-BO', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </p>
-                  )}
-                  {ep.embedUrl ? (
-                    <div style={{
-                      width: '100%',
-                      borderRadius: '6px',
-                      overflow: 'hidden',
-                    }}>
-                      <iframe
-                        src={ep.embedUrl}
-                        title={ep.title}
-                        style={{
-                          width: '100%',
-                          aspectRatio: '16 / 9',
-                          border: 'none',
-                          display: 'block',
-                        }}
-                        allowFullScreen
-                      />
-                    </div>
-                  ) : (
-                    <p style={{ color: '#555', fontSize: '0.9rem', fontStyle: 'italic' }}>
-                      Video no disponible aún.
-                    </p>
-                  )}
-                </div>
+                <EpisodeCard
+                  key={ep.id}
+                  title={ep.title}
+                  publishedAt={ep.publishedAt}
+                  embedUrl={ep.embedUrl ?? null}
+                  thumbnailUrl={(ep.thumbnail as any)?.url ?? null}
+                />
               ))}
             </div>
           ) : (

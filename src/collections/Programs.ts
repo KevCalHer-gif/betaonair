@@ -87,6 +87,13 @@ export const Programs: CollectionConfig = {
       defaultValue: '#c61d4a',
     },
     {
+      name: 'youtubePlaylistId',
+      type: 'text',
+      admin: {
+        description: 'ID de la lista de reproducción de YouTube. Es el valor que aparece después de list= en la URL de la lista.',
+      },
+    },
+    {
       name: 'isLive',
       type: 'checkbox',
       defaultValue: false,
